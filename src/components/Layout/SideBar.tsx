@@ -12,7 +12,7 @@ export default function SideBar() {
 
   return (
     <section className="font-montserrat ">
-      <div className="flex flex-col items-center justify-center space-y-4 pt-5 ">
+      <div className="flex flex-col items-center justify-center space-y-7 w-[150px] pt-5 ">
         <Link href="/" className="pl-1">
           <div className="relative h-[60px] w-[60px]">
             <BlurImage
@@ -68,6 +68,22 @@ export default function SideBar() {
             <PersonIcon width={20} height={20} />
 
             <h3 className="font-montserrat">Contacts</h3>
+          </div>
+        </Link>
+
+        <Link href="/accounting">
+          <div
+            className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname.startsWith("/accounting")
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+          >
+            <span>$</span>
+
+            <h3 className="font-montserrat">Accounting</h3>
           </div>
         </Link>
       </div>
