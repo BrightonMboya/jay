@@ -13,7 +13,15 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)"],
+        montserrat: ["var(--font-montserrat)"],
+      },
+      colors: {
+        primary: "#a87133",
+        dark: "#764f24",
+        darker: "#54391a",
+        lighter: "#dcc6ad",
+        light: "#c29c70",
+        lightest: "#f6f1eb",
       },
     },
   },
