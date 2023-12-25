@@ -17,7 +17,7 @@ export function MainNav({
       >
         Overview
       </Link>
-      <Link
+      {/* <Link
         href="/examples/dashboard"
         className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
       >
@@ -34,7 +34,7 @@ export function MainNav({
         className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
       >
         Settings
-      </Link>
+      </Link> */}
     </nav>
   );
 }

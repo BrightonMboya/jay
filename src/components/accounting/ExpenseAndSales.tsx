@@ -9,7 +9,7 @@ import { Label } from "~/components/ui/label";
 import Input from "~/components/ui/Input";
 import Button from "~/components/ui/Button";
 
-export default function Component() {
+export default function ExpenseAndSales() {
   return (
     <div className="grid gap-6 p-6 lg:grid-cols-2">
       <Card>
