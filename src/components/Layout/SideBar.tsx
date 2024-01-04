@@ -4,6 +4,7 @@ import {
   CubeIcon,
   PersonIcon,
   EnvelopeClosedIcon,
+  MagicWandIcon,
 } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
 
@@ -12,7 +13,7 @@ export default function SideBar() {
 
   return (
     <section className="font-montserrat ">
-      <div className="flex flex-col items-center justify-center space-y-7 w-[150px] pt-5 ">
+      <div className="flex w-[150px] flex-col items-center justify-center space-y-7 pt-5 ">
         <Link href="/" className="pl-1">
           <div className="relative h-[60px] w-[60px]">
             <BlurImage
@@ -20,6 +21,22 @@ export default function SideBar() {
               rounded={true}
               preload={false}
             />
+          </div>
+        </Link>
+
+        <Link href="/ai">
+          <div
+            className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname.startsWith("/ai")
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+          >
+            <MagicWandIcon width={20} height={20} />
+
+            <h3 className="font-montserrat">Assistant</h3>
           </div>
         </Link>
 
