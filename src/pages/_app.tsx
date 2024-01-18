@@ -15,11 +15,11 @@ const monsterrat = Montserrat({
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <Layout>
+    // <Layout>
       <main className={`${monsterrat.className}`}>
         <Component {...pageProps} />
       </main>
-    </Layout>
+    // </Layout>
   );
 };
 
