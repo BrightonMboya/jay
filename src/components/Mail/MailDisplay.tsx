@@ -17,7 +17,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "~/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import Button from "~/components/ui/Button";
 import { Calendar } from "~/components/ui/calendar";
 import {
