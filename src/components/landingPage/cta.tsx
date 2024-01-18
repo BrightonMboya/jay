@@ -6,7 +6,7 @@ export default function CTA() {
           <div className="lg:absolute lg:inset-0 lg:left-1/2">
             <img
               className="h-64 w-full object-cover sm:h-80 lg:absolute lg:h-full"
-              src="https://windstatic.com/images/bundle.png"
+              src="https://images.unsplash.com/photo-1705518648497-e4ea72bcb27d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8"
               alt=""
             />
           </div>
