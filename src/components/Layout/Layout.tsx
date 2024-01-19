@@ -6,7 +6,7 @@ type Props = {
 export default function Layout({ children }: Props) {
   return (
     <section>
-      <div className="flex space-x-5 font-sans ">
+      <div className="flex space-x-5 font- ">
         <SideBar />
         <main className="">{children}</main>
       </div>

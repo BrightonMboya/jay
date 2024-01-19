@@ -1,25 +1,35 @@
 import { type AppType } from "next/app";
+import type { NextPage } from "next";
+import type { AppProps } from "next/app";
 
 import { api } from "~/utils/api";
+import type { ReactElement, ReactNode } from "react";
 
 import "~/styles/globals.css";
 
 import { Montserrat } from "next/font/google";
 import Layout from "~/components/Layout/Layout";
-;
+
 
 const monsterrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-montserrat"
+  variable: "--font-montserrat",
 });
 
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
 const MyApp: AppType = ({ Component, pageProps }) => {
+
   return (
-    // <Layout>
-      <main className={`${monsterrat.className}`}>
-        <Component {...pageProps} />
-      </main>
-    // </Layout>
+    <main className={`${monsterrat.className}`}>
+      <Component {...pageProps} />
+    </main>
   );
 };
 

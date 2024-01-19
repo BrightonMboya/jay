@@ -72,6 +72,22 @@ export default function SideBar() {
           </div>
         </Link>
 
+        <Link href="/trips">
+          <div
+            className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname.startsWith("/trips")
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+          >
+            <PersonIcon width={20} height={20} />
+
+            <h3 className="font-montserrat">Trips</h3>
+          </div>
+        </Link>
+
         <Link href="/contacts">
           <div
             className={`flex items-center justify-center space-x-2
