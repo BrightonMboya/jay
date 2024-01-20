@@ -12,7 +12,7 @@ export default function SideBar() {
   const router = useRouter();
 
   return (
-    <section className="font-montserrat ">
+    <section className="font-montserrat fixed">
       <div className="flex w-[150px] flex-col items-center justify-center space-y-7 pt-5 ">
         <Link href="/" className="pl-1">
           <div className="relative h-[60px] w-[60px]">

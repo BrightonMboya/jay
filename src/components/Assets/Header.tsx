@@ -13,7 +13,7 @@ export default function Header({ href, title }: Props) {
       <div className="flex items-center gap-2">
         <Button variant="ghost">Export</Button>
         <Link href={`${href}`}>
-          <Button>New Asset</Button>
+          <Button>{`New ${title}`}</Button>
         </Link>
       </div>
     </div>
