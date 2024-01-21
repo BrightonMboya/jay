@@ -21,6 +21,7 @@ export default function Page() {
   return (
     <Layout>
       <main className="mt-[40px] pl-[30px]">
+        <h3 className="pb-10 text-xl text-primary">{`${trip[0]?.guestName} Trip Expense`}</h3>
         <TooltipProvider delayDuration={0}>
           <ResizablePanelGroup
             direction="horizontal"
@@ -42,7 +43,7 @@ export default function Page() {
               <ExpenseTable />
             </ResizablePanel>
             <ResizableHandle withHandle />
-           
+
             <ResizablePanel
               defaultSize={600}
               collapsedSize={4}

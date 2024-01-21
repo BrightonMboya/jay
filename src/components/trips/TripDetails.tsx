@@ -24,7 +24,7 @@ export default function TripDetails() {
         <h3>22/01/2023</h3>
       </ItemLayout>
       <ItemLayout>
-        <AssetLabel label="Arrival" caption="When is this guest arrived" />
+        <AssetLabel label="Arrival" caption="When this guest arrived" />
         <h3>22/01/2023</h3>
       </ItemLayout>
       <ItemLayout>
