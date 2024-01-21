@@ -1,5 +1,6 @@
 import { Mail } from "~/components/Mail/Mail";
 import { accounts, mails } from "~/components/Mail//data";
+import Layout from "~/components/Layout/Layout";
 
 export default function MailPage() {
   //   const layout = cookies().get("react-resizable-panels:layout");
@@ -9,7 +10,7 @@ export default function MailPage() {
   const defaultCollapsed = undefined;
 
   return (
-    <>
+    <Layout>
       <div className="hidden flex-col md:flex">
         <Mail
           accounts={accounts}
@@ -19,6 +20,6 @@ export default function MailPage() {
           navCollapsedSize={4}
         />
       </div>
-    </>
+    </Layout>
   );
 }

@@ -1,10 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons";
+import { ChevronDownIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -37,8 +34,9 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import Link from "next/link";
 
-const data: Trips[] = [
+export const data: Trips[] = [
   {
     id: 1,
     guestName: "Brighton Mboya",
@@ -49,7 +47,6 @@ const data: Trips[] = [
     tripType: "Trekking",
   },
 ];
-
 
 export type Trips = {
   id: number;
@@ -131,7 +128,7 @@ export const columns: ColumnDef<Trips>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
+      const trip = row.original;
 
       return (
         <DropdownMenu>
@@ -154,7 +151,14 @@ export const columns: ColumnDef<Trips>[] = [
               View Customer Experience
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
-              View Accounting
+              <Link
+                href={{
+                  pathname: "/trips/accounting",
+                  query: { tripId: trip.id },
+                }}
+              >
+                View Accounting
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -196,7 +200,9 @@ export function TripsList() {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Guests..."
-          value={(table.getColumn("guestName")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("guestName")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
             table.getColumn("guestName")?.setFilterValue(event.target.value)
           }

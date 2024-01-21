@@ -41,7 +41,7 @@ export default function SideBar() {
           </div>
         </Link> */}
 
-        {/* <Link href="/mails">
+        <Link href="/mails">
           <div
             className={`flex items-center justify-center space-x-2
               ${
@@ -55,7 +55,7 @@ export default function SideBar() {
 
             <h3 className="font-montserrat">Mail</h3>
           </div>
-        </Link> */}
+        </Link>
         <Link href="/trips">
           <div
             className={`flex items-center justify-center space-x-2
@@ -120,9 +120,12 @@ export default function SideBar() {
           </div>
         </Link>
 
-        <Button className="fixed bottom-10 w-[150px] ml-10"
-        variant="destructive"
-        >Log out</Button>
+        <Button
+          className="fixed bottom-10 ml-10 w-[150px]"
+          variant="destructive"
+        >
+          Log out
+        </Button>
       </div>
     </section>
   );
