@@ -8,40 +8,32 @@ import {
 import Button from "../ui/Button";
 import { Label } from "../ui/label";
 import Input from "../ui/Input";
+import { Checkbox } from "../ui/checkbox";
 
-export default function TripExpenseCard() {
+export default function ReservationCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Record Expenses</CardTitle>
-        <CardDescription>Input the trip expenses details here</CardDescription>
+        <CardTitle>Reservation Tracker</CardTitle>
+        <CardDescription>
+          Track reservations associated with this trip
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="expenseName">Expense Type</Label>
-              <Input id="expenseName" placeholder="Safari" />
+              <Label htmlFor="expenseName">Accomodation Name</Label>
+              <Input id="expenseName" placeholder="Grand Melia Hotel" />
             </div>
             <div>
-              <Label htmlFor="expenseName">Expense Name</Label>
-              <Input id="expenseName" placeholder="Expense Name" />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="expenseAmount">Amount</Label>
-              <Input id="expenseAmount" placeholder="Amount" type="number" />
-            </div>
-            <div>
-              <Label htmlFor="expenseDate">Date</Label>
+              <Label htmlFor="expenseName">Date Booked</Label>
               <Input id="expenseDate" placeholder="Date" type="date" />
             </div>
           </div>
 
           <Label htmlFor="expenseName">Description</Label>
-          <Input id="expenseName" placeholder="hotel reservation" />
+          <Input id="expenseName" placeholder="Double room" />
 
           <Label>Receipt</Label>
 
@@ -74,7 +66,15 @@ export default function TripExpenseCard() {
               <input id="dropzone-file" type="file" className="hidden" />
             </label>
           </div>
-
+          <div className="flex items-center space-x-2">
+            <Checkbox id="terms" />
+            <label
+              htmlFor="terms"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Reservation already booked
+            </label>
+          </div>
           <Button className="w-full" type="submit">
             Submit Expense
           </Button>

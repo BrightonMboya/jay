@@ -145,7 +145,14 @@ export const columns: ColumnDef<Trips>[] = [
               View Operations
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
-              View Reservations
+              <Link
+                href={{
+                  pathname: "/trips/reservations",
+                  query: { tripId: trip.id },
+                }}
+              >
+                View Reservations
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
               View Customer Experience
