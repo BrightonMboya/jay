@@ -15,6 +15,7 @@ import { Overview } from "~/components/accounting/overview";
 import { RecentSales } from "~/components/accounting/recent-sales";
 import ExpenseAndSales from "~/components/accounting/ExpenseAndSales";
 import Reports from "~/components/accounting/reports";
+import Layout from "~/components/Layout/Layout";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function DashboardPage() {
   return (
-    <>
+    <Layout>
       <div className="md:hidden">
         <Image
           src="/examples/dashboard-light.png"
@@ -55,10 +56,7 @@ export default function DashboardPage() {
               <TabsTrigger value="expenseandsales">
                 Expense and Sales
               </TabsTrigger>
-              <TabsTrigger value="reports" >
-                Reports
-              </TabsTrigger>
-             
+              <TabsTrigger value="reports">Reports</TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -195,6 +193,6 @@ export default function DashboardPage() {
           </Tabs>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }

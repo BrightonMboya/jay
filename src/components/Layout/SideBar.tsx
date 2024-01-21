@@ -7,12 +7,13 @@ import {
   MagicWandIcon,
 } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
+import Button from "../ui/Button";
 
 export default function SideBar() {
   const router = useRouter();
 
   return (
-    <section className="font-montserrat fixed">
+    <section className="fixed font-montserrat">
       <div className="flex w-[150px] flex-col items-center justify-center space-y-7 pt-5 ">
         <Link href="/" className="pl-1">
           <div className="relative h-[60px] w-[60px]">
@@ -24,7 +25,7 @@ export default function SideBar() {
           </div>
         </Link>
 
-        <Link href="/ai">
+        {/* <Link href="/ai">
           <div
             className={`flex items-center justify-center space-x-2
               ${
@@ -38,9 +39,9 @@ export default function SideBar() {
 
             <h3 className="font-montserrat">Assistant</h3>
           </div>
-        </Link>
+        </Link> */}
 
-        <Link href="/mails">
+        {/* <Link href="/mails">
           <div
             className={`flex items-center justify-center space-x-2
               ${
@@ -53,6 +54,37 @@ export default function SideBar() {
             <EnvelopeClosedIcon width={20} height={20} />
 
             <h3 className="font-montserrat">Mail</h3>
+          </div>
+        </Link> */}
+        <Link href="/trips">
+          <div
+            className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname.startsWith("/trips")
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+          >
+            <PersonIcon width={20} height={20} />
+
+            <h3 className="font-montserrat">Trips</h3>
+          </div>
+        </Link>
+
+        <Link href="/accounting">
+          <div
+            className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname.startsWith("/accounting")
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+          >
+            <span>$</span>
+
+            <h3 className="font-montserrat">Accounting</h3>
           </div>
         </Link>
 
@@ -72,22 +104,6 @@ export default function SideBar() {
           </div>
         </Link>
 
-        <Link href="/trips">
-          <div
-            className={`flex items-center justify-center space-x-2
-              ${
-                router.pathname.startsWith("/trips")
-                  ? "text-dark"
-                  : "text-gray-500"
-              }
-          `}
-          >
-            <PersonIcon width={20} height={20} />
-
-            <h3 className="font-montserrat">Trips</h3>
-          </div>
-        </Link>
-
         <Link href="/contacts">
           <div
             className={`flex items-center justify-center space-x-2
@@ -104,21 +120,9 @@ export default function SideBar() {
           </div>
         </Link>
 
-        <Link href="/accounting">
-          <div
-            className={`flex items-center justify-center space-x-2
-              ${
-                router.pathname.startsWith("/accounting")
-                  ? "text-dark"
-                  : "text-gray-500"
-              }
-          `}
-          >
-            <span>$</span>
-
-            <h3 className="font-montserrat">Accounting</h3>
-          </div>
-        </Link>
+        <Button className="fixed bottom-10 w-[150px] ml-10"
+        variant="destructive"
+        >Log out</Button>
       </div>
     </section>
   );
