@@ -36,7 +36,7 @@ export default function Page() {
             />
           </ItemLayout>
         </section>
-        <Button className="mt-[50px] w-[100px] w-full">Add Email</Button>
+        <Button className="mt-[50px] w-full">Add Email</Button>
       </main>
     </Layout>
   );
