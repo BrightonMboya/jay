@@ -26,7 +26,6 @@ interface Props {
 }
 
 export function TripsTable({ trips }: Props) {
-  console.log(trips);
   return (
     <Table className="mt-10">
       <TableCaption>A summary of where you will be travelling</TableCaption>

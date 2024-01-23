@@ -63,4 +63,31 @@ The ideal bush and beach destination, visitors can witness the mighty herds of t
       ],
     },
   ],
+
+  transportation: [
+    {
+      id: 1,
+      date: "20 Dec 2022",
+      company: "Tazama Africa",
+      type: "Transfer",
+      pickup: "Kilimanjaro Airport",
+      dropOff: "Kahawa House",
+    },
+    {
+      id: 2,
+      date: "22 Dec 2022",
+      company: "Tazama Africa",
+      type: "Private Guided Trip",
+      pickup: "Kahawa House",
+      dropOff: "Serengeti Kati Kati",
+    },
+    {
+      id: 2,
+      date: "25 Dec 2022",
+      company: "Tazama Africa",
+      type: "4x4 Land Cruiser (Private Guided Trip)",
+      pickup: "Serengeti Kati Kati",
+      dropOff: "Pembeni House",
+    },
+  ],
 };

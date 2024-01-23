@@ -1,3 +1,4 @@
+import { TransportTable } from "./TransportTable";
 import { TripsTable } from "./TripsTable";
 import { serengetiItienary } from "./data";
 import Image from "next/legacy/image";
@@ -36,6 +37,9 @@ export default function ItienaryPage() {
 
           <p className="pt-10 text-4xl text-primary">Trip Summary</p>
           <TripsTable trips={serengetiItienary.destinations} />
+
+          <p className="pt-10 text-4xl text-primary">Transport Summary</p>
+          <TransportTable transport={serengetiItienary.transportation} />
         </div>
       </section>
     </main>
