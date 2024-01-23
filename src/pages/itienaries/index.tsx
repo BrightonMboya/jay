@@ -7,6 +7,7 @@ const ItineraryForm = () => {
     <Layout>
       <main>
         <ItienaryPage />
+        
       </main>
     </Layout>
   );
