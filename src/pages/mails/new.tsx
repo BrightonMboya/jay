@@ -7,8 +7,9 @@ import Button from "~/components/ui/Button";
 export default function Page() {
   return (
     <Layout>
-      <main>
-        <section className="relative mt-[50px] flex flex-col space-y-[30px] ">
+      <main className="mt-[50px]">
+        <h1 className="text-xl font-bold">Add New Email Template</h1>
+        <section className="relative  flex flex-col space-y-[30px] mt-10 ">
           <ItemLayout>
             <AssetLabel
               label="Email Name"

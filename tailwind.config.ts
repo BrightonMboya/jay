@@ -22,6 +22,8 @@ export default {
         lighter: "#dcc6ad",
         light: "#c29c70",
         lightest: "#f6f1eb",
+        muted: "hsl(var(--muted-foreground))",
+       foreground: "hsl(var(--foreground))"
       },
     },
   },

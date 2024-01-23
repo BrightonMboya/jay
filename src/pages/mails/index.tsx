@@ -9,6 +9,7 @@ export default function MailPage() {
   return (
     <Layout>
       <div className="hidden flex-col pt-10 md:flex">
+        
         <Mail
           accounts={accounts}
           mails={mails}
