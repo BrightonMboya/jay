@@ -24,12 +24,12 @@ export function MailList({ items }: MailListProps) {
               "hover:bg-accent flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all",
               mail.selected === item.id && "bg-muted",
             )}
-            onClick={() =>
+            onClick={() => {
               setMail({
                 ...mail,
                 selected: item.id,
-              })
-            }
+              });
+            }}
           >
             <div className="flex w-full flex-col gap-1">
               <div className="flex items-center">

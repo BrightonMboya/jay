@@ -8,7 +8,7 @@ import { Mail } from "~/components/Mail/data";
 import { useMail } from "./use-mail";
 import { Separator } from "~/components/ui/seperator";
 import Input from "~/components/ui/Input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/Tabs";
+import { Tabs, TabsContent } from "~/components/ui/Tabs";
 import { TooltipProvider } from "~/components/ui/tooltip";
 import {
   ResizableHandle,
@@ -35,8 +35,9 @@ export function Mail({
   defaultCollapsed = false,
   navCollapsedSize,
 }: MailProps) {
-  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
   const [mail] = useMail();
+
+  const [searchedMails, setSearchedMails] = React.useState("");
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -53,13 +54,20 @@ export function Mail({
           <Tabs defaultValue="all">
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Email Templates</h1>
+             
             </div>
             <Separator />
             <div className="bg-background/95 supports-[backdrop-filter]:bg-background/60 p-4 backdrop-blur">
               <form>
                 <div className="relative">
                   <Search className="text-muted-foreground absolute left-2 top-2.5 h-4 w-4" />
-                  <Input placeholder="Search templates" className="pl-8" />
+
+                  <Input
+                    placeholder="Search templates"
+                    className="pl-8"
+                    value={searchedMails}
+                    onChange={(e) => setSearchedMails(e.target.value)}
+                  />
                 </div>
               </form>
             </div>

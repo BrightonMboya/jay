@@ -5,7 +5,7 @@ import { Textarea } from "~/components/ui/TextArea";
 
 import { Mail } from "./data";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AssetLabel, ItemLayout } from "~/pages/contacts/new";
 import Input from "../ui/Input";
 
@@ -14,8 +14,13 @@ interface MailDisplayProps {
 }
 
 export function MailDisplay({ mail }: MailDisplayProps) {
-  const [emailBody, setEmailBody] = useState(mail?.text);
-  const [emailSubject, setEmailSubject] = useState(mail?.subject);
+  const [emailBody, setEmailBody] = useState("");
+  const [emailSubject, setEmailSubject] = useState<string>("");
+
+  useEffect(() => {
+    setEmailBody(mail?.text!);
+    setEmailSubject(mail?.subject!);
+  }, [mail]);
   return (
     <div className="flex h-full flex-col">
       <Separator />
