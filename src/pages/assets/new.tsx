@@ -15,15 +15,17 @@ function AssetLabel({ label, caption }: { label: string; caption?: string }) {
 
 function ItemLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-2 items-center gap-[50px]">{children}</div>
+    <div className={`grid grid-cols-2 items-center gap-[50px] `}>
+      {children}
+    </div>
   );
 }
 
 export default function Page() {
   return (
-    <main className="pl-[30px] mt-[40px]">
+    <main className="mt-[40px] pl-[30px]">
       <h3 className="text-2xl font-medium ">Untitled Asset</h3>
-      <section className="relative flex flex-col space-y-[30px] mt-[50px] ">
+      <section className="relative mt-[50px] flex flex-col space-y-[30px] ">
         <ItemLayout>
           <AssetLabel label="Name" />
           <Input />
@@ -72,7 +74,7 @@ export default function Page() {
           <Textarea placeholder="Add a description of your asset" />
         </ItemLayout>
       </section>
-      <Button className="mt-[50px] w-[100px]">Save</Button>
+        <Button className="mt-[50px] w-[100px]">Save</Button>
     </main>
   );
 }
