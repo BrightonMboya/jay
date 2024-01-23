@@ -8,6 +8,7 @@ import {
 } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
 import Button from "../ui/Button";
+import { Plane } from "lucide-react";
 
 export default function SideBar() {
   const router = useRouter();
@@ -69,6 +70,21 @@ export default function SideBar() {
             <PersonIcon width={20} height={20} />
 
             <h3 className="font-montserrat">Trips</h3>
+          </div>
+        </Link>
+
+        <Link href="/itienaries">
+          <div
+            className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname.startsWith("/itienaries")
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+          >
+            <Plane width={20} height={20} />
+            <h3 className="font-montserrat">Itienaries</h3>
           </div>
         </Link>
 
