@@ -1,3 +1,4 @@
+import { TripsTable } from "./TripsTable";
 import { serengetiItienary } from "./data";
 import Image from "next/legacy/image";
 
@@ -33,7 +34,8 @@ export default function ItienaryPage() {
             {serengetiItienary.intro}
           </p>
 
-          <p className="text-4xl text-primary pt-10">Trip Summary</p>
+          <p className="pt-10 text-4xl text-primary">Trip Summary</p>
+          <TripsTable trips={serengetiItienary.destinations} />
         </div>
       </section>
     </main>
