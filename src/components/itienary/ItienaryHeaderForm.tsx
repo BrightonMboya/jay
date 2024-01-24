@@ -74,14 +74,19 @@ export default function ItienaryHeaderForm() {
         </ItemLayout>
         <ItemLayout>
           <AssetLabel
+            label="Price"
+            caption="Enter the Prcing Per Person for this trip. Default currency is USD"
+          />
+          <Input placeholder="300" />
+        </ItemLayout>
+        <ItemLayout>
+          <AssetLabel
             label="Introduction"
             caption="Give this trip a short introduction and hook the guests"
           />
           <Textarea placeholder="Add short notes about this Itienary" />
         </ItemLayout>
       </div>
-
-   
     </section>
   );
 }

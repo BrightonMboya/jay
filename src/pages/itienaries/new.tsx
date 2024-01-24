@@ -26,10 +26,19 @@ const ItineraryForm = () => {
       <main>
         <form>
           {MultiPageForm()}
-          <div>
+          <div className="space-x-5">
             <Button
               className="mt-10 w-[200px]"
               type="button"
+              onClick={() => setPage(page - 1)}
+              disabled={page <= 0}
+            >
+             Previous
+            </Button>
+            <Button
+              className="mt-10 w-[200px]"
+              type="button"
+              disabled={page >= 2}
               onClick={() => setPage(page + 1)}
             >
               Next
