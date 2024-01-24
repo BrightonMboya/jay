@@ -1,12 +1,11 @@
 import { ItemLayout, AssetLabel } from "~/pages/contacts/new";
 import Input from "../ui/Input";
 import { Textarea } from "../ui/TextArea";
-import Button from "../ui/Button";
 
 export default function ItienaryHeaderForm() {
   return (
     <section className="pt-10">
-      <p className="text-4xl text-primary">Basic Itienary Info</p>
+      <p className="text-4xl text-primary ">Basic Itienary Info</p>
       <div className="flex w-full items-center justify-center pt-5">
         <label className=" flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 ">
           <div className="flex flex-col items-center justify-center ">
@@ -82,7 +81,7 @@ export default function ItienaryHeaderForm() {
         </ItemLayout>
       </div>
 
-      <Button className="mt-10 w-[200px]" size="lg">Next</Button>
+   
     </section>
   );
 }
