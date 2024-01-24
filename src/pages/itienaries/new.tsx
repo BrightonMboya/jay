@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "~/components/Layout/Layout";
 import ItienaryHeaderForm from "~/components/itienary/ItienaryHeaderForm";
 import DestinationForm from "~/components/itienary/DestinationForm";
+import TransportationForm from "~/components/itienary/TransportationForm";
 import Button from "~/components/ui/Button";
 
 const ItineraryForm = () => {
@@ -14,6 +15,8 @@ const ItineraryForm = () => {
         return <ItienaryHeaderForm />;
       case 1:
         return <DestinationForm />;
+      case 2:
+        return <TransportationForm />;
       default:
         return <ItienaryHeaderForm />;
     }
