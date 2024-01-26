@@ -2,7 +2,7 @@
 import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 
-const DestinationDetails = ({ control, register, remove, index }) => {
+export const DestinationDetails = ({ control, register, remove, index }) => {
   return (
     <div key={index} className="mb-4 rounded border p-4">
       <h3 className="mb-2 text-xl font-semibold">Destination {index + 1}</h3>

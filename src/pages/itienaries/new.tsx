@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Layout from "~/components/Layout/Layout";
 import ItienaryHeaderForm from "~/components/itienary/ItienaryHeaderForm";
-import DestinationForm from "~/components/itienary/DestinationForm";
+import DayManagementForm, {
+  ManagementForm,
+} from "~/components/itienary/DayManagementForm";
 import TransportationForm from "~/components/itienary/TransportationForm";
 import Button from "~/components/ui/Button";
 import SuccessComponent from "~/components/itienary/SuccessComponent";
@@ -9,6 +11,13 @@ import { Steps, ConfigProvider } from "antd";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+
+const daysManagementSchema = z.object({
+  about: z.string(),
+  accomodation: z.string(),
+});
+
+export type IDaysManagement = z.infer<typeof daysManagementSchema>;
 
 const itienarySchema = z.object({
   guestName: z.string(),
@@ -18,12 +27,7 @@ const itienarySchema = z.object({
   numberOfGuests: z.string(),
   description: z.string(),
   pricePerPerson: z.string(),
-  // daysManagement: z.array(
-  //   z.object({
-  //     about: z.string(),
-  //     accomodation: z.string(),
-  //   }),
-  // ),
+  daysManagement: z.array(daysManagementSchema),
 });
 
 export type ValidationSchema = z.infer<typeof itienarySchema>;
@@ -56,14 +60,17 @@ const ItineraryForm = () => {
     setValue,
     watch,
     formState: { errors },
-  } =
-    //^?
-    useForm<ValidationSchema>({ resolver: zodResolver(itienarySchema) });
+  } = useForm<ValidationSchema>({
+    resolver: zodResolver(itienarySchema),
+    defaultValues: {
+      daysManagement: [{ about: "About the Trip", accomodation: "Kahama" }],
+    },
+  });
 
-  // const { fields, append, remove } = useFieldArray({
-  //   control,
-  //   name: "Day Management",
-  // });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "daysManagement",
+  });
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log(data);
   };
@@ -75,9 +82,9 @@ const ItineraryForm = () => {
       case 0:
         return <ItienaryHeaderForm control={control} register={register} />;
       case 1:
-        return <DestinationForm />;
+        // return fields.map((item, index) => <ManagementForm key={item.id} />);
 
-      // return <DestinationForm />;
+        return <DayManagementForm fields={fields} register={register} remove={remove} append={append} />;
       case 2:
         return <TransportationForm />;
       case 3:

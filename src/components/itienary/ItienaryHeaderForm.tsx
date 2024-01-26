@@ -3,9 +3,10 @@ import Input from "../ui/Input";
 import { Textarea } from "../ui/TextArea";
 import { UseFormRegister, Control } from "react-hook-form";
 import { type ValidationSchema } from "~/pages/itienaries/new";
+
 interface Props {
   register: UseFormRegister<ValidationSchema>;
-  control: Control<ValidationSchema, any>;
+  control: Control<ValidationSchema>;
 }
 
 export default function ItienaryHeaderForm({ register, control }: Props) {
