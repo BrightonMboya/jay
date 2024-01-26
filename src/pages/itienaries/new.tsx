@@ -5,7 +5,8 @@ import DestinationForm from "~/components/itienary/DestinationForm";
 import TransportationForm from "~/components/itienary/TransportationForm";
 import Button from "~/components/ui/Button";
 import SuccessComponent from "~/components/itienary/SuccessComponent";
-import { message, Steps, theme, ConfigProvider } from "antd";
+import { Steps, ConfigProvider } from "antd";
+import { useForm, useFieldArray } from "react-hook-form";
 
 const itienarySteps = [
   {
@@ -28,21 +29,30 @@ const items = itienarySteps.map((item) => ({
 }));
 
 const ItineraryForm = () => {
+  const { control, handleSubmit, register, setValue, watch } = useForm();
+  //^?
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "Day Management",
+  });
+  const onSubmit = () => {};
   // state for controlling which form is shown on the screen
   const [page, setPage] = useState(0);
 
   const MultiPageForm = () => {
     switch (page) {
       case 0:
-        return <ItienaryHeaderForm />;
+        return <ItienaryHeaderForm control={control} register={register} />;
       case 1:
         return <DestinationForm />;
+
+      // return <DestinationForm />;
       case 2:
         return <TransportationForm />;
       case 3:
         return <SuccessComponent />;
       default:
-        return <ItienaryHeaderForm />;
+        return <ItienaryHeaderForm control={control} register={register} />;
     }
   };
   return (
@@ -64,7 +74,7 @@ const ItineraryForm = () => {
             className="fixed w-[60%] bg-white pt-5 font-montserrat"
           />
         </ConfigProvider>
-        <form className="pt-10">
+        <form className="pt-10" onSubmit={handleSubmit(onSubmit)}>
           {MultiPageForm()}
 
           {page < 3 && (

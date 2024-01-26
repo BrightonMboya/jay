@@ -1,8 +1,14 @@
 import { ItemLayout, AssetLabel } from "~/pages/contacts/new";
 import Input from "../ui/Input";
 import { Textarea } from "../ui/TextArea";
+import { UseFormRegister, FieldValues, Control } from "react-hook-form";
 
-export default function ItienaryHeaderForm() {
+interface Props {
+  register: UseFormRegister<FieldValues>;
+  control: Control<FieldValues, any>;
+}
+
+export default function ItienaryHeaderForm({ register, control }: Props) {
   return (
     <section className="pt-10">
       <p className="text-4xl text-primary ">Basic Itienary Info</p>
@@ -39,6 +45,7 @@ export default function ItienaryHeaderForm() {
           <AssetLabel
             label="Itienary Name"
             caption="Give this Itienary a desriptive name "
+            {...register("")}
           />
           <Input placeholder="Serengeti 2 Days Safaris" />
         </ItemLayout>
