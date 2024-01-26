@@ -68,11 +68,12 @@ const ItineraryForm = () => {
   });
 
   const { fields, append, remove } = useFieldArray({
+        //^?
     control,
     name: "daysManagement",
   });
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log(data);
+    console.log(data, "Data Fields");
   };
   // state for controlling which form is shown on the screen
   const [page, setPage] = useState(0);
@@ -94,7 +95,7 @@ const ItineraryForm = () => {
     }
   };
 
-  console.log(errors, ">>>>>>>>>>");
+  console.log(errors, "errors field");
   return (
     <Layout>
       <main>
