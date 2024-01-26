@@ -2,10 +2,10 @@ import { ItemLayout, AssetLabel } from "~/pages/contacts/new";
 import Input from "../ui/Input";
 import { Textarea } from "../ui/TextArea";
 import { UseFormRegister, FieldValues, Control } from "react-hook-form";
-
+import { type ValidationSchema } from "~/pages/itienaries/new";
 interface Props {
-  register: UseFormRegister<FieldValues>;
-  control: Control<FieldValues, any>;
+  register: UseFormRegister<ValidationSchema>;
+  control: Control<ValidationSchema, any>;
 }
 
 export default function ItienaryHeaderForm({ register, control }: Props) {
@@ -45,9 +45,11 @@ export default function ItienaryHeaderForm({ register, control }: Props) {
           <AssetLabel
             label="Itienary Name"
             caption="Give this Itienary a desriptive name "
-            {...register("")}
           />
-          <Input placeholder="Serengeti 2 Days Safaris" />
+          <Input
+            placeholder="Serengeti 2 Days Safaris"
+            {...register("itienaryName")}
+          />
         </ItemLayout>
 
         <ItemLayout>
@@ -55,7 +57,7 @@ export default function ItienaryHeaderForm({ register, control }: Props) {
             label="Guest Name"
             caption="The full names of the guest, you can add one name only"
           />
-          <Input placeholder="John Legend" />
+          <Input placeholder="John Legend" {...register("guestName")} />
         </ItemLayout>
 
         <ItemLayout>
@@ -63,35 +65,38 @@ export default function ItienaryHeaderForm({ register, control }: Props) {
             label="Number of Days"
             caption="How many days will this trip take"
           />
-          <Input placeholder="5" />
+          <Input placeholder="5" {...register("numberOfDays")} />
         </ItemLayout>
         <ItemLayout>
           <AssetLabel
             label="Number of Nights"
             caption="How many moons will this trip take"
           />
-          <Input placeholder="4" />
+          <Input placeholder="4" {...register("numberOfNights")} />
         </ItemLayout>
         <ItemLayout>
           <AssetLabel
             label="Number of Guests"
             caption="How many guests do we have for this trip"
           />
-          <Input placeholder="3" />
+          <Input placeholder="3" {...register("numberOfNights")} />
         </ItemLayout>
         <ItemLayout>
           <AssetLabel
             label="Price"
             caption="Enter the Prcing Per Person for this trip. Default currency is USD"
           />
-          <Input placeholder="300" />
+          <Input placeholder="300" {...register("pricePerPerson")} />
         </ItemLayout>
         <ItemLayout>
           <AssetLabel
             label="Introduction"
             caption="Give this trip a short introduction and hook the guests"
           />
-          <Textarea placeholder="Add short notes about this Itienary" />
+          <Textarea
+            placeholder="Add short notes about this Itienary"
+            {...register("description")}
+          />
         </ItemLayout>
       </div>
     </section>

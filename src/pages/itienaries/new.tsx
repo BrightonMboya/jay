@@ -7,6 +7,26 @@ import Button from "~/components/ui/Button";
 import SuccessComponent from "~/components/itienary/SuccessComponent";
 import { Steps, ConfigProvider } from "antd";
 import { useForm, useFieldArray } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const itienarySchema = z.object({
+  guestName: z.string(),
+  itienaryName: z.string(),
+  numberOfDays: z.string(),
+  numberOfNights: z.string(),
+  numberOfGuests: z.string(),
+  description: z.string(),
+  pricePerPerson: z.string(),
+  daysManagement: z.array(
+    z.object({
+      about: z.string(),
+      accomodation: z.string(),
+    }),
+  ),
+});
+
+export type ValidationSchema = z.infer<typeof itienarySchema>;
 
 const itienarySteps = [
   {
@@ -29,8 +49,10 @@ const items = itienarySteps.map((item) => ({
 }));
 
 const ItineraryForm = () => {
-  const { control, handleSubmit, register, setValue, watch } = useForm();
-  //^?
+  const { control, handleSubmit, register, setValue, watch } =
+    //^?
+    useForm<ValidationSchema>({ resolver: zodResolver(itienarySchema) });
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "Day Management",
