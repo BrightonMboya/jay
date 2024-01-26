@@ -6,7 +6,7 @@ import TransportationForm from "~/components/itienary/TransportationForm";
 import Button from "~/components/ui/Button";
 import SuccessComponent from "~/components/itienary/SuccessComponent";
 import { Steps, ConfigProvider } from "antd";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -18,12 +18,12 @@ const itienarySchema = z.object({
   numberOfGuests: z.string(),
   description: z.string(),
   pricePerPerson: z.string(),
-  daysManagement: z.array(
-    z.object({
-      about: z.string(),
-      accomodation: z.string(),
-    }),
-  ),
+  // daysManagement: z.array(
+  //   z.object({
+  //     about: z.string(),
+  //     accomodation: z.string(),
+  //   }),
+  // ),
 });
 
 export type ValidationSchema = z.infer<typeof itienarySchema>;
@@ -49,15 +49,24 @@ const items = itienarySteps.map((item) => ({
 }));
 
 const ItineraryForm = () => {
-  const { control, handleSubmit, register, setValue, watch } =
+  const {
+    control,
+    handleSubmit,
+    register,
+    setValue,
+    watch,
+    formState: { errors },
+  } =
     //^?
     useForm<ValidationSchema>({ resolver: zodResolver(itienarySchema) });
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "Day Management",
-  });
-  const onSubmit = () => {};
+  // const { fields, append, remove } = useFieldArray({
+  //   control,
+  //   name: "Day Management",
+  // });
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+    console.log(data);
+  };
   // state for controlling which form is shown on the screen
   const [page, setPage] = useState(0);
 
@@ -77,6 +86,8 @@ const ItineraryForm = () => {
         return <ItienaryHeaderForm control={control} register={register} />;
     }
   };
+
+  console.log(errors, ">>>>>>>>>>");
   return (
     <Layout>
       <main>
@@ -119,6 +130,8 @@ const ItineraryForm = () => {
               </Button>
             </div>
           )}
+
+          <Button type="submit">Submit</Button>
         </form>
       </main>
     </Layout>

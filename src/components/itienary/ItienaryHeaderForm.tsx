@@ -1,7 +1,7 @@
 import { ItemLayout, AssetLabel } from "~/pages/contacts/new";
 import Input from "../ui/Input";
 import { Textarea } from "../ui/TextArea";
-import { UseFormRegister, FieldValues, Control } from "react-hook-form";
+import { UseFormRegister, Control } from "react-hook-form";
 import { type ValidationSchema } from "~/pages/itienaries/new";
 interface Props {
   register: UseFormRegister<ValidationSchema>;
@@ -80,6 +80,14 @@ export default function ItienaryHeaderForm({ register, control }: Props) {
             caption="How many guests do we have for this trip"
           />
           <Input placeholder="3" {...register("numberOfNights")} />
+        </ItemLayout>
+
+        <ItemLayout>
+          <AssetLabel
+            label="Guests"
+            caption="Enter the number of guests in this trip"
+          />
+          <Input placeholder="300" {...register("numberOfGuests")} />
         </ItemLayout>
         <ItemLayout>
           <AssetLabel
