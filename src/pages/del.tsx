@@ -3,10 +3,7 @@ import Layout from "~/components/Layout/Layout";
 import BasicInfoForm, {
   type BasicInfoFormValues,
 } from "~/components/itienary/forms/BasicInfo";
-import {
-  ItienaryFormRef,
-  ItienaryFormWrapper,
-} from "~/components/itienary/forms/ItienaryFormWrapper";
+import { SubmitHandler } from "react-hook-form";
 import Button from "~/components/ui/Button";
 
 export default function Page() {
@@ -14,9 +11,11 @@ export default function Page() {
     basicInfo: BasicInfoFormValues;
   } | null>(null);
 
-  const handleBasicItienaryInfo = (values: unknown) => {
+  const handleBasicItienaryInfo: SubmitHandler<BasicInfoFormValues> = (
+    data,
+  ) => {
     console.log("<<<<<<<");
-    console.log(values);
+    console.log(data);
     console.log(">>>>>>>");
   };
 

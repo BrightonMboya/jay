@@ -50,7 +50,7 @@ export default function DayManagementForm({
   fields,
   append,
 }: Props) {
-  console.log(fields, "///////");
+  
   return (
     <section className="pt-10">
       <p className="pb-5 text-4xl text-primary">Trip Destination Details</p>
