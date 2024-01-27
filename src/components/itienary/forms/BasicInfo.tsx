@@ -22,7 +22,7 @@ export type BasicInfoFormValues = z.infer<typeof basicInfoSchema>;
 interface BasicInfoFormProps {
   onSubmitReady: (values: BasicInfoFormValues) => void;
   initialValues?: BasicInfoFormValues;
-  setNextPage: Dispatch<SetStateAction<number>>;
+  
 }
 
 export default function BasicInfoForm(props: BasicInfoFormProps) {
@@ -170,14 +170,7 @@ export default function BasicInfoForm(props: BasicInfoFormProps) {
 
       <div className="space-x-5">
         <Button className="mt-10 w-[200px]" type="submit">
-          Save
-        </Button>
-        <Button
-          className="mt-10 w-[200px]"
-          type="button"
-          onClick={() => props.setNextPage(1)}
-        >
-          Next
+          Save & Next
         </Button>
       </div>
     </form>

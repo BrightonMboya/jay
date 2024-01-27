@@ -32,16 +32,17 @@ export type DayManagementValues = z.infer<typeof dayManagementSchema>;
 interface DayManagementFormProps {
   onSubmitReady: (values: DayManagementValues) => void;
   initialValues?: DayManagementValues;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
 }
 
 export default function DayManagementForm(props: DayManagementFormProps) {
-  const { initialValues } = props;
+  const { initialValues, page } = props;
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-    //^?
   } = useForm<DayManagementValues>({
     resolver: zodResolver(dayManagementSchema),
     defaultValues: {
@@ -62,7 +63,14 @@ export default function DayManagementForm(props: DayManagementFormProps) {
     const fieldErros = errors.daysManagement?.[idx];
     const { id } = field;
 
-    return <IndividualDayForm idx={idx} register={register} errors={errors} key={id} />;
+    return (
+      <IndividualDayForm
+        idx={idx}
+        register={register}
+        errors={errors}
+        key={id}
+      />
+    );
   });
 
   return (
@@ -81,7 +89,7 @@ export default function DayManagementForm(props: DayManagementFormProps) {
       </div>
 
       <Button className="mt-10 w-full" type="submit">
-        Save{" "}
+        Save & Next
       </Button>
     </form>
   );

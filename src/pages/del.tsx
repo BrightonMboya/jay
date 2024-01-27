@@ -7,7 +7,6 @@ import { SubmitHandler } from "react-hook-form";
 import DayManagementForm, {
   type DayManagementValues,
 } from "~/components/itienary/forms/DayManagementForm";
-import Button from "~/components/ui/Button";
 
 export default function Page() {
   const [formData, setFormData] = useState<{
@@ -24,6 +23,7 @@ export default function Page() {
     console.log("<<<<<<<");
     console.log(data);
     console.log(">>>>>>>");
+    setPage(() => page + 1);
   };
 
   const handleDayManagementInfo: SubmitHandler<DayManagementValues> = (
@@ -38,15 +38,16 @@ export default function Page() {
   const MultiPageForm = () => {
     switch (page) {
       case 0:
-        return (
-          <BasicInfoForm
-            onSubmitReady={handleBasicItienaryInfo}
-            setNextPage={setPage}
-          />
-        );
+        return <BasicInfoForm onSubmitReady={handleBasicItienaryInfo} />;
 
       case 1:
-        return <DayManagementForm onSubmitReady={handleDayManagementInfo} />;
+        return (
+          <DayManagementForm
+            onSubmitReady={handleDayManagementInfo}
+            setPage={setPage}
+            page={page}
+          />
+        );
     }
   };
 
