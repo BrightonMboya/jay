@@ -4,11 +4,18 @@ import BasicInfoForm, {
   type BasicInfoFormValues,
 } from "~/components/itienary/forms/BasicInfo";
 import { SubmitHandler } from "react-hook-form";
+import DayManagementForm, {
+  type DayManagementValues,
+} from "~/components/itienary/forms/DayManagementForm";
 import Button from "~/components/ui/Button";
 
 export default function Page() {
   const [formData, setFormData] = useState<{
     basicInfo: BasicInfoFormValues;
+  } | null>(null);
+
+  const [dayManagementData, setDayManagementData] = useState<{
+    dayManagement: DayManagementValues;
   } | null>(null);
 
   const handleBasicItienaryInfo: SubmitHandler<BasicInfoFormValues> = (
@@ -17,6 +24,14 @@ export default function Page() {
     console.log("<<<<<<<");
     console.log(data);
     console.log(">>>>>>>");
+  };
+
+  const handleDayManagementInfo: SubmitHandler<DayManagementValues> = (
+    data,
+  ) => {
+    console.log("*********");
+    console.log(data);
+    console.log("*********");
   };
 
   const [page, setPage] = useState(0);
@@ -31,7 +46,7 @@ export default function Page() {
         );
 
       case 1:
-        return <h3>hello World</h3>;
+        return <DayManagementForm onSubmitReady={handleDayManagementInfo} />;
     }
   };
 

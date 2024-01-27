@@ -11,7 +11,6 @@ import {
   FieldArrayWithId,
   UseFieldArrayAppend,
 } from "react-hook-form";
-import { DestinationDetails } from "~/pages/del";
 
 import {
   type ValidationSchema,
