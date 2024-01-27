@@ -8,13 +8,13 @@ import Button from "~/components/ui/Button";
 import { type Dispatch, type SetStateAction } from "react";
 
 export const basicInfoSchema = z.object({
-  guestName: z.string(),
-  itienaryName: z.string(),
-  numberOfDays: z.string(),
-  numberOfNights: z.string(),
-  numberOfGuests: z.string(),
+  guestName: z.string().min(1),
+  itienaryName: z.string().min(1),
+  numberOfDays: z.string().min(1),
+  numberOfNights: z.string().min(1),
+  numberOfGuests: z.string().min(1),
   description: z.string(),
-  pricePerPerson: z.string(),
+  pricePerPerson: z.string().min(1),
 });
 
 export type BasicInfoFormValues = z.infer<typeof basicInfoSchema>;
@@ -70,10 +70,18 @@ export default function BasicInfoForm(props: BasicInfoFormProps) {
             label="Itienary Name"
             caption="Give this Itienary a desriptive name "
           />
-          <Input
-            placeholder="Serengeti 2 Days Safaris"
-            {...register("itienaryName")}
-          />
+
+          <div>
+            <Input
+              placeholder="Serengeti 2 Days Safaris"
+              {...register("itienaryName")}
+            />
+            {errors?.itienaryName?.message && (
+              <span className="text-sm text-red-500">
+                Please give this itienary a name
+              </span>
+            )}
+          </div>
         </ItemLayout>
 
         <ItemLayout>
@@ -81,7 +89,14 @@ export default function BasicInfoForm(props: BasicInfoFormProps) {
             label="Guest Name"
             caption="The full names of the guest, you can add one name only"
           />
-          <Input placeholder="John Legend" {...register("guestName")} />
+          <div>
+            <Input placeholder="John Legend" {...register("guestName")} />
+            {errors?.guestName?.message && (
+              <span className="text-sm text-red-500">
+                A guest name is important here ...
+              </span>
+            )}
+          </div>
         </ItemLayout>
 
         <ItemLayout>
@@ -89,36 +104,57 @@ export default function BasicInfoForm(props: BasicInfoFormProps) {
             label="Number of Days"
             caption="How many days will this trip take"
           />
-          <Input placeholder="5" {...register("numberOfDays")} />
+          <div>
+            <Input placeholder="5" {...register("numberOfDays")} />
+            {errors?.numberOfDays?.message && (
+              <span className="text-sm text-red-500">
+                The guest would love to know how long this trip will take
+              </span>
+            )}
+          </div>
         </ItemLayout>
         <ItemLayout>
           <AssetLabel
             label="Number of Nights"
             caption="How many moons will this trip take"
           />
-          <Input placeholder="4" {...register("numberOfNights")} />
+          <div>
+            <Input placeholder="4" {...register("numberOfNights")} />
+            {errors?.numberOfNights?.message && (
+              <span className="text-sm text-red-500">
+                The guest would love to know how long this trip will take
+              </span>
+            )}
+          </div>
         </ItemLayout>
         <ItemLayout>
           <AssetLabel
             label="Number of Guests"
             caption="How many guests do we have for this trip"
           />
-          <Input placeholder="3" {...register("numberOfNights")} />
+          <div>
+            <Input placeholder="3" {...register("numberOfGuests")} />
+            {errors?.numberOfGuests?.message && (
+              <span className="text-sm text-red-500">
+                Adding number of guests is good for record keeping
+              </span>
+            )}
+          </div>
         </ItemLayout>
 
-        <ItemLayout>
-          <AssetLabel
-            label="Guests"
-            caption="Enter the number of guests in this trip"
-          />
-          <Input placeholder="300" {...register("numberOfGuests")} />
-        </ItemLayout>
         <ItemLayout>
           <AssetLabel
             label="Price"
             caption="Enter the Prcing Per Person for this trip. Default currency is USD"
           />
-          <Input placeholder="300" {...register("pricePerPerson")} />
+          <div>
+            <Input placeholder="300" {...register("pricePerPerson")} />
+            {errors?.pricePerPerson?.message && (
+              <span className="text-sm text-red-500">
+                Adding the price per person is good for accounting
+              </span>
+            )}
+          </div>
         </ItemLayout>
         <ItemLayout>
           <AssetLabel
