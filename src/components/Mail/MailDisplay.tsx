@@ -4,6 +4,7 @@ import { Separator } from "~/components/ui/seperator";
 import { Textarea } from "~/components/ui/TextArea";
 
 import { Mail } from "./data";
+import { SelectTrip } from "./TripSelector";
 
 import { useState, useEffect } from "react";
 import { AssetLabel, ItemLayout } from "~/pages/contacts/new";
@@ -16,6 +17,7 @@ interface MailDisplayProps {
 export function MailDisplay({ mail }: MailDisplayProps) {
   const [emailBody, setEmailBody] = useState("");
   const [emailSubject, setEmailSubject] = useState<string>("");
+  const [emailTrip, setEmailTrip] = useState("");
 
   useEffect(() => {
     setEmailBody(mail?.text!);
@@ -42,6 +44,18 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 className="w-[300px] "
                 placeholder="alicesmith@example.com"
               />
+            </div>
+
+            <div className="flex items-center space-x-5 ">
+              <AssetLabel label="Add CC" />
+              <Input
+                className="w-[300px] "
+                placeholder="smith@example.com, john@example.com"
+              />
+            </div>
+            <div className="flex items-center space-x-5 ">
+              <AssetLabel label="Select Trip" />
+              <SelectTrip />
             </div>
           </div>
           <Separator />
