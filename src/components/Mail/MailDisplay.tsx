@@ -1,13 +1,11 @@
 import Button from "~/components/ui/Button";
-
-import { Separator } from "~/components/ui/seperator";
 import { Textarea } from "~/components/ui/TextArea";
 
 import { Mail } from "./data";
 import { SelectTrip } from "./TripSelector";
 
 import { useState, useEffect } from "react";
-import { AssetLabel, ItemLayout } from "~/pages/contacts/new";
+import { AssetLabel } from "~/pages/contacts/new";
 import Input from "../ui/Input";
 
 interface MailDisplayProps {
@@ -17,7 +15,6 @@ interface MailDisplayProps {
 export function MailDisplay({ mail }: MailDisplayProps) {
   const [emailBody, setEmailBody] = useState("");
   const [emailSubject, setEmailSubject] = useState<string>("");
-  const [emailTrip, setEmailTrip] = useState("");
 
   useEffect(() => {
     setEmailBody(mail?.text!);
@@ -25,7 +22,6 @@ export function MailDisplay({ mail }: MailDisplayProps) {
   }, [mail]);
   return (
     <div className="flex h-full flex-col">
-      <Separator />
       {mail ? (
         <div className="flex flex-1 flex-col">
           <div className="space-y-5  pl-4">
@@ -58,7 +54,6 @@ export function MailDisplay({ mail }: MailDisplayProps) {
               <SelectTrip />
             </div>
           </div>
-          <Separator />
 
           <Textarea
             className="mx-4 mt-10 w-[90%] flex-1 whitespace-pre-wrap p-4 text-sm"
@@ -67,8 +62,6 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           />
 
           <Button className="ml-4 mr-auto mt-5">Send Email</Button>
-
-          <Separator className="mt-auto" />
         </div>
       ) : (
         <div className="text-muted-foreground p-8 text-center">

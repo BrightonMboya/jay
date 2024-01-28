@@ -4,7 +4,7 @@ import TripRevenueCard from "./RevenueCard";
 
 export default function TripAccounting() {
   return (
-    <Tabs defaultValue="expenses" className="w-[400px]">
+    <Tabs defaultValue="expenses" className="">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="expenses">Expenses</TabsTrigger>
         <TabsTrigger value="sales">Sales</TabsTrigger>

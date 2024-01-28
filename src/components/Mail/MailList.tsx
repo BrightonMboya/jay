@@ -22,7 +22,7 @@ export function MailList({ items }: MailListProps) {
             key={item.id}
             className={cn(
               "hover:bg-accent flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all",
-              mail.selected === item.id && "bg-muted/10",
+              mail.selected === item.id && "bg-lighter",
             )}
             onClick={() => {
               setMail({
