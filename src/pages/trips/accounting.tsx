@@ -9,8 +9,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "~/components/ui/resizable";
-import TripExpenseCard from "~/components/trips/TripExpenseCard";
 import { ExpenseTable } from "~/components/trips/ExpensesTable";
+import TripAccounting from "~/components/trips/TripAccounting"
 
 export default function Page() {
   const { query } = useRouter();
@@ -51,7 +51,7 @@ export default function Page() {
               minSize={30}
               className="pl-10"
             >
-              <TripExpenseCard />
+              <TripAccounting />
             </ResizablePanel>
           </ResizablePanelGroup>
         </TooltipProvider>
