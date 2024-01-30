@@ -4,13 +4,12 @@ import type { AppProps } from "next/app";
 
 import { api } from "~/utils/api";
 import type { ReactElement, ReactNode } from "react";
- import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 
 import "~/styles/globals.css";
 
 import { Montserrat } from "next/font/google";
 import Layout from "~/components/Layout/Layout";
-
 
 const monsterrat = Montserrat({
   subsets: ["latin"],
@@ -26,11 +25,12 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-
   return (
-    <main className={`${monsterrat.className}`}>
-      <Component {...pageProps} />
-    </main>
+    <ClerkProvider {...pageProps}>
+      <main className={`${monsterrat.className}`}>
+        <Component {...pageProps} />
+      </main>
+    </ClerkProvider>
   );
 };
 
