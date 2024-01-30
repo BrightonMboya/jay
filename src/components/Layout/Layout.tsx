@@ -9,20 +9,20 @@ type Props = {
 export default function Layout({ children }: Props) {
   return (
     <>
-      <SignedIn>
+      {/* <SignedIn> */}
         <section>
           <div className="font- flex space-x-[200px] ">
             <SideBar />
             <main className="">{children}</main>
           </div>
         </section>
-      </SignedIn>
+      {/* </SignedIn> */}
 
-      <SignedOut>
+      {/* <SignedOut>
         <section className="flex h-screen items-center justify-center">
           <SignUpForm />
         </section>
-      </SignedOut>
+      </SignedOut> */}
     </>
   );
 }
