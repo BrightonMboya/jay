@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 
 import { api } from "~/utils/api";
 import type { ReactElement, ReactNode } from "react";
+ import { ClerkProvider } from "@clerk/nextjs";
 
 import "~/styles/globals.css";
 
