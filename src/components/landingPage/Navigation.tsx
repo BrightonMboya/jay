@@ -69,10 +69,10 @@ export default function Navigation() {
                       width="28.5"
                       height="28.5"
                       filterUnits="userSpaceOnUse"
-                      color-interpolation-filters="sRGB"
+                      colorInterpolationFilters="sRGB"
                     >
                       <feFlood
-                        flood-opacity="0"
+                        floodOpacity="0"
                         result="BackgroundImageFix"
                       ></feFlood>
                       <feColorMatrix
@@ -106,10 +106,10 @@ export default function Navigation() {
                       width="28.812"
                       height="28.2021"
                       filterUnits="userSpaceOnUse"
-                      color-interpolation-filters="sRGB"
+                      colorInterpolationFilters="sRGB"
                     >
                       <feFlood
-                        flood-opacity="0"
+                        floodOpacity="0"
                         result="BackgroundImageFix"
                       ></feFlood>
                       <feColorMatrix
@@ -217,16 +217,16 @@ export default function Navigation() {
                 >
                   <path
                     className="{'hidden': open, 'inline-flex': !open }"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M4 6h16M4 12h16M4 18h16"
                   ></path>
                   <path
                     className="{'hidden': !open, 'inline-flex': open }"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M6 18L18 6M6 6l12 12"
                   ></path>
                 </svg>

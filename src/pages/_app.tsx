@@ -26,7 +26,14 @@ type AppPropsWithLayout = AppProps & {
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <ClerkProvider {...pageProps}>
+    <ClerkProvider
+      {...pageProps}
+      appearance={{
+        variables: {
+          colorPrimary: "#46783E",
+        },
+      }}
+    >
       <main className={`${monsterrat.className}`}>
         <Component {...pageProps} />
       </main>
