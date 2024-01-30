@@ -5,7 +5,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "~/components/ui/Button";
-import { type Dispatch, type SetStateAction } from "react";
 
 export const basicInfoSchema = z.object({
   guestName: z.string().min(1),
@@ -22,7 +21,6 @@ export type BasicInfoFormValues = z.infer<typeof basicInfoSchema>;
 interface BasicInfoFormProps {
   onSubmitReady: (values: BasicInfoFormValues) => void;
   initialValues?: BasicInfoFormValues;
-  
 }
 
 export default function BasicInfoForm(props: BasicInfoFormProps) {

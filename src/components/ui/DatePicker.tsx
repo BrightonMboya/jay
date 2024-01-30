@@ -13,7 +13,9 @@ import {
   PopoverTrigger,
 } from "./Popover";
 
-export function DatePicker() {
+interface Props {}
+
+export function  DatePicker() {
   const [date, setDate] = React.useState<Date>();
 
   return (
@@ -22,8 +24,8 @@ export function DatePicker() {
         <Button
           variant={"outline"}
           className={cn(
-            "w-[240px] justify-start text-left font-normal",
-            !date && "text-muted-foreground",
+            "w-full justify-start text-left font-normal",
+            // !date && "text-muted-foreground",
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />

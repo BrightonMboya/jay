@@ -16,7 +16,7 @@ model Organizations {
     id           Int        @id @default(autoincrement())
     emailAddress String
     assets       Assets[]
-    contacts     Contacts[]
+    // contacts     Contacts[]
     expense      Expenses[]
     sales        Sales[]
 }
@@ -31,23 +31,26 @@ model Assets {
     organizationId Int
 }
 
-model Contacts {
-    id             Int           @id @default(autoincrement())
-    name           String
-    country        String
-    description    String
-    organization   Organizations @relation(fields: [organizationId], references: [id])
-    organizationId Int
-    trips          Trips[]
-}
+// model Contacts {
+//     id             Int           @id @default(autoincrement())
+//     name           String
+//     country        String
+//     description    String
+//     organization   Organizations @relation(fields: [organizationId], references: [id])
+//     organizationId Int
+//     trips          Trips[]
+// }
 
 model Trips {
-    id          Int      @id @default(autoincrement())
-    name        String
-    date        DateTime
-    destination String
-    contact     Contacts @relation(fields: [ContactId], references: [id])
-    ContactId   Int
+    id            Int       @id @default(autoincrement())
+    guestName     String
+    email         String
+    itienaryLink  String?
+    bookedOn      DateTime
+    dateOfArrival DateTime
+    citizenship   String
+    noOfDays      Int
+    description   String?
 }
 
 model Expenses {
