@@ -13,7 +13,7 @@ export const tripSchema = z.object({
   departureDate: z.date(),
   citizenship: z.string().min(1),
   noOfDays: z.number(),
-  // gender: z.string().min(1),
+  gender: z.string().min(1),
   description: z.string().min(1),
 });
 

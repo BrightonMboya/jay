@@ -42,14 +42,16 @@ model Assets {
 // }
 
 model Trips {
-    id            Int       @id @default(autoincrement())
+    id            Int      @id @default(autoincrement())
     guestName     String
     email         String
     itienaryLink  String?
     bookedOn      DateTime
     dateOfArrival DateTime
+    departureDate DateTime
     citizenship   String
     noOfDays      Int
+    gender        String
     description   String?
 }
 

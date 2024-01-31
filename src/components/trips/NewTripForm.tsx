@@ -3,17 +3,16 @@
 import { AssetLabel, ItemLayout } from "~/pages/contacts/new";
 import Input from "~/components/ui/Input";
 import { GenderDropDown } from "~/components/contacts/GenderDropDown";
-import { DatePicker } from "~/components/ui/DatePicker";
 import { Textarea } from "~/components/ui/TextArea";
 import Button from "~/components/ui/Button";
 import { type UseFormRegister, type Control } from "react-hook-form";
 import { TripSchemaType } from "~/pages/trips/new";
 import { Controller } from "react-hook-form";
-import { DayPicker } from "react-day-picker";
 
 import * as React from "react";
 
 import TripDatePicker from "./tripDatePicker";
+import TripGenderPicker from "./tripGenderPicker";
 
 interface Props {
   register: UseFormRegister<TripSchemaType>;
@@ -34,13 +33,18 @@ export default function NewTripForm({ register, control }: Props) {
           <Input placeholder="doe@gmail.com" {...register("email")} />
         </ItemLayout>
 
-        {/* <ItemLayout>
+        <ItemLayout>
           <AssetLabel
             label="Gender"
             caption="Gender of the guest as it appears in passport"
           />
-          <GenderDropDown {...register("gender")} />
-        </ItemLayout> */}
+          <Controller
+            control={control}
+            name="gender"
+            render={({ field }) => <TripGenderPicker field={field} />}
+          />
+          
+        </ItemLayout>
 
         <ItemLayout>
           <AssetLabel label="Booked On" caption="When was this trip booked" />

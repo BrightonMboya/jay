@@ -39,6 +39,7 @@ export default function TripDatePicker({field}: Props){
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             mode="single"
+            // @ts-expect-error idek wtf its yelling here
             selected={field.value}
             onSelect={field.onChange}
             // onChange={(date: any) => field.onChange(date)}
