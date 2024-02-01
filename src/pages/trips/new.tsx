@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { ToastAction } from "~/components/ui/Toast";
 import { useToast } from "~/utils/hooks/useToast";
 import { Toaster } from "~/components/ui/toaster";
+import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
 
 export const tripSchema = z.object({
   guestName: z.string().min(1),
@@ -48,7 +49,7 @@ export default function Page() {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: ` ${error.message}`,
+        description: `${error.message}`,
         action: <ToastAction altText="Try again">Try again</ToastAction>,
         duration: 1500,
       });
@@ -64,20 +65,22 @@ export default function Page() {
     } catch (cause) {
       console.log(cause);
     }
-    // console.log(data);
-    // console.log(errors, ">>>>>>");
   };
 
   console.log(errors, ">>>>>>");
   return (
     <Layout>
       <Toaster />
-      <main className="mt-[40px] pl-[30px]">
-        <h3 className="text-2xl font-medium ">New Safari</h3>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <NewTripForm register={register} control={control} />
-        </form>
-      </main>
+      {!isLoading ? (
+        <LoadingSkeleton />
+      ) : (
+        <main className="mt-[40px] pl-[30px]">
+          <h3 className="text-2xl font-medium ">New Safari</h3>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <NewTripForm register={register} control={control} />
+          </form>
+        </main>
+      )}
     </Layout>
   );
 }

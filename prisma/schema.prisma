@@ -9,13 +9,17 @@ datasource db {
 }
 
 model Organizations {
-    name         String
-    id           Int        @id @default(autoincrement())
-    emailAddress String
-    assets       Assets[]
-    expense      Expenses[]
-    sales        Sales[]
-    trips        Trips[]
+    name               String
+    id                 Int          @id @default(autoincrement())
+    emailAddress       String       @unique
+    // organizations send emails to the customers, below is the email used
+    communicationEmail String
+    assets             Assets[]
+    expense            Expenses[]
+    sales              Sales[]
+    trips              Trips[]
+    emails             Emails[]
+    itienaries         Itienaries[]
 }
 
 model Assets {
@@ -45,17 +49,86 @@ model Trips {
 }
 
 model Expenses {
-    id              Int           @id @default(autoincrement())
+    id              String        @id @default(cuid())
     amount          Int
-    item            String
+    expenseType     String
+    expenseName     String
+    date            DateTime
+    description     String?
+    // for every expense recorded we also store the receipt, below is the link to the receipt
+    receiptLink     String?
     organizationsId Int
     Organizations   Organizations @relation(fields: [organizationsId], references: [id])
 }
 
 model Sales {
-    id              Int            @id @default(autoincrement())
+    id              String         @id @default(cuid())
     amount          Int
-    item            String
+    salesType       String
+    salesName       String
+    date            DateTime
+    description     String?
+    receiptLink     String?
     organizationsId Int?
     Organizations   Organizations? @relation(fields: [organizationsId], references: [id])
+}
+
+model Emails {
+    id             String         @id @default(cuid())
+    name           String
+    label          String
+    // the emails are stored as txt files on supabase, below is the link to the file
+    emailFileLink  String
+    organizationId Int?
+    Organization   Organizations? @relation(fields: [organizationId], references: [id])
+}
+
+model Itienaries {
+    id             String          @id @default(cuid())
+    guestName      String
+    itienaryName   String
+    numberOfDays   Int
+    numberOfNights Int
+    numberOfGuests Int
+    description    String          @db.Text()
+    pricePerPerson Int
+    // each itienary has different days associated with it, we link the data below here
+    dayManagement  DayManagement[]
+    organizationId Int?
+    Organization   Organizations?  @relation(fields: [organizationId], references: [id])
+}
+
+model DayManagement {
+    id              String        @id @default(cuid())
+    daySummary      String        @db.Text()
+    pickUpLocation  String
+    dropOffLocation String
+    date            DateTime
+    // each day is associated with an accomodation
+    accomodation    Accomodation? @relation(fields: [accomodationId], references: [id])
+    // each day is associated with a destination as well
+    destination     Destination?  @relation(fields: [destinationId], references: [id])
+    // below means each day belongs to a particular itienary
+    itienaryId      String?
+    Itienary        Itienaries?   @relation(fields: [itienaryId], references: [id])
+    destinationId   String?
+    accomodationId  String?
+}
+
+model Accomodation {
+    id            String          @id @default(cuid())
+    name          String
+    // each accomodation has imgs, we store them in supabase and below is their links
+    imgUrls       String[]
+    // each accomodation has many daysManagement
+    DayManagement DayManagement[]
+}
+
+model Destination {
+    id            String          @id @default(cuid())
+    name          String
+    description   String          @db.Text()
+    // each destination also has imgs which we store them on supabase
+    imgUrls       String[]
+    DayManagement DayManagement[]
 }

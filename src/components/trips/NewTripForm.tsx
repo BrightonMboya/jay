@@ -43,7 +43,6 @@ export default function NewTripForm({ register, control }: Props) {
             name="gender"
             render={({ field }) => <TripGenderPicker field={field} />}
           />
-          
         </ItemLayout>
 
         <ItemLayout>
