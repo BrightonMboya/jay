@@ -3,6 +3,7 @@ import { protectedProcedure, createTRPCRouter } from "../../trpc";
 import { mailSchema } from "~/pages/mails/new";
 import { supabase } from "../../trpc";
 import { randomUUID } from "crypto";
+import { CANT_MUTATE_ERROR } from "../trips/newTrip";
 
 export const createMail = createTRPCRouter({
   create: protectedProcedure
@@ -44,6 +45,36 @@ export const createMail = createTRPCRouter({
         return newEmail;
       } catch (cause) {
         console.log(cause);
+      }
+    }),
+
+  byOrganization: protectedProcedure
+    .input(
+      z.object({
+        email: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        // fetching the unique organization email
+        const organizationId = await ctx.db.organizations.findUnique({
+          where: {
+            emailAddress: input.email,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        const emails = await ctx.db.emails.findMany({
+          where: {
+            organizationId: organizationId?.id,
+          },
+        });
+        return emails;
+      } catch (cause) {
+        console.log(cause);
+        throw CANT_MUTATE_ERROR;
       }
     }),
 });

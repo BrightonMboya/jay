@@ -9,7 +9,7 @@ import { TRPCError } from "@trpc/server";
 
 // change this to a protected procedure
 
-const CANT_MUTATE_ERROR = new TRPCError({
+export const CANT_MUTATE_ERROR = new TRPCError({
   code: "BAD_REQUEST",
   message: "Failed to perform this operatoin",
 });
