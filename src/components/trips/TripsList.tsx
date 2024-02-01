@@ -35,20 +35,8 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import Link from "next/link";
-import { type TripSchemaType } from "~/pages/trips/new";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 
-// export const data: Trips[] = [
-//   {
-//     id: 1,
-//     guestName: "Brighton Mboya",
-//     noOfDays: 10,
-//     dateBooked: "23/07/2000",
-//     arrivalDate: "23/08/1999",
-//     departureDate: "12/01/1212",
-//     tripType: "Trekking",
-//   },
-// ];
 
 export type Trips = {
   id: number;
