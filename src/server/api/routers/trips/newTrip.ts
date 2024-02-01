@@ -57,4 +57,36 @@ export const tripsRouter = createTRPCRouter({
         throw CANT_MUTATE_ERROR;
       }
     }),
+
+  byOrganization: protectedProcedure
+    .input(
+      z.object({
+        email: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        // lets find the organizationId associated with this email
+        const organizationId = await ctx.db.organizations.findUnique({
+          where: {
+            emailAddress: input.email,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        // then we fetch all the trips associated with this id
+        const trips = await ctx.db.trips.findMany({
+          where: {
+            id: organizationId?.id as unknown as number,
+          },
+        });
+
+        return trips;
+      } catch (cause) {
+        console.log(cause);
+        throw CANT_MUTATE_ERROR;
+      }
+    }),
 });

@@ -35,18 +35,20 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import Link from "next/link";
+import { type TripSchemaType } from "~/pages/trips/new";
+import { format, parseISO } from "date-fns";
 
-export const data: Trips[] = [
-  {
-    id: 1,
-    guestName: "Brighton Mboya",
-    noOfDays: 10,
-    dateBooked: "23/07/2000",
-    arrivalDate: "23/08/1999",
-    departureDate: "12/01/1212",
-    tripType: "Trekking",
-  },
-];
+// export const data: Trips[] = [
+//   {
+//     id: 1,
+//     guestName: "Brighton Mboya",
+//     noOfDays: 10,
+//     dateBooked: "23/07/2000",
+//     arrivalDate: "23/08/1999",
+//     departureDate: "12/01/1212",
+//     tripType: "Trekking",
+//   },
+// ];
 
 export type Trips = {
   id: number;
@@ -81,6 +83,7 @@ export const columns: ColumnDef<Trips>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+
   {
     accessorKey: "guestName",
     header: "Guest Name",
@@ -89,12 +92,13 @@ export const columns: ColumnDef<Trips>[] = [
     ),
   },
   {
-    accessorKey: "tripType",
-    header: "Trip Type",
+    accessorKey: "citizenship",
+    header: "Citizenship",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("tripType")}</div>
+      <div className="capitalize">{row.getValue("citizenship")}</div>
     ),
   },
+
   {
     accessorKey: "noOfDays",
     header: "Duration",
@@ -103,24 +107,30 @@ export const columns: ColumnDef<Trips>[] = [
     ),
   },
   {
-    accessorKey: "dateBooked",
+    accessorKey: "bookedOn",
     header: "Date Booked",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("dateBooked")}</div>
+      <div className="capitalize">
+        {format(row.getValue("bookedOn"), "PPP")}
+      </div>
     ),
   },
   {
-    accessorKey: "arrivalDate",
+    accessorKey: "dateOfArrival",
     header: "Arrival Date",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("arrivalDate")}</div>
+      <div className="capitalize">
+        {format(row.getValue("dateOfArrival"), "PPP")}
+      </div>
     ),
   },
   {
     accessorKey: "departureDate",
     header: "Date of Departure",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("departureDate")}</div>
+      <div className="capitalize">
+        {format(row.getValue("departureDate"), "PPP")}
+      </div>
     ),
   },
 
@@ -174,7 +184,7 @@ export const columns: ColumnDef<Trips>[] = [
   },
 ];
 
-export function TripsList() {
+export function TripsList({ trips }: any) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -184,7 +194,7 @@ export function TripsList() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data,
+    data: trips,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -202,11 +212,14 @@ export function TripsList() {
     },
   });
 
+  // const date = trips[0].departureDate;
+  // console.log(format(date, "PPP"))
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter Guests..."
+          placeholder="Filter Trips..."
           value={
             (table.getColumn("guestName")?.getFilterValue() as string) ?? ""
           }
@@ -293,7 +306,7 @@ export function TripsList() {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
+        <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>

@@ -4,9 +4,15 @@ import { TripsList } from "~/components/trips/TripsList";
 import { useUser } from "@clerk/nextjs";
 import { type NextPageWithLayout } from "../_app";
 import { ReactElement } from "react";
+import { api } from "~/utils/api";
+import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
 
 const Page: NextPageWithLayout = () => {
   const user = useUser();
+
+  const { data } = api.trips.byOrganization.useQuery({
+    email: user.user?.primaryEmailAddress?.emailAddress as unknown as string,
+  });
   return (
     <main className="pl-5">
       <Header title="Tazama Trips" href="/trips/new" />
@@ -16,7 +22,9 @@ const Page: NextPageWithLayout = () => {
           c2a="Add Trips"
           c2aUrl="/trips/new"
         /> */}
-      <TripsList />
+      {data ? <TripsList trips={data} /> : (
+        <LoadingSkeleton/>
+      )}
     </main>
   );
 };
