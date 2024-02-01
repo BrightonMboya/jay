@@ -14,12 +14,13 @@ import {
   type SignedInAuthObject,
   type SignedOutAuthObject,
 } from "@clerk/nextjs/server";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
 import { NextApiRequest } from "next";
-
+import { env } from "~/env";
 /**
  * 1. CONTEXT
  *
@@ -28,12 +29,11 @@ import { NextApiRequest } from "next";
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
 
-// type CreateContextOptions = Record<string, never>;
-// type CreateContextOptions = {
-//   auth: SignedInAuthObject | SignedOutAuthObject;
-// }
+// creating a supabse client so that I pass it to context
+const supabase = createClient(env.DATABASE_URL, env.SUPABASE_ANNON_KEY);
 type CreateContextOptions = {
   auth: SignedInAuthObject | SignedOutAuthObject;
+  supabase: SupabaseClient<any, any>;
 };
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -49,6 +49,7 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
   return {
     db,
     auth: _opts.auth,
+    supabase: _opts.supabase,
   };
 };
 
@@ -63,6 +64,7 @@ export const createTRPCContext = async (opts?: CreateNextContextOptions) => {
   const auth = getAuth(opts?.req as NextApiRequest);
   return createInnerTRPCContext({
     auth,
+    supabase,
   });
 };
 

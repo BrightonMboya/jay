@@ -86,6 +86,7 @@ const Page: NextPageWithLayout = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <NewTripForm register={register} control={control} />
           </form>
+          
         </main>
       )}
     </>
