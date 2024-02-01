@@ -89,4 +89,23 @@ export const tripsRouter = createTRPCRouter({
         throw CANT_MUTATE_ERROR;
       }
     }),
+
+  byId: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const trip = await ctx.db.trips.findFirst({
+          where: {
+            id: input.id,
+          },
+        });
+        return trip;
+      } catch (cause) {
+        throw CANT_MUTATE_ERROR;
+      }
+    }),
 });
