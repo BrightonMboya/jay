@@ -79,7 +79,7 @@ export const tripsRouter = createTRPCRouter({
         // then we fetch all the trips associated with this id
         const trips = await ctx.db.trips.findMany({
           where: {
-            id: organizationId?.id as unknown as number,
+            organizationsId: organizationId?.id as unknown as number,
           },
         });
 
