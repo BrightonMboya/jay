@@ -71,7 +71,7 @@ export default function Page() {
   return (
     <Layout>
       <Toaster />
-      {!isLoading ? (
+      {isLoading ? (
         <LoadingSkeleton />
       ) : (
         <main className="mt-[40px] pl-[30px]">

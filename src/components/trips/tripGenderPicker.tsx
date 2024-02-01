@@ -8,7 +8,7 @@ interface Props {
   field: ControllerRenderProps<TripSchemaType>;
 }
 
-=
+
 
 export default function TripGenderPicker({ field }: Props) {
   return (

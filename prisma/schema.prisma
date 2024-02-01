@@ -116,11 +116,11 @@ model DayManagement {
 }
 
 model Accomodation {
-    id            String          @id @default(cuid())
-    name          String
+    id      String   @id @default(cuid())
+    name    String
     // each accomodation has imgs, we store them in supabase and below is their links
-    imgUrls       String[]
-    // each accomodation has many daysManagement
+    imgUrls String[]
+// each accomodation has many daysManagement
     DayManagement DayManagement[]
 }
 
