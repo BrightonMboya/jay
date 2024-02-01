@@ -1,58 +1,61 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model Organizations {
-  name         String
-  id           Int        @id @default(autoincrement())
-  emailAddress String
-  assets       Assets[]
-  expense      Expenses[]
-  sales        Sales[]
+    name         String
+    id           Int        @id @default(autoincrement())
+    emailAddress String
+    assets       Assets[]
+    expense      Expenses[]
+    sales        Sales[]
+    trips        Trips[]
 }
 
 model Assets {
-  id             Int           @id @default(autoincrement())
-  name           String
-  imgUrl         String
-  description    String
-  value          Int
-  organizationId Int
-  organization   Organizations @relation(fields: [organizationId], references: [id])
+    id             Int           @id @default(autoincrement())
+    name           String
+    imgUrl         String
+    description    String
+    value          Int
+    organizationId Int
+    organization   Organizations @relation(fields: [organizationId], references: [id])
 }
 
 model Trips {
-  id            Int      @id @default(autoincrement())
-  guestName     String
-  email         String
-  itienaryLink  String?
-  bookedOn      DateTime
-  dateOfArrival DateTime
-  departureDate DateTime
-  citizenship   String
-  noOfDays      Int
-  gender        String
-  description   String?
+    id              Int            @id @default(autoincrement())
+    guestName       String
+    email           String
+    itienaryLink    String?
+    bookedOn        DateTime
+    dateOfArrival   DateTime
+    departureDate   DateTime
+    citizenship     String
+    noOfDays        Int
+    gender          String
+    description     String?
+    Organizations   Organizations? @relation(fields: [organizationsId], references: [id])
+    organizationsId Int?
 }
 
 model Expenses {
-  id              Int           @id @default(autoincrement())
-  amount          Int
-  item            String
-  organizationsId Int
-  Organizations   Organizations @relation(fields: [organizationsId], references: [id])
+    id              Int           @id @default(autoincrement())
+    amount          Int
+    item            String
+    organizationsId Int
+    Organizations   Organizations @relation(fields: [organizationsId], references: [id])
 }
 
 model Sales {
-  id              Int            @id @default(autoincrement())
-  amount          Int
-  item            String
-  organizationsId Int?
-  Organizations   Organizations? @relation(fields: [organizationsId], references: [id])
+    id              Int            @id @default(autoincrement())
+    amount          Int
+    item            String
+    organizationsId Int?
+    Organizations   Organizations? @relation(fields: [organizationsId], references: [id])
 }

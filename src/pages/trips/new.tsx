@@ -7,6 +7,10 @@ import { z } from "zod";
 import { api } from "~/utils/api";
 import { AppRouter } from "~/server/api/root";
 import { inferProcedureInput } from "@trpc/server";
+import { useRouter } from "next/router";
+import { ToastAction } from "~/components/ui/Toast";
+import { useToast } from "~/utils/hooks/useToast";
+import { Toaster } from "~/components/ui/toaster";
 
 export const tripSchema = z.object({
   guestName: z.string().min(1),
@@ -33,8 +37,23 @@ export default function Page() {
     resolver: zodResolver(tripSchema),
   });
 
+  const router = useRouter();
+  const { toast } = useToast();
   // handling the data mutation
-  const { mutateAsync } = api.trips.new.useMutation();
+  const { mutateAsync, isLoading } = api.trips.new.useMutation({
+    onSuccess: () => {
+      router.push("/trips");
+    },
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: ` ${error.message}`,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+        duration: 1500,
+      });
+    },
+  });
 
   const onSubmit: SubmitHandler<TripSchemaType> = (data) => {
     type Input = inferProcedureInput<AppRouter["trips"]["new"]>;
@@ -52,6 +71,7 @@ export default function Page() {
   console.log(errors, ">>>>>>");
   return (
     <Layout>
+      <Toaster />
       <main className="mt-[40px] pl-[30px]">
         <h3 className="text-2xl font-medium ">New Safari</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
