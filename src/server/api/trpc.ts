@@ -30,7 +30,10 @@ import { env } from "~/env";
  */
 
 // creating a supabse client so that I pass it to context
-const supabase = createClient(env.DATABASE_URL, env.SUPABASE_ANNON_KEY);
+export const supabase = createClient(
+  env.NEXT_PUBLIC_SUPABASE_URL,
+  env.NEXT_PUBLIC_SUPABASE_ANNON_KEY,
+);
 type CreateContextOptions = {
   auth: SignedInAuthObject | SignedOutAuthObject;
   supabase: SupabaseClient<any, any>;

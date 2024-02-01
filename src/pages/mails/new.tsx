@@ -8,8 +8,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { NextPageWithLayout } from "../_app";
 import { ReactElement } from "react";
+import { api } from "~/utils/api";
+// import { supabase } from "~/server/api/trpc";
+import { createClient } from "@supabase/supabase-js";
 
-const mailSchema = z.object({
+import { env } from "~/env";
+
+export const supabase = createClient(
+  env.NEXT_PUBLIC_SUPABASE_URL,
+  env.NEXT_PUBLIC_SUPABASE_ANNON_KEY,
+);
+
+export const mailSchema = z.object({
   name: z.string().min(1),
   label: z.string().min(1),
   body: z.string().min(1),
@@ -26,18 +36,21 @@ const Page: NextPageWithLayout = () => {
     resolver: zodResolver(mailSchema),
   });
 
-  const onSubmit: SubmitHandler<MailValidationSchema> = (data) => {
-    console.log(data);
+  const { mutateAsync } = api.createMail.create.useMutation();
+
+  const onSubmit: SubmitHandler<MailValidationSchema> = async (data) => {
+    // console.log(data);
     const file = new Blob([data.body], { type: "text/plain" });
     const blobUrl = URL.createObjectURL(file);
     const previewContainer = document.getElementById("previewContainer");
     if (previewContainer) {
       previewContainer.src = blobUrl;
     }
-    console.log(file);
+
+    mutateAsync(data);
   };
 
-  console.log(errors);
+  // console.log(errors);
   return (
     <main className="mt-[50px]">
       <h1 className="text-xl font-bold">Add New Email Template</h1>

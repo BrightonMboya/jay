@@ -14,8 +14,9 @@ export const env = createEnv({
         (str) => !str.includes("YOUR_MYSQL_URL_HERE"),
         "You forgot to change the default URL",
       ),
-    SUPABASE_ANNON_KEY: z.string(),
+
     DIRECT_DATABASE_URL: z.string().url(),
+
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -30,6 +31,8 @@ export const env = createEnv({
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
+    NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
+    NEXT_PUBLIC_SUPABASE_ANNON_KEY: z.string(),
   },
 
   /**
@@ -43,7 +46,8 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     DIRECT_DATABASE_URL: process.env.DIRECT_DATABASE_URL,
-    SUPABASE_ANNON_KEY: process.env.SUPABASE_ANNON_KEY,
+    NEXT_PUBLIC_SUPABASE_ANNON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANNON_KEY,
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
