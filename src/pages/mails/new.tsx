@@ -9,15 +9,7 @@ import { z } from "zod";
 import { NextPageWithLayout } from "../_app";
 import { ReactElement } from "react";
 import { api } from "~/utils/api";
-// import { supabase } from "~/server/api/trpc";
-import { createClient } from "@supabase/supabase-js";
-
-import { env } from "~/env";
-
-export const supabase = createClient(
-  env.NEXT_PUBLIC_SUPABASE_URL,
-  env.NEXT_PUBLIC_SUPABASE_ANNON_KEY,
-);
+import { useUser } from "@clerk/nextjs";
 
 export const mailSchema = z.object({
   name: z.string().min(1),
@@ -37,29 +29,21 @@ const Page: NextPageWithLayout = () => {
   });
 
   const { mutateAsync } = api.createMail.create.useMutation();
+  const user = useUser();
 
   const onSubmit: SubmitHandler<MailValidationSchema> = async (data) => {
-    // console.log(data);
-    const file = new Blob([data.body], { type: "text/plain" });
-    const blobUrl = URL.createObjectURL(file);
-    const previewContainer = document.getElementById("previewContainer");
-    if (previewContainer) {
-      previewContainer.src = blobUrl;
-    }
-
-    mutateAsync(data);
+    mutateAsync({
+      ...data,
+      organizationEmail: user.user?.primaryEmailAddress
+        ?.emailAddress as unknown as string,
+    });
   };
 
   // console.log(errors);
   return (
     <main className="mt-[50px]">
       <h1 className="text-xl font-bold">Add New Email Template</h1>
-      <iframe
-        id="previewContainer"
-        title="Blob Preview"
-        width="100%"
-        height="200px"
-      ></iframe>
+
       <form
         className="relative  mt-10 flex flex-col space-y-[30px] "
         onSubmit={handleSubmit(onSubmit)}
