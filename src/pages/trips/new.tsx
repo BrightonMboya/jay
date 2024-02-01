@@ -3,7 +3,8 @@ import Layout from "~/components/Layout/Layout";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-
+import { type NextPageWithLayout } from "../_app";
+import { ReactElement } from "react";
 import { api } from "~/utils/api";
 import { AppRouter } from "~/server/api/root";
 import { inferProcedureInput } from "@trpc/server";
@@ -29,7 +30,7 @@ export const tripSchema = z.object({
 
 export type TripSchemaType = z.infer<typeof tripSchema>;
 
-export default function Page() {
+const Page: NextPageWithLayout = () => {
   const {
     register,
     control,
@@ -74,9 +75,8 @@ export default function Page() {
     }
   };
 
-  console.log(errors, ">>>>>>");
   return (
-    <Layout>
+    <>
       <Toaster />
       {isLoading ? (
         <LoadingSkeleton />
@@ -88,6 +88,12 @@ export default function Page() {
           </form>
         </main>
       )}
-    </Layout>
+    </>
   );
-}
+};
+
+Page.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
+
+export default Page;

@@ -15,7 +15,7 @@ const CANT_MUTATE_ERROR = new TRPCError({
 });
 
 export const tripsRouter = createTRPCRouter({
-  new: publicProcedure
+  new: protectedProcedure
     .input(
       tripSchema.merge(
         z.object({
@@ -53,7 +53,7 @@ export const tripsRouter = createTRPCRouter({
 
         return newTrip;
       } catch (error) {
-        console.log(error, "@@@@@@@");
+        console.log(error);
         throw CANT_MUTATE_ERROR;
       }
     }),

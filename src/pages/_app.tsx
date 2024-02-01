@@ -24,7 +24,8 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const getLayout = Component.getLayout ?? ((page) => page);
   return (
     <ClerkProvider
       {...pageProps}
@@ -34,9 +35,11 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         },
       }}
     >
+      {getLayout(
       <main className={`${monsterrat.className}`}>
         <Component {...pageProps} />
       </main>
+      )}
     </ClerkProvider>
   );
 };
