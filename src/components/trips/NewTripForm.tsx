@@ -2,7 +2,6 @@
 
 import { AssetLabel, ItemLayout } from "~/pages/contacts/new";
 import Input from "~/components/ui/Input";
-import { GenderDropDown } from "~/components/contacts/GenderDropDown";
 import { Textarea } from "~/components/ui/TextArea";
 import Button from "~/components/ui/Button";
 import { type UseFormRegister, type Control } from "react-hook-form";

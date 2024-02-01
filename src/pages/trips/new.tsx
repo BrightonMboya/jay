@@ -12,6 +12,7 @@ import { ToastAction } from "~/components/ui/Toast";
 import { useToast } from "~/utils/hooks/useToast";
 import { Toaster } from "~/components/ui/toaster";
 import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
+import { useUser } from "@clerk/nextjs";
 
 export const tripSchema = z.object({
   guestName: z.string().min(1),
@@ -40,6 +41,8 @@ export default function Page() {
 
   const router = useRouter();
   const { toast } = useToast();
+  const user = useUser();
+
   // handling the data mutation
   const { mutateAsync, isLoading } = api.trips.new.useMutation({
     onSuccess: () => {
@@ -58,7 +61,11 @@ export default function Page() {
 
   const onSubmit: SubmitHandler<TripSchemaType> = (data) => {
     type Input = inferProcedureInput<AppRouter["trips"]["new"]>;
-    const input: Input = data;
+    const input: Input = {
+      ...data,
+      organizationEmail: user.user?.primaryEmailAddress
+        ?.emailAddress as unknown as string,
+    };
 
     try {
       mutateAsync(input);
