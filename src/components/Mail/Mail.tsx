@@ -17,24 +17,11 @@ import {
 } from "~/components/ui/resizable";
 
 interface MailProps {
-  accounts: {
-    label: string;
-    email: string;
-    icon: React.ReactNode;
-  }[];
   mails: Mail[];
   defaultLayout: number[] | undefined;
-  defaultCollapsed?: boolean;
-  navCollapsedSize: number;
 }
 
-export function Mail({
-  accounts,
-  mails,
-  defaultLayout = [265, 440, 655],
-  defaultCollapsed = false,
-  navCollapsedSize,
-}: MailProps) {
+export function Mail({ mails, defaultLayout = [265, 440, 655] }: MailProps) {
   const [mail] = useMail();
 
   const [searchedMails, setSearchedMails] = React.useState("");
@@ -54,13 +41,12 @@ export function Mail({
           <Tabs defaultValue="all">
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Email Templates</h1>
-             
             </div>
             <Separator />
-            <div className="bg-background/95 supports-[backdrop-filter]:bg-background/60 p-4 backdrop-blur">
+            <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <form>
                 <div className="relative">
-                  <Search className="text-muted-foreground absolute left-2 top-2.5 h-4 w-4" />
+                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
 
                   <Input
                     placeholder="Search templates"

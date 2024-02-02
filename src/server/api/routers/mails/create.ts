@@ -77,4 +77,14 @@ export const createMail = createTRPCRouter({
         throw CANT_MUTATE_ERROR;
       }
     }),
+
+    // byOrganization: protectedProcedure
+    // .input(
+    //   z.object({
+    //     organizationEmail: z.string(),
+    //   })
+    // )
+    // .query(async ({input, ctx}) => {
+
+    // })
 });

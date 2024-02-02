@@ -1,10 +1,8 @@
 import Link from "next/link";
-import BlurImage from "../ui/BlurImage";
 import {
   CubeIcon,
   PersonIcon,
   EnvelopeClosedIcon,
-  MagicWandIcon,
 } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
 import Button from "../ui/Button";
