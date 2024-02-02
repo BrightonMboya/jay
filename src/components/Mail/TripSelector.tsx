@@ -19,25 +19,18 @@ import {
 } from "~/components/ui/Popover";
 import { api } from "~/utils/api";
 
-const trips = [
-  {
-    value: "jamesTrip",
-    label: "James Trip",
-  },
-  {
-    value: "natasha",
-    label: "natasha",
-  },
-  {
-    value: "amina",
-    label: "amina",
-  },
-];
-
-export function SelectTrip({ organizationEmail }: { organizationEmail: string }) {
+export function SelectTrip({
+  organizationEmail,
+}: {
+  organizationEmail: string;
+}) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-
+  const { data } = api.fetchTrips.tripNames.useQuery({
+    organizationEmail: organizationEmail,
+  });
+  console.log(data);
+  console.log(data?.find((trip) => trip.guestName.toLowerCase() === value.toLowerCase()), ">><<<>>");
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -48,9 +41,9 @@ export function SelectTrip({ organizationEmail }: { organizationEmail: string })
           className="w-[300px] justify-between"
         >
           {value
-            ? trips.find((trip) => trip.value === value)?.label
+            ? data?.find((trip) => trip.guestName.toLowerCase() === value.toLowerCase())?.guestName
             : "Select trip..."}
-          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <CaretSortIcon className=" h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0">
@@ -58,20 +51,21 @@ export function SelectTrip({ organizationEmail }: { organizationEmail: string })
           <CommandInput placeholder="Search trip..." className="h-9" />
           <CommandEmpty>No trip found.</CommandEmpty>
           <CommandGroup>
-            {trips.map((trip) => (
+            {data?.map((trip) => (
               <CommandItem
-                key={trip.value}
-                value={trip.value}
+                key={trip.guestName}
+                value={trip.guestName}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue);
+                  console.log(value);
                   setOpen(false);
                 }}
               >
-                {trip.label}
+                {trip.guestName}
                 <CheckIcon
                   className={cn(
                     "ml-auto h-4 w-4",
-                    value === trip.value ? "opacity-100" : "opacity-0",
+                    value === trip.guestName ? "opacity-100" : "opacity-0",
                   )}
                 />
               </CommandItem>
