@@ -58,6 +58,7 @@
     "recharts": "^2.10.3",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.2.0",
+    "uuid": "^9.0.1",
     "zod": "link:@hookform/resolvers/zod"
   },
   "devDependencies": {
@@ -66,6 +67,7 @@
     "@types/node": "^18.17.0",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "autoprefixer": "^10.4.14",

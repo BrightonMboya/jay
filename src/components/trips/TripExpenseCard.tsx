@@ -12,6 +12,10 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { api } from "~/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useUser } from "@clerk/nextjs";
+import { useState } from "react";
+import { supabase } from "~/utils/supabase";
+import { v4 as uuidv4 } from "uuid";
 
 export const expensesSchema = z.object({
   amount: z.number(),
@@ -32,11 +36,37 @@ export default function TripExpenseCard() {
   } = useForm<ExpenseValidationSchema>({
     resolver: zodResolver(expensesSchema),
   });
+  const { mutateAsync } = api.tripAccounting.recordExpense.useMutation();
+  const user = useUser();
 
+  const [file, setFile] = useState();
   const onSubmit: SubmitHandler<ExpenseValidationSchema> = async (data) => {
-    console.log(data.receipt[0], "////");
+    // uploading the file to supabase
+    const fileName = uuidv4();
+    const extensionType = file.name.split(".")[1];
+
+    const res = await supabase.storage
+      .from("expenses_receipts")
+      .upload(`${fileName}.${extensionType}`, file);
+
+    // then creating a new record
+    mutateAsync({
+      expenseName: data.expenseName,
+      amount: data.amount,
+      expenseType: data.expenseType,
+      organizationEmail: user.user?.primaryEmailAddress
+        ?.emailAddress as unknown as string,
+      receiptLink: res.data?.fullPath,
+      date: data.date,
+      description: data.description,
+    });
   };
-  console.log(errors, "????");
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -125,6 +155,7 @@ export default function TripExpenseCard() {
                 type="file"
                 className="hidden"
                 {...register("receipt")}
+                onChange={handleFileChange}
               />
             </label>
           </div>

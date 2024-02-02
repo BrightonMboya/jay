@@ -7,11 +7,15 @@ import { randomUUID } from "crypto";
 export const tripAccounting = createTRPCRouter({
   recordExpense: protectedProcedure
     .input(
-      expensesSchema.merge(
-        z.object({
-          organizationEmail: z.string(),
-        }),
-      ),
+      z.object({
+        organizationEmail: z.string(),
+        amount: z.number(),
+        expenseType: z.string(),
+        expenseName: z.string(),
+        date: z.date(),
+        description: z.string(),
+        receiptLink: z.any(),
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
@@ -25,11 +29,6 @@ export const tripAccounting = createTRPCRouter({
           },
         });
 
-        // then we upload the receipt to supabase
-        const fileName = randomUUID();
-        const { data } = await ctx.supabase.storage
-          .from("expenses_receipts")
-          .upload(`${fileName}.png`, input.receipt);
         // record the new expense
         const newExpense = await ctx.db.expenses.create({
           data: {
@@ -38,7 +37,7 @@ export const tripAccounting = createTRPCRouter({
             expenseName: input.expenseName,
             date: input.date,
             description: input.description,
-            receiptLink: data?.path,
+            receiptLink: input.receiptLink,
             organizationsId: Number(organizationId?.id),
           },
         });
