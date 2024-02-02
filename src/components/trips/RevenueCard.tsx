@@ -17,7 +17,6 @@ import { api } from "~/utils/api";
 import { useUser } from "@clerk/nextjs";
 import { v4 as uuidv4 } from "uuid";
 
-
 export const revenueSchema = z.object({
   amount: z.number(),
   salesType: z.string(),
@@ -48,6 +47,8 @@ export default function TripRevenueCard() {
     const res = await supabase.storage
       .from("expenses_receipts")
       .upload(`${fileName}.${extensionType}`, file);
+    
+
 
     // then creating the new record
     mutateAsync({
@@ -56,7 +57,7 @@ export default function TripRevenueCard() {
       description: data.description,
       salesName: data.salesName,
       salesType: data.salesType,
-      receiptLink: res?.data.fullPath,
+      receiptLink: res?.data?.fullPath,
       organizationEmail: user.user?.primaryEmailAddress
         ?.emailAddress as unknown as string,
     });
@@ -79,7 +80,6 @@ export default function TripRevenueCard() {
         <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-4">
             <div>
-             
               <Label htmlFor="salesType">Sales Type</Label>
               <Input
                 id="salesType"

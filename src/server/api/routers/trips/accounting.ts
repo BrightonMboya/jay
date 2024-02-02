@@ -91,6 +91,7 @@ export const tripAccounting = createTRPCRouter({
             salesType: input.salesType,
             salesName: input.salesName,
             date: input.date,
+            receiptLink: input.receiptLink,
             description: input.description,
             organizationsId: organizationId?.id,
           },
