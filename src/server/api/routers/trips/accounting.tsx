@@ -46,4 +46,42 @@ export const tripAccounting = createTRPCRouter({
         throw CANT_MUTATE_ERROR;
       }
     }),
+
+  recordSales: protectedProcedure
+    .input(
+      z.object({
+        organizationEmail: z.string(),
+        amount: z.number(),
+        salesType: z.string(),
+        salesName: z.string(),
+        date: z.date(),
+        description: z.string(),
+        receiptLink: z.any(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        // look for that organization id
+        const organizationId = await ctx.db.organizations.findUnique({
+          where: {
+            emailAddress: input.organizationEmail,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        //   record the new sales
+        const newSale = await ctx.db.sales.create({
+          data: {
+            ...input,
+            organizationsId: organizationId?.id,
+          },
+        });
+        return newSale;
+      } catch (cause) {
+        console.log(cause);
+        throw CANT_MUTATE_ERROR;
+      }
+    }),
 });
