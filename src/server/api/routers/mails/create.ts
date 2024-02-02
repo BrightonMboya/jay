@@ -78,13 +78,5 @@ export const createMail = createTRPCRouter({
       }
     }),
 
-    // byOrganization: protectedProcedure
-    // .input(
-    //   z.object({
-    //     organizationEmail: z.string(),
-    //   })
-    // )
-    // .query(async ({input, ctx}) => {
-
-    // })
+  
 });

@@ -10,6 +10,8 @@ import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
 const Page: NextPageWithLayout = () => {
   const defaultLayout = undefined;
   const user = useUser();
+  const organizatonEmail = user.user?.primaryEmailAddress
+    ?.emailAddress as unknown as string;
   const { data, isLoading } = api.createMail.byOrganization.useQuery({
     email: user.user?.primaryEmailAddress?.emailAddress as unknown as string,
   });
@@ -20,7 +22,11 @@ const Page: NextPageWithLayout = () => {
         <LoadingSkeleton />
       ) : (
         <div className="hidden flex-col pt-10 md:flex">
-          <Mail mails={mails} defaultLayout={defaultLayout} />
+          <Mail
+            mails={mails}
+            defaultLayout={defaultLayout}
+            organizationEmail={organizatonEmail}
+          />
         </div>
       )}
     </>

@@ -19,9 +19,14 @@ import {
 interface MailProps {
   mails: Mail[];
   defaultLayout: number[] | undefined;
+  organizationEmail: string;
 }
 
-export function Mail({ mails, defaultLayout = [265, 440, 655] }: MailProps) {
+export function Mail({
+  mails,
+  defaultLayout = [265, 440, 655],
+  organizationEmail,
+}: MailProps) {
   const [mail] = useMail();
 
   const [searchedMails, setSearchedMails] = React.useState("");
@@ -69,6 +74,7 @@ export function Mail({ mails, defaultLayout = [265, 440, 655] }: MailProps) {
         <ResizablePanel defaultSize={defaultLayout[2]}>
           <MailDisplay
             mail={mails.find((item) => item.id === mail.selected) || null}
+            organizationEmail={organizationEmail}
           />
         </ResizablePanel>
       </ResizablePanelGroup>

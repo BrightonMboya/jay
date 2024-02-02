@@ -17,6 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/Popover";
+import { api } from "~/utils/api";
 
 const trips = [
   {
@@ -33,7 +34,7 @@ const trips = [
   },
 ];
 
-export function SelectTrip() {
+export function SelectTrip({ organizationEmail }: { organizationEmail: string }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
@@ -44,7 +45,7 @@ export function SelectTrip() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[300px] justify-between"
         >
           {value
             ? trips.find((trip) => trip.value === value)?.label
@@ -52,7 +53,7 @@ export function SelectTrip() {
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[300px] p-0">
         <Command>
           <CommandInput placeholder="Search trip..." className="h-9" />
           <CommandEmpty>No trip found.</CommandEmpty>

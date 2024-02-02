@@ -10,9 +10,11 @@ import Input from "../ui/Input";
 
 interface MailDisplayProps {
   mail: Mail | null;
+  organizationEmail: string;
 }
 
-export function MailDisplay({ mail }: MailDisplayProps) {
+export function MailDisplay({ mail, organizationEmail }: MailDisplayProps) {
+  
   const [emailBody, setEmailBody] = useState("");
   const [emailSubject, setEmailSubject] = useState<string>("");
 
@@ -24,7 +26,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
     <div className="flex h-full flex-col">
       {mail ? (
         <div className="flex flex-1 flex-col">
-          <div className="space-y-5  pl-4">
+          <div className="space-y-5 pl-4">
             <div className="flex items-center space-x-5 ">
               <AssetLabel label="Subject" />
               <Input
@@ -51,7 +53,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
             </div>
             <div className="flex items-center space-x-5 ">
               <AssetLabel label="Select Trip" />
-              <SelectTrip />
+              <SelectTrip organizationEmail={organizationEmail} />
             </div>
           </div>
 
@@ -64,7 +66,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           <Button className="ml-4 mr-auto mt-5">Send Email</Button>
         </div>
       ) : (
-        <div className="text-muted-foreground p-8 text-center">
+        <div className="p-8 text-center text-muted-foreground">
           No message selected
         </div>
       )}
