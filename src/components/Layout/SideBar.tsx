@@ -9,38 +9,20 @@ import {
 import { useRouter } from "next/router";
 import Button from "../ui/Button";
 import { Plane } from "lucide-react";
+import { UserButton, useClerk } from "@clerk/nextjs";
 
 export default function SideBar() {
   const router = useRouter();
+  const { signOut } = useClerk();
 
   return (
     <section className="fixed font-montserrat">
       <div className="flex w-[150px] flex-col items-center justify-center space-y-7 pt-5 ">
-        <Link href="/" className="pl-1">
-          <div className="relative h-[60px] w-[60px]">
-            <BlurImage
-              imageUrl="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bG9nb3xlbnwwfHwwfHx8MA%3D%3D"
-              rounded={true}
-              preload={false}
-            />
-          </div>
-        </Link>
-
-        {/* <Link href="/ai">
-          <div
-            className={`flex items-center justify-center space-x-2
-              ${
-                router.pathname.startsWith("/ai")
-                  ? "text-dark"
-                  : "text-gray-500"
-              }
-          `}
-          >
-            <MagicWandIcon width={20} height={20} />
-
-            <h3 className="font-montserrat">Assistant</h3>
-          </div>
-        </Link> */}
+        <UserButton
+          appearance={{
+            variables: {},
+          }}
+        />
 
         <Link href="/mails">
           <div
@@ -139,6 +121,7 @@ export default function SideBar() {
         <Button
           className="fixed bottom-10 ml-10 w-[150px]"
           variant="destructive"
+          onClick={() => signOut(() => router.push("/"))}
         >
           Log out
         </Button>
