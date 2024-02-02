@@ -8,41 +8,122 @@ import {
 import Button from "../ui/Button";
 import { Label } from "../ui/label";
 import Input from "../ui/Input";
+import { z } from "zod";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { supabase } from "~/utils/supabase";
+import { api } from "~/utils/api";
+import { useUser } from "@clerk/nextjs";
+import { v4 as uuidv4 } from "uuid";
+
+
+export const revenueSchema = z.object({
+  amount: z.number(),
+  salesType: z.string(),
+  salesName: z.string(),
+  date: z.date(),
+  description: z.string(),
+});
+
+export type RevenueValidationSchema = z.infer<typeof revenueSchema>;
 
 export default function TripRevenueCard() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RevenueValidationSchema>({
+    resolver: zodResolver(revenueSchema),
+  });
+  const [file, setFile] = useState<File | null>(null);
+  const user = useUser();
+
+  const { mutateAsync } = api.tripAccounting.recordSales.useMutation();
+  const onSubmit: SubmitHandler<RevenueValidationSchema> = async (data) => {
+    // uploading the file to supabase
+    const fileName = uuidv4();
+    const extensionType = file.name.split(".")[1];
+
+    const res = await supabase.storage
+      .from("expenses_receipts")
+      .upload(`${fileName}.${extensionType}`, file);
+
+    // then creating the new record
+    mutateAsync({
+      amount: data.amount,
+      date: data.date,
+      description: data.description,
+      salesName: data.salesName,
+      salesType: data.salesType,
+      receiptLink: res?.data.fullPath,
+      organizationEmail: user.user?.primaryEmailAddress
+        ?.emailAddress as unknown as string,
+    });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target?.files[0]!;
+
+    setFile(selectedFile);
+  };
   return (
     <Card>
       <CardHeader>
         <CardTitle>Record Sales</CardTitle>
-        <CardDescription>Record all sales you made for this trip</CardDescription>
+        <CardDescription>
+          Record all sales you made for this trip
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="grid gap-4">
+        <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Input id="salesType" placeholder="trip booking" />
+             
               <Label htmlFor="salesType">Sales Type</Label>
-              <Input id="salesType" placeholder="trip booking" />
+              <Input
+                id="salesType"
+                placeholder="trip booking"
+                {...register("salesType")}
+              />
             </div>
             <div>
               <Label htmlFor="salesName">Sales Name</Label>
-              <Input id="salesName" placeholder="Sales Name" />
+              <Input
+                id="salesName"
+                placeholder="Sales Name"
+                {...register("salesName")}
+              />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="salesAmount">Amount</Label>
-              <Input id="salesAmount" placeholder="Amount" type="number" />
+              <Input
+                id="salesAmount"
+                placeholder="Amount"
+                type="number"
+                {...register("amount", { valueAsNumber: true })}
+              />
             </div>
             <div>
               <Label htmlFor="salesDate">Date</Label>
-              <Input id="salesDate" placeholder="Date" type="date" />
+              <Input
+                id="salesDate"
+                placeholder="Date"
+                type="date"
+                {...register("date", { valueAsDate: true })}
+              />
             </div>
           </div>
 
           <Label htmlFor="salesName">Description</Label>
-          <Input id="salesName" placeholder="hotel reservation" />
+          <Input
+            id="salesName"
+            placeholder="hotel reservation"
+            {...register("description")}
+          />
 
           <Label>Receipt</Label>
 
@@ -72,7 +153,12 @@ export default function TripRevenueCard() {
                   PNG, JPG (MAX 2MB)
                 </p>
               </div>
-              <input id="dropzone-file" type="file" className="hidden" />
+              <input
+                id="dropzone-file"
+                type="file"
+                className="hidden"
+                onChange={handleFileChange}
+              />
             </label>
           </div>
 

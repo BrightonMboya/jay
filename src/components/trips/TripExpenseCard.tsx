@@ -23,7 +23,6 @@ export const expensesSchema = z.object({
   expenseName: z.string(),
   date: z.date(),
   description: z.string(),
-  receipt: z.any(),
 });
 
 export type ExpenseValidationSchema = z.infer<typeof expensesSchema>;
@@ -39,7 +38,7 @@ export default function TripExpenseCard() {
   const { mutateAsync } = api.tripAccounting.recordExpense.useMutation();
   const user = useUser();
 
-  const [file, setFile] = useState();
+  const [file, setFile] = useState<File | null>(null);
   const onSubmit: SubmitHandler<ExpenseValidationSchema> = async (data) => {
     // uploading the file to supabase
     const fileName = uuidv4();
@@ -62,8 +61,9 @@ export default function TripExpenseCard() {
     });
   };
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile =  e.target?.files[0]!
+                                
     setFile(selectedFile);
   };
 
@@ -154,7 +154,6 @@ export default function TripExpenseCard() {
                 id="dropzone-file"
                 type="file"
                 className="hidden"
-                {...register("receipt")}
                 onChange={handleFileChange}
               />
             </label>
