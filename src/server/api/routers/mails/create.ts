@@ -15,7 +15,7 @@ export const createMail = createTRPCRouter({
       ),
     )
     .mutation(async ({ ctx, input }) => {
-      const mailBlob = new Blob([input.body], { type: "text/plain" });
+      // const mailBlob = new Blob([input.body], { type: "text/plain" });
       try {
         const fileName = randomUUID();
         const { data, error } = await ctx.supabase.storage

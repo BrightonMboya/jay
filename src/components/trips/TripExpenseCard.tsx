@@ -8,8 +8,35 @@ import {
 import Button from "../ui/Button";
 import { Label } from "../ui/label";
 import Input from "../ui/Input";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+import { api } from "~/utils/api";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+export const expensesSchema = z.object({
+  amount: z.number(),
+  expenseType: z.string(),
+  expenseName: z.string(),
+  date: z.date(),
+  description: z.string(),
+  receipt: z.any(),
+});
+
+export type ExpenseValidationSchema = z.infer<typeof expensesSchema>;
 
 export default function TripExpenseCard() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ExpenseValidationSchema>({
+    resolver: zodResolver(expensesSchema),
+  });
+
+  const onSubmit: SubmitHandler<ExpenseValidationSchema> = async (data) => {
+    console.log(data.receipt[0], "////");
+  };
+  console.log(errors, "????");
   return (
     <Card>
       <CardHeader>
@@ -17,31 +44,53 @@ export default function TripExpenseCard() {
         <CardDescription>Input the trip expenses details here</CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="grid gap-4">
+        <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="expenseName">Expense Type</Label>
-              <Input id="expenseName" placeholder="Safari" />
+              <Input
+                id="expenseName"
+                placeholder="Safari"
+                {...register("expenseType")}
+              />
             </div>
             <div>
               <Label htmlFor="expenseName">Expense Name</Label>
-              <Input id="expenseName" placeholder="Expense Name" />
+              <Input
+                id="expenseName"
+                placeholder="Expense Name"
+                {...register("expenseName")}
+              />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="expenseAmount">Amount</Label>
-              <Input id="expenseAmount" placeholder="Amount" type="number" />
+              <Input
+                id="expenseAmount"
+                placeholder="Amount"
+                type="number"
+                {...register("amount", { valueAsNumber: true })}
+              />
             </div>
             <div>
               <Label htmlFor="expenseDate">Date</Label>
-              <Input id="expenseDate" placeholder="Date" type="date" />
+              <Input
+                id="expenseDate"
+                placeholder="Date"
+                type="date"
+                {...register("date", { valueAsDate: true })}
+              />
             </div>
           </div>
 
           <Label htmlFor="expenseName">Description</Label>
-          <Input id="expenseName" placeholder="hotel reservation" />
+          <Input
+            id="expenseName"
+            placeholder="hotel reservation"
+            {...register("description")}
+          />
 
           <Label>Receipt</Label>
 
@@ -71,7 +120,12 @@ export default function TripExpenseCard() {
                   PNG, JPG (MAX 2MB)
                 </p>
               </div>
-              <input id="dropzone-file" type="file" className="hidden" />
+              <input
+                id="dropzone-file"
+                type="file"
+                className="hidden"
+                {...register("receipt")}
+              />
             </label>
           </div>
 

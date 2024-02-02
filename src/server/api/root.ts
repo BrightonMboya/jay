@@ -2,6 +2,7 @@ import { postRouter } from "~/server/api/routers/post";
 import { createTRPCRouter } from "~/server/api/trpc";
 import { tripsRouter } from "./routers/trips/newTrip";
 import { createMail } from "./routers/mails/create";
+import { tripAccounting } from "./routers/trips/accounting";
 
 /**
  * This is the primary router for your server.
@@ -12,6 +13,7 @@ export const appRouter = createTRPCRouter({
   post: postRouter,
   trips: tripsRouter,
   createMail,
+  tripAccounting
 });
 
 // export type definition of API

@@ -25,48 +25,46 @@ const Page: NextPageWithLayout = () => {
   // const trip = data;
   const defaultLayout = [500, 400, 655];
 
-
   return (
     <>
       {/* {isLoading ? (
         <LoadingSkeleton />
       ) : ( */}
-        <main className="mt-[40px] pl-[30px]">
-          {/* <h3 className="pb-10 text-xl text-primary">{`${trip?.guestName} Trip Expense`}</h3> */}
-          <TooltipProvider delayDuration={0}>
-            <ResizablePanelGroup
-              direction="horizontal"
-              onLayout={(sizes: number[]) => {
-                document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-                  sizes,
-                )}`;
-              }}
-              className="h-full max-h-[800px] items-stretch "
+      <main className="mt-[40px] pl-[30px]">
+        <TooltipProvider delayDuration={0}>
+          <ResizablePanelGroup
+            direction="horizontal"
+            onLayout={(sizes: number[]) => {
+              document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+                sizes,
+              )}`;
+            }}
+            className="h-full max-h-[800px] items-stretch "
+          >
+            <ResizablePanel
+              defaultSize={defaultLayout[2]}
+              collapsedSize={4}
+              collapsible={true}
+              minSize={30}
             >
-              <ResizablePanel
-                defaultSize={defaultLayout[2]}
-                collapsedSize={4}
-                collapsible={true}
-                minSize={30}
-              >
-                <TripDetails />
-                <Separator className="mt-5" />
-                <ExpenseTable />
-              </ResizablePanel>
-              <ResizableHandle withHandle />
+              <TripDetails />
+              <Separator className="mt-5" />
+              <ExpenseTable />
+            </ResizablePanel>
+            <ResizableHandle withHandle />
 
-              <ResizablePanel
-                defaultSize={600}
-                collapsedSize={4}
-                collapsible={true}
-                minSize={30}
-                className="pl-10"
-              >
-                <TripAccounting />
-              </ResizablePanel>
-            </ResizablePanelGroup>
-          </TooltipProvider>
-        </main>
+            <ResizablePanel
+              defaultSize={600}
+              collapsedSize={4}
+              collapsible={true}
+              minSize={30}
+              className="pl-10"
+            >
+              <TripAccounting />
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </TooltipProvider>
+      </main>
       {/* )} */}
     </>
   );
