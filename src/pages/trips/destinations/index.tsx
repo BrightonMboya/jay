@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import { UploadCloud } from "lucide-react";
-import { message, Upload } from "antd";
+import { Upload } from "antd";
 import type { GetProp, UploadFile, UploadProps } from "antd";
 import { NextPageWithLayout } from "~/pages/_app";
 import Layout from "~/components/Layout/Layout";
@@ -12,6 +12,12 @@ import Input from "~/components/ui/Input";
 import { Textarea } from "~/components/ui/TextArea";
 import Button from "~/components/ui/Button";
 import { api } from "~/utils/api";
+import { v4 as uuidv4 } from "uuid";
+import { supabase } from "~/utils/supabase";
+import { useToast } from "~/utils/hooks/useToast";
+import { Toaster } from "~/components/ui/toaster";
+import { ToastAction } from "~/components/ui/Toast";
+import { Spinner } from "~/components/trips/LoadingSkeleton";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -24,7 +30,6 @@ type DestinationValidationSchema = z.infer<typeof destinationSchema>;
 
 const Page: NextPageWithLayout = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [uploading, setUploading] = useState(false);
 
   const props: UploadProps = {
     onRemove: (file) => {
@@ -40,21 +45,82 @@ const Page: NextPageWithLayout = () => {
     },
     fileList,
   };
-
-  const handleUpload = () => {
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append("files[]", file as FileType);
+  const { toast } = useToast();
+  const { mutateAsync, isLoading } =
+    api.destinations.newDestination.useMutation({
+      onSuccess: () => {
+        toast({
+          description: "You have succesfully added a new Destination",
+        });
+        reset();
+      },
+      onError: (error) => {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `${error.message}`,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+          duration: 1500,
+        });
+      },
     });
-  };
 
-  const onSubmit: SubmitHandler<DestinationValidationSchema> = (data) => {
-    console.log(fileList);
+  const onSubmit: SubmitHandler<DestinationValidationSchema> = async (data) => {
+    try {
+      const imgUrls: Array<string> = [];
+
+      const uploadFile = async (file: File) => {
+        const fileName = uuidv4();
+        const extensionType = file.type?.split("/")[1];
+
+        try {
+          const { data, error } = await supabase.storage
+            .from("destination_images")
+            .upload(`${fileName}.${extensionType}`, file);
+
+          if (error) {
+            console.error("Error uploading file:", error.message);
+            return null;
+          }
+
+          // @ts-expect-error
+          return data?.fullPath;
+        } catch (error) {
+          // @ts-expect-error
+          console.error("Error uploading file:", error.message);
+          return null;
+        }
+      };
+
+      const uploadAllFiles = async () => {
+        // @ts-expect-error
+        const uploadPromises = fileList.map(uploadFile);
+        const uploadedPaths = await Promise.all(uploadPromises);
+
+        // Filter out any null values (failed uploads)
+        const successfulPaths = uploadedPaths.filter((path) => path !== null);
+
+        // Now you can use successfulPaths or update your imgUrls array
+        imgUrls.push(...successfulPaths);
+        console.log(imgUrls, "Starting to mutate");
+        mutateAsync({
+          name: data.name,
+          description: data.description,
+          imgUrls: imgUrls,
+        });
+        console.log(imgUrls, "Finished mutating");
+      };
+
+      uploadAllFiles();
+    } catch (cause) {
+      console.log(cause);
+    }
   };
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<DestinationValidationSchema>({
     resolver: zodResolver(destinationSchema),
@@ -62,6 +128,7 @@ const Page: NextPageWithLayout = () => {
   return (
     <main className="mt-[50px] pl-5">
       <h3 className="text-2xl font-medium ">New Destination</h3>
+      <Toaster />
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="relative flex flex-col space-y-[30px] pt-10 ">
           <ItemLayout>
@@ -96,19 +163,13 @@ const Page: NextPageWithLayout = () => {
                   <p>Select Images</p>
                 </div>
               </Upload>
-              {/* <Button
-                onClick={handleUpload}
-                disabled={fileList.length === 0}
-                loading={uploading}
-                style={{ marginTop: 16 }}
-              >
-                {uploading ? "Uploading" : "Start Upload"}
-              </Button> */}
             </div>
           </ItemLayout>
         </section>
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="mt-5 w-full">
+          {isLoading ? <Spinner /> : <p>Submit</p>}
+        </Button>
       </form>
     </main>
   );

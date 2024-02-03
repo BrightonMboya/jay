@@ -14,6 +14,7 @@ export const destinations = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
+        console.log(input.imgUrls, ">>>>>>>>")
         const newDestination = await ctx.db.destination.create({
           data: {
             ...input,
