@@ -96,7 +96,7 @@ export default function SideBar() {
                 <div
                   className={`flex items-center justify-center space-x-2
               ${
-                router.pathname === "/destinations"
+                router.pathname === "/trips/destinations"
                   ? "text-dark"
                   : "text-gray-500"
               }
@@ -104,7 +104,7 @@ export default function SideBar() {
                 >
                   <Luggage width={20} height={20} />
 
-                  <h3 className="">Destination</h3>
+                  <h3 className="">Destinations</h3>
                 </div>
               </Link>
             </AccordionContent>

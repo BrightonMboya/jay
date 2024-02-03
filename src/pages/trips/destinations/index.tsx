@@ -30,6 +30,7 @@ type DestinationValidationSchema = z.infer<typeof destinationSchema>;
 
 const Page: NextPageWithLayout = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const props: UploadProps = {
     onRemove: (file) => {
@@ -93,6 +94,7 @@ const Page: NextPageWithLayout = () => {
       };
 
       const uploadAllFiles = async () => {
+        setLoading(true);
         // @ts-expect-error
         const uploadPromises = fileList.map(uploadFile);
         const uploadedPaths = await Promise.all(uploadPromises);
@@ -102,18 +104,26 @@ const Page: NextPageWithLayout = () => {
 
         // Now you can use successfulPaths or update your imgUrls array
         imgUrls.push(...successfulPaths);
-        console.log(imgUrls, "Starting to mutate");
+
         mutateAsync({
           name: data.name,
           description: data.description,
           imgUrls: imgUrls,
         });
-        console.log(imgUrls, "Finished mutating");
+        setFileList([]);
+        setLoading(false);
       };
 
       uploadAllFiles();
     } catch (cause) {
       console.log(cause);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: `Failed to create the destination`,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+        duration: 1500,
+      });
     }
   };
 
@@ -167,7 +177,7 @@ const Page: NextPageWithLayout = () => {
           </ItemLayout>
         </section>
 
-        <Button type="submit" className="mt-5 w-full">
+        <Button type="submit" className="mt-5 w-full" disabled={loading}>
           {isLoading ? <Spinner /> : <p>Submit</p>}
         </Button>
       </form>
