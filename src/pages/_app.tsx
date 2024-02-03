@@ -35,11 +35,9 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
         },
       }}
     >
-      {getLayout(
       <main className={`${monsterrat.className}`}>
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
       </main>
-      )}
     </ClerkProvider>
   );
 };

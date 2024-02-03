@@ -6,69 +6,149 @@ import {
 } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
 import Button from "../ui/Button";
-import { Plane } from "lucide-react";
 import { UserButton, useClerk } from "@clerk/nextjs";
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~/components/ui/accordion";
+import { PlusCircle, Luggage, Send, Plane } from "lucide-react";
 
 export default function SideBar() {
   const router = useRouter();
   const { signOut } = useClerk();
 
   return (
-    <section className="fixed font-montserrat">
-      <div className="flex w-[150px] flex-col items-center justify-center space-y-7 pt-5 ">
+    <section className="fixed">
+      <div className="spac flex w-full flex-col items-center justify-center px-5 pt-5 ">
         <UserButton
           appearance={{
             variables: {},
           }}
         />
 
-        <Link href="/mails">
-          <div
-            className={`flex items-center justify-center space-x-2
+        <Accordion type="single" collapsible className="text-gray-500">
+          <AccordionItem value="mailCommunication">
+            <AccordionTrigger>Communications</AccordionTrigger>
+            <AccordionContent className="flex flex-col space-y-5">
+              <Link href="/mails">
+                <div
+                  className={`flex items-center justify-center space-x-2
+              ${router.pathname === "/mails" ? "text-dark" : "text-gray-500"}
+          `}
+                >
+                  <Send width={20} height={20} />
+
+                  <h3>Send Email</h3>
+                </div>
+              </Link>
+
+              <Link href="/mails/new">
+                <div
+                  className={`flex items-center justify-center space-x-2
               ${
-                router.pathname.startsWith("/mail")
+                router.pathname === "/mails/new" ? "text-dark" : "text-gray-500"
+              }
+          `}
+                >
+                  <EnvelopeClosedIcon width={20} height={20} />
+
+                  <h3>New Email</h3>
+                </div>
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <Accordion type="single" collapsible className="text-gray-500">
+          <AccordionItem value="allTrips">
+            <AccordionTrigger>Trip Management</AccordionTrigger>
+            <AccordionContent className="flex flex-col space-y-5">
+              <Link href="/trips">
+                <div
+                  className={`flex items-center justify-center space-x-2
+              ${router.pathname === "/trips" ? "text-dark" : "text-gray-500"}
+          `}
+                >
+                  <PersonIcon width={20} height={20} />
+
+                  <h3 className="">All Trips</h3>
+                </div>
+              </Link>
+
+              <Link href="/trips/new">
+                <div
+                  className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname === "/trips/new" ? "text-dark" : "text-gray-500"
+              }
+          `}
+                >
+                  <PlusCircle width={20} height={20} />
+
+                  <h3 className="">Add Trips</h3>
+                </div>
+              </Link>
+
+              <Link href="/trips/destinations">
+                <div
+                  className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname === "/destinations"
                   ? "text-dark"
                   : "text-gray-500"
               }
           `}
-          >
-            <EnvelopeClosedIcon width={20} height={20} />
+                >
+                  <Luggage width={20} height={20} />
 
-            <h3 className="font-montserrat">Mail</h3>
-          </div>
-        </Link>
-        <Link href="/trips">
-          <div
-            className={`flex items-center justify-center space-x-2
+                  <h3 className="">Destination</h3>
+                </div>
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <Accordion type="single" collapsible className="text-gray-500">
+          <AccordionItem value="itienaries">
+            <AccordionTrigger>Itienaries Management</AccordionTrigger>
+            <AccordionContent className="flex flex-col space-y-5">
+              <Link href="/itienaries">
+                <div
+                  className={`flex items-center justify-center space-x-2
               ${
-                router.pathname.startsWith("/trips")
+                router.pathname === "/itienaries"
                   ? "text-dark"
                   : "text-gray-500"
               }
           `}
-          >
-            <PersonIcon width={20} height={20} />
+                >
+                  <Plane width={20} height={20} />
+                  <h3>Itienaries</h3>
+                </div>
+              </Link>
 
-            <h3 className="font-montserrat">Trips</h3>
-          </div>
-        </Link>
-
-        <Link href="/itienaries">
-          <div
-            className={`flex items-center justify-center space-x-2
+              <Link href="/itienaries/new">
+                <div
+                  className={`flex items-center justify-center space-x-2
               ${
-                router.pathname.startsWith("/itienaries")
+                router.pathname === "/itienaries/new"
                   ? "text-dark"
                   : "text-gray-500"
               }
           `}
-          >
-            <Plane width={20} height={20} />
-            <h3 className="font-montserrat">Itienaries</h3>
-          </div>
-        </Link>
+                >
+                  <PlusCircle width={20} height={20} />
+                  <h3>New Itienary</h3>
+                </div>
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
 
-        <Link href="/accounting">
+        {/* <Link href="/accounting">
           <div
             className={`flex items-center justify-center space-x-2
               ${
@@ -80,11 +160,11 @@ export default function SideBar() {
           >
             <span>$</span>
 
-            <h3 className="font-montserrat">Accounting</h3>
+            <h3>Accounting</h3>
           </div>
-        </Link>
+        </Link> */}
 
-        <Link href="/assets">
+        {/* <Link href="/assets">
           <div
             className={`flex items-center justify-center space-x-2
               ${
@@ -96,11 +176,11 @@ export default function SideBar() {
           >
             <CubeIcon width={20} height={20} />
 
-            <h3 className="font-montserrat">Assets</h3>
+            <h3>Assets</h3>
           </div>
-        </Link>
+        </Link> */}
 
-        <Link href="/contacts">
+        {/* <Link href="/contacts">
           <div
             className={`flex items-center justify-center space-x-2
               ${
@@ -112,9 +192,9 @@ export default function SideBar() {
           >
             <PersonIcon width={20} height={20} />
 
-            <h3 className="font-montserrat">Contacts</h3>
+            <h3>Contacts</h3>
           </div>
-        </Link>
+        </Link> */}
 
         <Button
           className="fixed bottom-10 ml-10 w-[150px]"
