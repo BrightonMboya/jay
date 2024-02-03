@@ -15,7 +15,7 @@ import { api } from "~/utils/api";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
-const destinationSchema = z.object({
+export const destinationSchema = z.object({
   name: z.string(),
   description: z.string(),
 });
