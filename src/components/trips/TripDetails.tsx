@@ -3,10 +3,16 @@ import { api } from "~/utils/api";
 import LoadingSkeleton from "./LoadingSkeleton";
 import { format } from "date-fns";
 
-export default function TripDetails() {
+interface Props {
+  organizationId: number;
+  tripId: number;
+}
+
+export default function TripDetails({ organizationId, tripId }: Props) {
   const { data, isLoading } = api.trips.byId.useQuery({
-    id: Number(2),
+    id: tripId,
   });
+
   return (
     <>
       {isLoading ? (

@@ -14,9 +14,14 @@ import { api } from "~/utils/api";
 import { NextPageWithLayout } from "../_app";
 import { ReactElement } from "react";
 import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
+import { useUser } from "@clerk/nextjs";
 
 const Page: NextPageWithLayout = () => {
   const { query } = useRouter();
+  const user = useUser();
+  const { data } = api.organization.fetchOrganizationId.useQuery({
+    email: user.user?.primaryEmailAddress?.emailAddress as unknown as string,
+  });
   const tripId = query.tripId;
   // const { data, isLoading } = api.trips.byId.useQuery({
   //   id: Number(tripId)
@@ -47,7 +52,8 @@ const Page: NextPageWithLayout = () => {
               collapsible={true}
               minSize={30}
             >
-              <TripDetails />
+              {data && <TripDetails organizationId={data?.id} tripId={Number(tripId)} />}
+                                                   
               <Separator className="mt-5" />
               <ExpenseTable />
             </ResizablePanel>

@@ -9,7 +9,7 @@ export const organization = createTRPCRouter({
         email: z.string(),
       }),
     )
-    .mutation(async ({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       try {
         return await ctx.db.organizations.findUnique({
           where: {
