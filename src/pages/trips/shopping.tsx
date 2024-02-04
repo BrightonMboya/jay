@@ -8,17 +8,32 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "~/components/ui/resizable";
-import ReservationCard from "~/components/trips/ReservationCard";
+import { ExpenseTable } from "~/components/trips/ExpensesTable";
 import { api } from "~/utils/api";
+import { NextPageWithLayout } from "../_app";
+import { ReactElement } from "react";
+import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
+import { useUser } from "@clerk/nextjs";
 
-export default function Page() {
+const Page: NextPageWithLayout = () => {
   const { query } = useRouter();
+  const user = useUser();
+  const { data } = api.organization.fetchOrganizationId.useQuery({
+    email: user.user?.primaryEmailAddress?.emailAddress as unknown as string,
+  });
   const tripId = query.tripId;
+  // const { data, isLoading } = api.trips.byId.useQuery({
+  //   id: Number(tripId)
+  // });
 
+  // const trip = data;
   const defaultLayout = [500, 400, 655];
 
   return (
-    <Layout>
+    <>
+      {/* {isLoading ? (
+        <LoadingSkeleton />
+      ) : ( */}
       <main className="mt-[40px] pl-[30px]">
         <TooltipProvider delayDuration={0}>
           <ResizablePanelGroup
@@ -36,9 +51,15 @@ export default function Page() {
               collapsible={true}
               minSize={30}
             >
-              <TripDetails organizationId={0} tripId={Number(tripId)} />
+              {data && (
+                <TripDetails
+                  organizationId={data?.id}
+                  tripId={Number(tripId)}
+                />
+              )}
+
               <Separator className="mt-5" />
-              {/* <ExpenseTable /> */}
+              <p>A list of all shopping for this trip</p>
             </ResizablePanel>
             <ResizableHandle withHandle />
 
@@ -49,11 +70,18 @@ export default function Page() {
               minSize={30}
               className="pl-10"
             >
-              <ReservationCard />
+             <p>Table to record shopping stuff</p>
             </ResizablePanel>
           </ResizablePanelGroup>
         </TooltipProvider>
       </main>
-    </Layout>
+      {/* )} */}
+    </>
   );
-}
+};
+
+Page.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
+
+export default Page;
