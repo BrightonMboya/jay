@@ -14,7 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import { PlusCircle, Luggage, Send, Plane } from "lucide-react";
+import { PlusCircle, Luggage, Send, Plane, Home } from "lucide-react";
 
 export default function SideBar() {
   const router = useRouter();
@@ -105,6 +105,22 @@ export default function SideBar() {
                   <Luggage width={20} height={20} />
 
                   <h3 className="">Destinations</h3>
+                </div>
+              </Link>
+
+              <Link href="/trips/accomodations">
+                <div
+                  className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname === "/trips/accomodations"
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+                >
+                  <Home width={20} height={20} />
+
+                  <h3 className="">Accomodations</h3>
                 </div>
               </Link>
             </AccordionContent>

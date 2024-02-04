@@ -37,7 +37,6 @@ import {
 import Link from "next/link";
 import { format } from "date-fns";
 
-
 export type Trips = {
   id: number;
   guestName: string;
@@ -199,9 +198,6 @@ export function TripsList({ trips }: any) {
       rowSelection,
     },
   });
-
-  // const date = trips[0].departureDate;
-  // console.log(format(date, "PPP"))
 
   return (
     <div className="w-full">
