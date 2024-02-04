@@ -1,10 +1,10 @@
 import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import { CANT_MUTATE_ERROR } from "./newTrip";
 import { destinationSchema } from "~/pages/trips/destinations";
+import { CANT_MUTATE_ERROR } from "./newTrip";
 
-export const destinations = createTRPCRouter({
-  newDestination: protectedProcedure
+export const accomodation = createTRPCRouter({
+  addAccomodation: protectedProcedure
     .input(
       destinationSchema.merge(
         z.object({
@@ -14,12 +14,11 @@ export const destinations = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        const newDestination = await ctx.db.destination.create({
+        const newAccomodation = await ctx.db.accomodation.create({
           data: {
             ...input,
           },
         });
-        return newDestination;
       } catch (cause) {
         console.log(cause);
         throw CANT_MUTATE_ERROR;

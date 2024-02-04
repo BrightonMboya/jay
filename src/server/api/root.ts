@@ -5,6 +5,7 @@ import { createMail } from "./routers/mails/create";
 import { tripAccounting } from "./routers/trips/accounting";
 import { fetchTrips } from "./routers/trips/fetch";
 import { destinations } from "./routers/trips/destination";
+import { accomodation } from "./routers/trips/accomodation";
 
 /**
  * This is the primary router for your server.
@@ -18,6 +19,7 @@ export const appRouter = createTRPCRouter({
   tripAccounting,
   fetchTrips,
   destinations,
+  accomodation,
 });
 
 // export type definition of API
