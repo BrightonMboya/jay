@@ -33,7 +33,7 @@ model Assets {
 }
 
 model Trips {
-    id              Int            @id @default(autoincrement())
+    id              Int           @id @default(autoincrement())
     guestName       String
     email           String
     itienaryLink    String?
@@ -44,8 +44,8 @@ model Trips {
     noOfDays        Int
     gender          String
     description     String?
-    Organizations   Organizations? @relation(fields: [organizationsId], references: [id])
-    organizationsId Int?
+    Organizations   Organizations @relation(fields: [organizationsId], references: [id])
+    organizationsId Int
     // this trip has many expenses
     expenses        Expenses[]
 }

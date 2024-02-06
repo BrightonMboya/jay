@@ -24,7 +24,7 @@ const Page: NextPageWithLayout = () => {
           c2aUrl="/trips/new"
         />
       )}
-      {(data?.length !== 0 && !isLoading) && <TripsList trips={data} />}
+      {data?.length !== 0 && !isLoading && <TripsList trips={data} />}
       {isLoading && <LoadingSkeleton />}
     </main>
   );
