@@ -10,7 +10,7 @@ import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
 const Page: NextPageWithLayout = () => {
   const user = useUser();
   console.log(user.user?.primaryEmailAddress?.emailAddress);
-  const { data } = api.trips.byOrganization.useQuery({
+  const { data, isLoading } = api.trips.byOrganization.useQuery({
     email: user.user?.primaryEmailAddress?.emailAddress as unknown as string,
   });
   return (
@@ -24,7 +24,8 @@ const Page: NextPageWithLayout = () => {
           c2aUrl="/trips/new"
         />
       )}
-      {data ? <TripsList trips={data} /> : <LoadingSkeleton />}
+      {(data?.length !== 0 && !isLoading) && <TripsList trips={data} />}
+      {isLoading && <LoadingSkeleton />}
     </main>
   );
 };
