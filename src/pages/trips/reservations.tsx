@@ -39,7 +39,7 @@ export default function Page() {
               collapsible={true}
               minSize={30}
             >
-              <TripDetails organizationId={0} tripId={Number(tripId)} />
+              <TripDetails tripId={Number(tripId)} />
               <Separator className="mt-5" />
               <ExpenseTable
                 tripId={Number(tripId)}

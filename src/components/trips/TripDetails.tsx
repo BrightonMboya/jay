@@ -4,11 +4,11 @@ import LoadingSkeleton from "./LoadingSkeleton";
 import { format } from "date-fns";
 
 interface Props {
-  organizationId: number;
+  
   tripId: number;
 }
 
-export default function TripDetails({ organizationId, tripId }: Props) {
+export default function TripDetails({ tripId }: Props) {
   const { data, isLoading } = api.trips.byId.useQuery({
     id: tripId,
   });
