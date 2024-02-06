@@ -50,11 +50,13 @@ model Trips {
 
 model Expenses {
     id              String        @id @default(cuid())
-    amount          Int
+    rackRateAmount  Int
+    stoRateAmount   Int
     expenseType     String
     expenseName     String
     date            DateTime
     description     String?
+    paid            Boolean       @default(false)
     // for every expense recorded we also store the receipt, below is the link to the receipt
     receiptLink     String?
     organizationsId Int
