@@ -29,9 +29,10 @@ export const expensesSchema = z.object({
 });
 type ReservationValidationSchema = z.infer<typeof expensesSchema>;
 
-
-
-export default function ReservationCard({ tripId, organizationEmail }: TripExpenseProps) {
+export default function ReservationCard({
+  tripId,
+  organizationEmail,
+}: TripExpenseProps) {
   const {
     register,
     handleSubmit,
@@ -44,6 +45,7 @@ export default function ReservationCard({ tripId, organizationEmail }: TripExpen
   });
 
   const { toast } = useToast();
+  const utils = api.useUtils();
 
   const { mutateAsync, isLoading } =
     api.tripAccounting.recordExpense.useMutation({
@@ -51,7 +53,12 @@ export default function ReservationCard({ tripId, organizationEmail }: TripExpen
         toast({
           description: "Reservation Expense added succesfully",
         });
+        // resetting the form fields
         reset();
+        // invalidating the cache for the expense trip
+        utils.tripAccounting.fetchExpenseType.invalidate({
+          expenseType: "reservations",
+        });
       },
       onError: (error) => {
         toast({
@@ -68,7 +75,7 @@ export default function ReservationCard({ tripId, organizationEmail }: TripExpen
       ...data,
       expenseType: "reservations",
       organizationEmail: organizationEmail,
-      tripId: tripId
+      tripId: tripId,
     });
   };
   console.log(errors);
