@@ -1,8 +1,8 @@
 import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import { expensesSchema } from "~/components/trips/TripExpenseCard";
 import { CANT_MUTATE_ERROR } from "./newTrip";
 import { revenueSchema } from "~/components/trips/RevenueCard";
+import { expensesSchema } from "~/components/trips/ReservationCard";
 
 export const tripAccounting = createTRPCRouter({
   recordExpense: protectedProcedure
@@ -10,18 +10,9 @@ export const tripAccounting = createTRPCRouter({
       expensesSchema.merge(
         z.object({
           organizationEmail: z.string(),
-          receiptLink: z.string(),
+          expenseType: z.string(),
         }),
       ),
-      // z.object({
-      //   organizationEmail: z.string(),
-      //   amount: z.number(),
-      //   expenseType: z.string(),
-      //   expenseName: z.string(),
-      //   date: z.date(),
-      //   description: z.string(),
-      //   receiptLink: z.any(),
-      // }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
@@ -38,13 +29,13 @@ export const tripAccounting = createTRPCRouter({
         // record the new expense
         const newExpense = await ctx.db.expenses.create({
           data: {
-           
-            amount: input.amount,
+            rackRateAmount: input.rackRateAmount,
+            stockRateAmount: input.stockRateAmount,
             expenseType: input.expenseType,
             expenseName: input.expenseName,
             date: input.date,
+            paid: input.paidByAccountant,
             description: input.description,
-            receiptLink: input.receiptLink,
             organizationsId: Number(organizationId?.id),
           },
         });

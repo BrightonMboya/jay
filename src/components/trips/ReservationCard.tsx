@@ -8,33 +8,65 @@ import {
 import Button from "../ui/Button";
 import { Label } from "../ui/label";
 import Input from "../ui/Input";
-import { Checkbox } from "../ui/checkbox";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "../ui/TextArea";
+import { api } from "~/utils/api";
+import { useUser } from "@clerk/nextjs";
+import { useToast } from "~/utils/hooks/useToast";
+import { ToastAction } from "~/components/ui/Toast";
+import { Spinner } from "./LoadingSkeleton";
 
-const reservationSchema = z.object({
+export const expensesSchema = z.object({
   expenseName: z.string(),
   stockRateAmount: z.number(),
   rackRateAmount: z.number(),
   date: z.date(),
   description: z.string(),
+  paidByAccountant: z.boolean(),
 });
-type ReservationValidationSchema = z.infer<typeof reservationSchema>;
+type ReservationValidationSchema = z.infer<typeof expensesSchema>;
 
 export default function ReservationCard() {
   const {
     register,
     handleSubmit,
+    control,
+    reset,
     formState: { errors },
   } = useForm<ReservationValidationSchema>({
-    resolver: zodResolver(reservationSchema),
+    resolver: zodResolver(expensesSchema),
+    // defaultValues: { paidByAccountant: false },
   });
+  const user = useUser();
+  const { toast } = useToast();
 
+  const { mutateAsync, isLoading } =
+    api.tripAccounting.recordExpense.useMutation({
+      onSuccess: () => {
+        toast({
+          description: "Reservation Expense added succesfully",
+        });
+        reset();
+      },
+      onError: (error) => {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `${error.message}`,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+          duration: 1500,
+        });
+      },
+    });
   const onSubmit: SubmitHandler<ReservationValidationSchema> = async (data) => {
-    console.log("Hello world");
-    console.log(data, "//////");
+    mutateAsync({
+      ...data,
+      expenseType: "reservations",
+      organizationEmail: user.user?.primaryEmailAddress
+        ?.emailAddress as unknown as string,
+    });
   };
   console.log(errors);
   return (
@@ -101,7 +133,8 @@ export default function ReservationCard() {
           <p className="text-sm text-red-500">{errors?.description?.message}</p>
 
           <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
+            <input type="checkbox" {...register("paidByAccountant")} />
+
             <label
               htmlFor="terms"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -110,7 +143,7 @@ export default function ReservationCard() {
             </label>
           </div>
           <Button className="w-full" type="submit">
-            Submit Expense
+            {isLoading ? <Spinner /> : <p> Submit Expense</p>}
           </Button>
         </form>
       </CardContent>

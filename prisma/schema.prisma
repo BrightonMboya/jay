@@ -51,7 +51,7 @@ model Trips {
 model Expenses {
     id              String        @id @default(cuid())
     rackRateAmount  Int
-    stoRateAmount   Int
+    stockRateAmount   Int
     expenseType     String
     expenseName     String
     date            DateTime
