@@ -10,10 +10,13 @@ import {
 } from "~/components/ui/resizable";
 import ReservationCard from "~/components/trips/ReservationCard";
 import { api } from "~/utils/api";
+import { useUser } from "@clerk/nextjs";
+import { ExpenseTable } from "~/components/trips/ExpensesTable";
 
 export default function Page() {
   const { query } = useRouter();
   const tripId = query.tripId;
+  const user = useUser();
 
   const defaultLayout = [500, 400, 655];
 
@@ -38,7 +41,13 @@ export default function Page() {
             >
               <TripDetails organizationId={0} tripId={Number(tripId)} />
               <Separator className="mt-5" />
-              {/* <ExpenseTable /> */}
+              <ExpenseTable
+                tripId={Number(tripId)}
+                organizationEmail={
+                  user?.user?.primaryEmailAddress
+                    ?.emailAddress as unknown as string
+                }
+              />
             </ResizablePanel>
             <ResizableHandle withHandle />
 
@@ -49,7 +58,13 @@ export default function Page() {
               minSize={30}
               className="pl-10"
             >
-              <ReservationCard />
+              <ReservationCard
+                tripId={Number(tripId)}
+                organizationEmail={
+                  user?.user?.primaryEmailAddress
+                    ?.emailAddress as unknown as string
+                }
+              />
             </ResizablePanel>
           </ResizablePanelGroup>
         </TooltipProvider>

@@ -17,6 +17,7 @@ import { useUser } from "@clerk/nextjs";
 import { useToast } from "~/utils/hooks/useToast";
 import { ToastAction } from "~/components/ui/Toast";
 import { Spinner } from "./LoadingSkeleton";
+import { TripExpenseProps } from "./ExpensesTable";
 
 export const expensesSchema = z.object({
   expenseName: z.string(),
@@ -28,7 +29,9 @@ export const expensesSchema = z.object({
 });
 type ReservationValidationSchema = z.infer<typeof expensesSchema>;
 
-export default function ReservationCard() {
+
+
+export default function ReservationCard({ tripId, organizationEmail }: TripExpenseProps) {
   const {
     register,
     handleSubmit,
@@ -39,7 +42,7 @@ export default function ReservationCard() {
     resolver: zodResolver(expensesSchema),
     // defaultValues: { paidByAccountant: false },
   });
-  const user = useUser();
+
   const { toast } = useToast();
 
   const { mutateAsync, isLoading } =
@@ -64,8 +67,8 @@ export default function ReservationCard() {
     mutateAsync({
       ...data,
       expenseType: "reservations",
-      organizationEmail: user.user?.primaryEmailAddress
-        ?.emailAddress as unknown as string,
+      organizationEmail: organizationEmail,
+      tripId: tripId
     });
   };
   console.log(errors);

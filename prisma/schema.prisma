@@ -46,12 +46,14 @@ model Trips {
     description     String?
     Organizations   Organizations? @relation(fields: [organizationsId], references: [id])
     organizationsId Int?
+    // this trip has many expenses
+    expenses        Expenses[]
 }
 
 model Expenses {
     id              String        @id @default(cuid())
     rackRateAmount  Int
-    stockRateAmount   Int
+    stockRateAmount Int
     expenseType     String
     expenseName     String
     date            DateTime
@@ -61,6 +63,8 @@ model Expenses {
     receiptLink     String?
     organizationsId Int
     Organizations   Organizations @relation(fields: [organizationsId], references: [id])
+    Trips           Trips         @relation(fields: [tripsId], references: [id])
+    tripsId         Int
 }
 
 model Sales {

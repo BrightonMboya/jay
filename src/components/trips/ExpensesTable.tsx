@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-
+import { api } from "~/utils/api";
 const invoices = [
   {
     invoice: "INV001",
@@ -54,7 +54,19 @@ const invoices = [
   },
 ];
 
-export function ExpenseTable() {
+export interface TripExpenseProps {
+  tripId: number;
+  organizationEmail: string;
+}
+
+export function ExpenseTable({ tripId, organizationEmail }: TripExpenseProps) {
+  const { data, isLoading } = api.tripAccounting.fetchExpenseType.useQuery({
+    tripId: tripId,
+    organizationEmail: organizationEmail,
+    expenseType: "reservations",
+  });
+
+  console.log(data, "^^^&&&66")
   return (
     <Table className="mt-10">
       <TableCaption>All expenses related to this trip</TableCaption>

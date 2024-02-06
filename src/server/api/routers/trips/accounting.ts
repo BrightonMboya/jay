@@ -3,6 +3,7 @@ import { z } from "zod";
 import { CANT_MUTATE_ERROR } from "./newTrip";
 import { revenueSchema } from "~/components/trips/RevenueCard";
 import { expensesSchema } from "~/components/trips/ReservationCard";
+import { TRPCError } from "@trpc/server";
 
 export const tripAccounting = createTRPCRouter({
   recordExpense: protectedProcedure
@@ -11,6 +12,7 @@ export const tripAccounting = createTRPCRouter({
         z.object({
           organizationEmail: z.string(),
           expenseType: z.string(),
+          tripId: z.number(),
         }),
       ),
     )
@@ -37,6 +39,7 @@ export const tripAccounting = createTRPCRouter({
             paid: input.paidByAccountant,
             description: input.description,
             organizationsId: Number(organizationId?.id),
+            tripsId: input.tripId,
           },
         });
         return newExpense;
@@ -53,15 +56,6 @@ export const tripAccounting = createTRPCRouter({
           receiptLink: z.string(),
         }),
       ),
-      // z.object({
-      //   organizationEmail: z.string(),
-      //   amount: z.number(),
-      //   salesType: z.string(),
-      //   salesName: z.string(),
-      //   date: z.date(),
-      //   description: z.string(),
-      //   receiptLink: z.any(),
-      // }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
@@ -91,6 +85,42 @@ export const tripAccounting = createTRPCRouter({
       } catch (cause) {
         console.log(cause);
         throw CANT_MUTATE_ERROR;
+      }
+    }),
+
+  fetchExpenseType: protectedProcedure
+    .input(
+      z.object({
+        organizationEmail: z.string(),
+        expenseType: z.string(),
+        tripId: z.number(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      try {
+        const organizationId = await ctx.db.organizations.findUnique({
+          where: {
+            emailAddress: input.organizationEmail,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        const expenses = await ctx.db.expenses.findMany({
+          where: {
+            organizationsId: organizationId?.id,
+            expenseType: input.expenseType,
+            tripsId: input.tripId,
+          },
+        });
+
+        return expenses;
+      } catch (cause) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "The expenses could not be fetched",
+        });
       }
     }),
 });
