@@ -2,7 +2,7 @@ import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { CANT_MUTATE_ERROR } from "./newTrip";
 import { revenueSchema } from "~/components/trips/RevenueCard";
-import { expensesSchema } from "~/components/trips/ReservationCard";
+import { expensesSchema } from "~/components/trips/expensesCards/ReservationCard";
 import { TRPCError } from "@trpc/server";
 
 export const tripAccounting = createTRPCRouter({

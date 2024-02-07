@@ -14,16 +14,16 @@ import { format } from "date-fns";
 export interface TripExpenseProps {
   tripId: number;
   organizationEmail: string;
+  expenseType: string;
 }
 
-export function ExpenseTable({ tripId, organizationEmail }: TripExpenseProps) {
+export function ExpenseTable({ tripId, organizationEmail, expenseType }: TripExpenseProps) {
   const { data, isLoading } = api.tripAccounting.fetchExpenseType.useQuery({
     tripId: tripId,
     organizationEmail: organizationEmail,
-    expenseType: "reservations",
+    expenseType: expenseType
   });
 
- 
   return (
     <Table className="mt-10">
       <TableCaption>All expenses related to this trip</TableCaption>

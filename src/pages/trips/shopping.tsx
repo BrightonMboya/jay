@@ -14,6 +14,7 @@ import { NextPageWithLayout } from "../_app";
 import { ReactElement } from "react";
 import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
 import { useUser } from "@clerk/nextjs";
+import TripShoppingCard from "~/components/trips/expensesCards/TripShopping";
 
 const Page: NextPageWithLayout = () => {
   const { query } = useRouter();
@@ -51,15 +52,17 @@ const Page: NextPageWithLayout = () => {
               collapsible={true}
               minSize={30}
             >
-              {data && (
-                <TripDetails
-                  organizationId={data?.id}
-                  tripId={Number(tripId)}
-                />
-              )}
+              {data && <TripDetails tripId={Number(tripId)} />}
 
               <Separator className="mt-5" />
-              <p>A list of all shopping for this trip</p>
+              <ExpenseTable
+                tripId={Number(tripId)}
+                organizationEmail={
+                  user?.user?.primaryEmailAddress
+                    ?.emailAddress as unknown as string
+                }
+                expenseType="tripShopping"
+              />
             </ResizablePanel>
             <ResizableHandle withHandle />
 
@@ -70,7 +73,14 @@ const Page: NextPageWithLayout = () => {
               minSize={30}
               className="pl-10"
             >
-             <p>Table to record shopping stuff</p>
+              <TripShoppingCard
+                tripId={Number(tripId)}
+                organizationEmail={
+                  user?.user?.primaryEmailAddress
+                    ?.emailAddress as unknown as string
+                }
+                expenseType="tripShopping"
+              />
             </ResizablePanel>
           </ResizablePanelGroup>
         </TooltipProvider>

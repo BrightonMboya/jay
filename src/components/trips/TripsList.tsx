@@ -139,7 +139,14 @@ export const columns: ColumnDef<Trips>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
             <DropdownMenuItem className="cursor-pointer">
-              View Operations
+              <Link
+                href={{
+                  pathname: "/trips/operations",
+                  query: { tripId: trip.id },
+                }}
+              >
+                View Operations
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
               <Link

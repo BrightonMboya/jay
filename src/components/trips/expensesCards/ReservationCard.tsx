@@ -4,20 +4,19 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "../ui/Card";
-import Button from "../ui/Button";
-import { Label } from "../ui/label";
-import Input from "../ui/Input";
+} from "../../ui/Card";
+import Button from "../../ui/Button";
+import { Label } from "../../ui/label";
+import Input from "../../ui/Input";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "../ui/TextArea";
+import { Textarea } from "../../ui/TextArea";
 import { api } from "~/utils/api";
-import { useUser } from "@clerk/nextjs";
 import { useToast } from "~/utils/hooks/useToast";
 import { ToastAction } from "~/components/ui/Toast";
-import { Spinner } from "./LoadingSkeleton";
-import { TripExpenseProps } from "./ExpensesTable";
+import { Spinner } from "../LoadingSkeleton";
+import { TripExpenseProps } from "../ExpensesTable";
 
 export const expensesSchema = z.object({
   expenseName: z.string(),
@@ -27,7 +26,7 @@ export const expensesSchema = z.object({
   description: z.string(),
   paidByAccountant: z.boolean(),
 });
-type ReservationValidationSchema = z.infer<typeof expensesSchema>;
+export type ReservationValidationSchema = z.infer<typeof expensesSchema>;
 
 export default function ReservationCard({
   tripId,
@@ -78,7 +77,7 @@ export default function ReservationCard({
       tripId: tripId,
     });
   };
-  console.log(errors);
+
   return (
     <Card>
       <CardHeader>
@@ -152,7 +151,7 @@ export default function ReservationCard({
               Already Paid by Accountant?
             </label>
           </div>
-          <Button className="w-full" type="submit">
+          <Button className="w-full" type="submit" disabled={isLoading}>
             {isLoading ? <Spinner /> : <p> Submit Expense</p>}
           </Button>
         </form>
