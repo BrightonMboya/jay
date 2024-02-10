@@ -91,12 +91,19 @@ export default function SideBar() {
                   <h3 className="">Add Trips</h3>
                 </div>
               </Link>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
 
-              <Link href="/trips/accomodations">
+        <Accordion type="single" collapsible className="text-gray-500">
+          <AccordionItem value="itienaries">
+            <AccordionTrigger>Accomodation Management</AccordionTrigger>
+            <AccordionContent className="flex flex-col space-y-5">
+              <Link href="/trips/accomodations/new">
                 <div
                   className={`flex items-center justify-center space-x-2
               ${
-                router.pathname === "/trips/accomodations"
+                router.pathname === "/trips/accomodations/new"
                   ? "text-dark"
                   : "text-gray-500"
               }
@@ -104,7 +111,23 @@ export default function SideBar() {
                 >
                   <Home width={20} height={20} />
 
-                  <h3 className="">Accomodations</h3>
+                  <h3 className="">New Accomodation</h3>
+                </div>
+              </Link>
+
+              <Link href="/trips/accomodations/">
+                <div
+                  className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname === "/trips/accomodations/"
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+                >
+                  <Home width={20} height={20} />
+
+                  <h3 className="">All</h3>
                 </div>
               </Link>
             </AccordionContent>

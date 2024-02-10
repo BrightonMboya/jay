@@ -11,7 +11,7 @@ export default function Layout({ children }: Props) {
     <>
       {/* <SignedIn> */}
         <section>
-          <div className="font- flex space-x-[200px] ">
+          <div className="font- flex space-x-[300px] ">
             <SideBar />
             <main className="">{children}</main>
           </div>
