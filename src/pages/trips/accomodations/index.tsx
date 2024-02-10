@@ -18,6 +18,7 @@ import { useToast } from "~/utils/hooks/useToast";
 import { Toaster } from "~/components/ui/toaster";
 import { ToastAction } from "~/components/ui/Toast";
 import { Spinner } from "~/components/trips/LoadingSkeleton";
+import { useUser } from "@clerk/nextjs";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -31,6 +32,8 @@ type AccomodationValidationSchema = z.infer<typeof accomodationSchema>;
 const Page: NextPageWithLayout = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const user = useUser();
 
   const props: UploadProps = {
     onRemove: (file) => {
@@ -107,11 +110,12 @@ const Page: NextPageWithLayout = () => {
         // Now you can use successfulPaths or update your imgUrls array
         imgUrls.push(...successfulPaths);
 
-       
         mutateAsync({
           name: data.name,
           description: data.description,
           imgUrls: imgUrls,
+          organizationEmail: user.user?.primaryEmailAddress
+            ?.emailAddress as unknown as string,
         });
         setFileList([]);
         setLoading(false);

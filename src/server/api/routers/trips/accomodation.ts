@@ -6,19 +6,34 @@ import { CANT_MUTATE_ERROR } from "./newTrip";
 export const accomodation = createTRPCRouter({
   addAccomodation: protectedProcedure
     .input(
-      destinationSchema.merge(
-        z.object({
-          imgUrls: z.array(z.string()),
-        }),
-      ),
+      z.object({
+        imgUrls: z.array(z.string()),
+        organizationEmail: z.string(),
+        name: z.string(),
+        description: z.string(),
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        const newAccomodation = await ctx.db.accomodation.create({
-          data: {
-            ...input,
+         // start by getting the organization Id
+        const organizationId = await ctx.db.organizations.findUnique({
+          where: {
+            emailAddress: input.organizationEmail,
+          },
+          select: {
+            id: true,
           },
         });
+        const newAccomodation = await ctx.db.accomodation.create({
+          data: {
+            name: input.name,
+            imgUrls: input.imgUrls,
+            description: input.description,
+            organizationsId: Number(organizationId?.id),
+          },
+        });
+
+        return newAccomodation;
       } catch (cause) {
         console.log(cause);
         throw CANT_MUTATE_ERROR;
