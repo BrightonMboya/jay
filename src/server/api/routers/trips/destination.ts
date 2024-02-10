@@ -1,22 +1,35 @@
 import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { CANT_MUTATE_ERROR } from "./newTrip";
-import { destinationSchema } from "~/pages/trips/destinations";
+import { destinationSchema } from "~/pages/trips/destinations/new";
 
 export const destinations = createTRPCRouter({
   newDestination: protectedProcedure
     .input(
-      destinationSchema.merge(
-        z.object({
-          imgUrls: z.array(z.string()),
-        }),
-      ),
+      z.object({
+        imgUrls: z.array(z.string()),
+        organizationEmail: z.string(),
+        name: z.string(),
+        description: z.string(),
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
+        // start by getting the organization Id
+        const organizationId = await ctx.db.organizations.findUnique({
+          where: {
+            emailAddress: input.organizationEmail,
+          },
+          select: {
+            id: true,
+          },
+        });
         const newDestination = await ctx.db.destination.create({
           data: {
-            ...input,
+            name: input.name,
+            imgUrls: input.imgUrls,
+            description: input.description,
+            organizationsId: Number(organizationId?.id),
           },
         });
         return newDestination;

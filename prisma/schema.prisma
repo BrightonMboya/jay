@@ -10,8 +10,8 @@ datasource db {
 
 model Organizations {
     name               String
-    id                 Int          @id @default(autoincrement())
-    emailAddress       String       @unique
+    id                 Int           @id @default(autoincrement())
+    emailAddress       String        @unique
     // organizations send emails to the customers, below is the email used
     communicationEmail String
     assets             Assets[]
@@ -20,6 +20,7 @@ model Organizations {
     trips              Trips[]
     emails             Emails[]
     itienaries         Itienaries[]
+    destinations       Destination[]
 }
 
 model Assets {
@@ -133,10 +134,12 @@ model Accomodation {
 
 // this destination below is connectd to the dayManagement
 model Destination {
-    id            String          @id @default(cuid())
-    name          String
-    description   String          @db.Text()
+    id              String          @id @default(cuid())
+    name            String
+    description     String          @db.Text()
     // each destination also has imgs which we store them on supabase
-    imgUrls       String[]
-    DayManagement DayManagement[]
+    imgUrls         String[]
+    DayManagement   DayManagement[]
+    Organizations   Organizations   @relation(fields: [organizationsId], references: [id])
+    organizationsId Int
 }

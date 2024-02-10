@@ -92,22 +92,6 @@ export default function SideBar() {
                 </div>
               </Link>
 
-              <Link href="/trips/destinations">
-                <div
-                  className={`flex items-center justify-center space-x-2
-              ${
-                router.pathname === "/trips/destinations"
-                  ? "text-dark"
-                  : "text-gray-500"
-              }
-          `}
-                >
-                  <Luggage width={20} height={20} />
-
-                  <h3 className="">Destinations</h3>
-                </div>
-              </Link>
-
               <Link href="/trips/accomodations">
                 <div
                   className={`flex items-center justify-center space-x-2
@@ -121,6 +105,45 @@ export default function SideBar() {
                   <Home width={20} height={20} />
 
                   <h3 className="">Accomodations</h3>
+                </div>
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <Accordion type="single" collapsible className="text-gray-500">
+          <AccordionItem value="itienaries">
+            <AccordionTrigger>Destination Management</AccordionTrigger>
+            <AccordionContent className="flex flex-col space-y-5">
+              <Link href="/trips/destinations">
+                <div
+                  className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname === "/trips/destinations"
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+                >
+                  <Luggage width={20} height={20} />
+
+                  <h3 className="">All Destinations</h3>
+                </div>
+              </Link>
+
+              <Link href="/trips/destinations/new">
+                <div
+                  className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname === "/trips/destinations/new"
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+                >
+                  <Luggage width={20} height={20} />
+
+                  <h3 className="">New Destinations</h3>
                 </div>
               </Link>
             </AccordionContent>

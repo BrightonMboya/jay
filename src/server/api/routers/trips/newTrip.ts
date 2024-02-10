@@ -47,7 +47,7 @@ export const tripsRouter = createTRPCRouter({
             description: input.description,
             noOfDays: input.noOfDays,
             gender: input.gender,
-            organizationsId: organizationId?.id,
+            organizationsId: Number(organizationId?.id),
           },
         });
 

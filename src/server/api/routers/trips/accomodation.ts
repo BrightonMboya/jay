@@ -1,6 +1,6 @@
 import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import { destinationSchema } from "~/pages/trips/destinations";
+import { destinationSchema } from "~/pages/trips/destinations/new";
 import { CANT_MUTATE_ERROR } from "./newTrip";
 
 export const accomodation = createTRPCRouter({
