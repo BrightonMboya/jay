@@ -8,10 +8,10 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "~/components/ui/resizable";
-import ReservationCard from "~/components/trips/expensesCards/ReservationCard";
 import { api } from "~/utils/api";
 import { useUser } from "@clerk/nextjs";
 import { ExpenseTable } from "~/components/trips/ExpensesTable";
+import OperationsCard from "~/components/trips/expensesCards/OperationsCard";
 
 export default function Page() {
   const { query } = useRouter();
@@ -47,7 +47,7 @@ export default function Page() {
                   user?.user?.primaryEmailAddress
                     ?.emailAddress as unknown as string
                 }
-                expenseType="reservations"
+                expenseType="operations"
               />
             </ResizablePanel>
             <ResizableHandle withHandle />
@@ -59,13 +59,13 @@ export default function Page() {
               minSize={30}
               className="pl-10"
             >
-              <ReservationCard
+              <OperationsCard
                 tripId={Number(tripId)}
                 organizationEmail={
                   user?.user?.primaryEmailAddress
                     ?.emailAddress as unknown as string
                 }
-                expenseType="reservations"
+                expenseType="operations"
               />
             </ResizablePanel>
           </ResizablePanelGroup>

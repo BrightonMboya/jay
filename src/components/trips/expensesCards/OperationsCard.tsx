@@ -27,7 +27,7 @@ export const operationsSchema = z.object({
 });
 export type OperationsValidationSchema = z.infer<typeof operationsSchema>;
 
-export default function ReservationCard({
+export default function OperationsCard({
   tripId,
   organizationEmail,
 }: TripExpenseProps) {
@@ -39,7 +39,7 @@ export default function ReservationCard({
     formState: { errors },
   } = useForm<OperationsValidationSchema>({
     resolver: zodResolver(operationsSchema),
-    // defaultValues: { paidByAccountant: false },
+    defaultValues: { paidByAccountant: false },
   });
 
   const { toast } = useToast();
@@ -49,13 +49,13 @@ export default function ReservationCard({
     api.tripAccounting.recordExpense.useMutation({
       onSuccess: () => {
         toast({
-          description: "Reservation Expense added succesfully",
+          description: "Expense added succesfully",
         });
         // resetting the form fields
         reset();
         // invalidating the cache for the expense trip
         utils.tripAccounting.fetchExpenseType.invalidate({
-          expenseType: "reservations",
+          expenseType: "operations",
         });
       },
       onError: (error) => {
@@ -71,9 +71,11 @@ export default function ReservationCard({
   const onSubmit: SubmitHandler<OperationsValidationSchema> = async (data) => {
     mutateAsync({
       ...data,
-      expenseType: "reservations",
+      expenseType: "operations",
       organizationEmail: organizationEmail,
       tripId: tripId,
+      stockRateAmount: data.amount,
+      rackRateAmount: 0,
     });
   };
 
@@ -82,17 +84,18 @@ export default function ReservationCard({
       <CardHeader>
         <CardTitle>Reservation Tracker</CardTitle>
         <CardDescription>
-          Record Reservations related expenses here
+          Keep Track of trip operations here such as park permits, crew payments
+          etc
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="expenseName">Accomodation Name</Label>
+              <Label htmlFor="expenseName">Expense</Label>
               <Input
                 id="expenseName"
-                placeholder="Grand Melia Hotel"
+                placeholder="Park Permits"
                 {...register("expenseName")}
               />
               <p className="text-sm text-red-500">
@@ -110,19 +113,14 @@ export default function ReservationCard({
               <p className="text-sm text-red-500">{errors?.date?.message}</p>
             </div>
           </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label>Stock Rate Amount</Label>
-              <Input
-                placeholder="1,800,000"
-                type="number"
-                {...register("amount", { valueAsNumber: true })}
-              />
-              <p className="text-sm text-red-500">
-                {errors?.amount?.message}
-              </p>
-            </div>
+          <div>
+            <Label>Amount</Label>
+            <Input
+              placeholder="1,800,000"
+              type="number"
+              {...register("amount", { valueAsNumber: true })}
+            />
+            <p className="text-sm text-red-500">{errors?.amount?.message}</p>
           </div>
 
           <Label htmlFor="expenseName">Description</Label>

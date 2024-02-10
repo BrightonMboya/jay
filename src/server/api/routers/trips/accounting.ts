@@ -110,7 +110,7 @@ export const tripAccounting = createTRPCRouter({
         const expenses = await ctx.db.expenses.findMany({
           where: {
             organizationsId: organizationId?.id,
-            expenseType: input.expenseType,
+            expenseType: input.expenseType === "all" ? "" : input.expenseType,
             tripsId: input.tripId,
           },
         });

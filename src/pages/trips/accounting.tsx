@@ -19,8 +19,10 @@ import { useUser } from "@clerk/nextjs";
 const Page: NextPageWithLayout = () => {
   const { query } = useRouter();
   const user = useUser();
+  const organizationEmail = user.user?.primaryEmailAddress
+    ?.emailAddress as unknown as string;
   const { data } = api.organization.fetchOrganizationId.useQuery({
-    email: user.user?.primaryEmailAddress?.emailAddress as unknown as string,
+    email: organizationEmail,
   });
   const tripId = query.tripId;
   // const { data, isLoading } = api.trips.byId.useQuery({
@@ -52,10 +54,14 @@ const Page: NextPageWithLayout = () => {
               collapsible={true}
               minSize={30}
             >
-              {data && <TripDetails organizationId={data?.id} tripId={Number(tripId)} />}
-                                                   
+              {data && <TripDetails tripId={Number(tripId)} />}
+
               <Separator className="mt-5" />
-              <ExpenseTable />
+              <ExpenseTable
+                tripId={Number(tripId)}
+                organizationEmail={organizationEmail}
+                expenseType="all"
+              />
             </ResizablePanel>
             <ResizableHandle withHandle />
 

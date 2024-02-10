@@ -158,9 +158,9 @@ export const columns: ColumnDef<Trips>[] = [
                 View Reservations
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
+            {/* <DropdownMenuItem className="cursor-pointer">
               View Customer Experience
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem className="cursor-pointer">
               <Link
                 href={{

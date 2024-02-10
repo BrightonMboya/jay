@@ -1,1 +1,1 @@
-## I did this on my xmas break !!
+## A saas that helps tourism companies manage their operations and sales

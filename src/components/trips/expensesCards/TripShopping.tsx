@@ -34,7 +34,7 @@ export default function TripShoppingCard({
     formState: { errors },
   } = useForm<ReservationValidationSchema>({
     resolver: zodResolver(expensesSchema),
-    // defaultValues: { paidByAccountant: false },
+    defaultValues: { rackRateAmount: 0 },
   });
 
   const { toast } = useToast();
@@ -106,19 +106,18 @@ export default function TripShoppingCard({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label>Stock Rate Amount</Label>
-              <Input
-                placeholder="1,800,000"
-                type="number"
-                {...register("stockRateAmount", { valueAsNumber: true })}
-              />
-              <p className="text-sm text-red-500">
-                {errors?.stockRateAmount?.message}
-              </p>
-            </div>
-            <div>
+          <div>
+            <Label>Amount</Label>
+            <Input
+              placeholder="1,800,000"
+              type="number"
+              {...register("stockRateAmount", { valueAsNumber: true })}
+            />
+            <p className="text-sm text-red-500">
+              {errors?.stockRateAmount?.message}
+            </p>
+          </div>
+          {/* <div>
               <Label>Rack Rate Amount</Label>
               <Input
                 placeholder="1,900,000"
@@ -128,8 +127,7 @@ export default function TripShoppingCard({
               <p className="text-sm text-red-500">
                 {errors?.rackRateAmount?.message}
               </p>
-            </div>
-          </div>
+            </div> */}
 
           <Label htmlFor="expenseName">Description</Label>
           <Textarea
