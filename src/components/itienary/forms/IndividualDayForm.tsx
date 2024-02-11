@@ -1,6 +1,6 @@
 import { AssetLabel, ItemLayout } from "~/pages/contacts/new";
 import Input from "~/components/ui/Input";
-import { type UseFormRegister, type FieldErrors } from "react-hook-form";
+import { type UseFormRegister, type FieldErrors, Control } from "react-hook-form";
 import { type DayManagementValues } from "./DayManagementForm";
 import { Textarea } from "~/components/ui/TextArea";
 import SelectDestination from "./SelectDestination";
@@ -11,12 +11,14 @@ interface Props {
   register: UseFormRegister<DayManagementValues>;
   errors: FieldErrors<DayManagementValues>;
   organizationEmail: string;
+  control: Control<DayManagementValues>;
 }
 
 export default function IndividualDayForm({
   idx,
   register,
   errors,
+  control,
   organizationEmail,
 }: Props) {
   return (
@@ -61,7 +63,7 @@ export default function IndividualDayForm({
           label="Destination Name"
           caption="What is the destination that this guest will visit this day"
         />
-        <SelectDestination organizationEmail={organizationEmail} />
+        <SelectDestination organizationEmail={organizationEmail} control={control} />
         {/* <Input
           placeholder="Serengeti Plains"
           {...register(`daysManagement.${idx}.destination`)}

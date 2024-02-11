@@ -71,6 +71,7 @@ export default function DayManagementForm(props: DayManagementFormProps) {
         errors={errors}
         key={id}
         organizationEmail={props.organizationEmail}
+        control={control}
       />
     );
   });
