@@ -3,14 +3,22 @@ import Input from "~/components/ui/Input";
 import { type UseFormRegister, type FieldErrors } from "react-hook-form";
 import { type DayManagementValues } from "./DayManagementForm";
 import { Textarea } from "~/components/ui/TextArea";
+import SelectDestination from "./SelectDestination";
+import SelectAccomodation from "./SelectAccomodation";
 
 interface Props {
   idx: number;
   register: UseFormRegister<DayManagementValues>;
   errors: FieldErrors<DayManagementValues>;
+  organizationEmail: string;
 }
 
-export default function IndividualDayForm({ idx, register, errors }: Props) {
+export default function IndividualDayForm({
+  idx,
+  register,
+  errors,
+  organizationEmail,
+}: Props) {
   return (
     <div className="mt-10 space-y-[30px]">
       <h3 className="mb-2 text-xl font-semibold">Day {idx + 1}</h3>
@@ -34,8 +42,6 @@ export default function IndividualDayForm({ idx, register, errors }: Props) {
             placeholder="Kahawa House"
             {...register(`daysManagement.${idx}.pickUpLocation`)}
           />
-
-          
         </div>
       </ItemLayout>
 
@@ -55,10 +61,11 @@ export default function IndividualDayForm({ idx, register, errors }: Props) {
           label="Destination Name"
           caption="What is the destination that this guest will visit this day"
         />
-        <Input
+        <SelectDestination organizationEmail={organizationEmail} />
+        {/* <Input
           placeholder="Serengeti Plains"
           {...register(`daysManagement.${idx}.destination`)}
-        />
+        /> */}
       </ItemLayout>
 
       <ItemLayout>
@@ -66,10 +73,11 @@ export default function IndividualDayForm({ idx, register, errors }: Props) {
           label="Accomodation"
           caption="Where will the guest spend the night?"
         />
-        <Input
+        <SelectAccomodation organizationEmail={organizationEmail} />
+        {/* <Input
           placeholder="Acacia Lodge"
           {...register(`daysManagement.${idx}.accomodation`)}
-        />
+        /> */}
       </ItemLayout>
 
       <ItemLayout>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import Layout from "~/components/Layout/Layout";
 import BasicInfoForm, {
   type BasicInfoFormValues,
@@ -7,8 +7,9 @@ import { SubmitHandler } from "react-hook-form";
 import DayManagementForm, {
   type DayManagementValues,
 } from "~/components/itienary/forms/DayManagementForm";
+import { NextPageWithLayout } from "./_app";
 
-export default function Page() {
+const Page: NextPageWithLayout = () => {
   const [formData, setFormData] = useState<{
     basicInfo: BasicInfoFormValues;
   } | null>(null);
@@ -51,9 +52,11 @@ export default function Page() {
     }
   };
 
-  return (
-    <Layout>
-      <main>{MultiPageForm()}</main>
-    </Layout>
-  );
-}
+  return <main>{MultiPageForm()}</main>;
+};
+
+Page.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
+
+export default Page;

@@ -2,6 +2,7 @@ import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { destinationSchema } from "~/pages/trips/destinations/new";
 import { CANT_MUTATE_ERROR } from "./newTrip";
+import { TRPCError } from "@trpc/server";
 
 export const accomodation = createTRPCRouter({
   addAccomodation: protectedProcedure
@@ -15,7 +16,7 @@ export const accomodation = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
-         // start by getting the organization Id
+        // start by getting the organization Id
         const organizationId = await ctx.db.organizations.findUnique({
           where: {
             emailAddress: input.organizationEmail,
@@ -39,4 +40,37 @@ export const accomodation = createTRPCRouter({
         throw CANT_MUTATE_ERROR;
       }
     }),
+  accomodationPicker: protectedProcedure.input(
+    z.object({
+      organizationEmail: z.string(),
+    }),
+  )
+  .query(async ({ctx, input}) => {
+     try {
+       const organizationId = await ctx.db.organizations.findUnique({
+         where: {
+           emailAddress: input.organizationEmail,
+         },
+         select: {
+           id: true,
+         },
+       });
+
+       const accomodations = await ctx.db.accomodation.findMany({
+         where: {
+           organizationsId: organizationId?.id,
+         },
+         select: {
+           id: true,
+           name: true,
+         },
+       });
+       return accomodations;
+     } catch (cause) {
+       throw new TRPCError({
+         code: "NOT_FOUND",
+         message: "Cant found the organization",
+       });
+     }
+  })
 });

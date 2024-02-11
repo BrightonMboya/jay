@@ -107,20 +107,20 @@ model Itienaries {
 }
 
 model DayManagement {
-    id              String        @id @default(cuid())
-    daySummary      String        @db.Text()
+    id              String       @id @default(cuid())
+    daySummary      String       @db.Text()
     pickUpLocation  String
     dropOffLocation String
     date            DateTime
     // each day is associated with an accomodation
-    accomodation    Accomodation? @relation(fields: [accomodationId], references: [id])
+    accomodation    Accomodation @relation(fields: [accomodationId], references: [id])
     // each day is associated with a destination as well
-    destination     Destination?  @relation(fields: [destinationId], references: [id])
+    destination     Destination  @relation(fields: [destinationId], references: [id])
     // below means each day belongs to a particular itienary
-    itienaryId      String?
-    Itienary        Itienaries?   @relation(fields: [itienaryId], references: [id])
-    destinationId   String?
-    accomodationId  String?
+    itienaryId      String
+    Itienary        Itienaries   @relation(fields: [itienaryId], references: [id])
+    destinationId   String
+    accomodationId  String
 }
 
 model Accomodation {

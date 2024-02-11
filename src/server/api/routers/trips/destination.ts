@@ -2,6 +2,7 @@ import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { CANT_MUTATE_ERROR } from "./newTrip";
 import { destinationSchema } from "~/pages/trips/destinations/new";
+import { TRPCError } from "@trpc/server";
 
 export const destinations = createTRPCRouter({
   newDestination: protectedProcedure
@@ -36,6 +37,41 @@ export const destinations = createTRPCRouter({
       } catch (cause) {
         console.log(cause);
         throw CANT_MUTATE_ERROR;
+      }
+    }),
+
+  destinationPicker: protectedProcedure
+    .input(
+      z.object({
+        organizationEmail: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const organizationId = await ctx.db.organizations.findUnique({
+          where: {
+            emailAddress: input.organizationEmail,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        const destinations = await ctx.db.destination.findMany({
+          where: {
+            organizationsId: organizationId?.id,
+          },
+          select: {
+            id: true,
+            name: true,
+          },
+        });
+        return destinations;
+      } catch (cause) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Cant found the organization",
+        });
       }
     }),
 });

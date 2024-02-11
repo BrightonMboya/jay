@@ -143,7 +143,7 @@ export default function BasicInfoForm(props: BasicInfoFormProps) {
         <ItemLayout>
           <AssetLabel
             label="Price"
-            caption="Enter the Prcing Per Person for this trip. Default currency is USD"
+            caption="Enter the Prcing Per Person for this trip. Default currency is Tsh"
           />
           <div>
             <Input placeholder="300" {...register("pricePerPerson")} />

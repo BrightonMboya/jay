@@ -34,6 +34,7 @@ interface DayManagementFormProps {
   initialValues?: DayManagementValues;
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
+  organizationEmail: string;
 }
 
 export default function DayManagementForm(props: DayManagementFormProps) {
@@ -69,6 +70,7 @@ export default function DayManagementForm(props: DayManagementFormProps) {
         register={register}
         errors={errors}
         key={id}
+        organizationEmail={props.organizationEmail}
       />
     );
   });
