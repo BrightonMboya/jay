@@ -63,7 +63,11 @@ export default function IndividualDayForm({
           label="Destination Name"
           caption="What is the destination that this guest will visit this day"
         />
-        <SelectDestination organizationEmail={organizationEmail} control={control} />
+        <SelectDestination
+          organizationEmail={organizationEmail}
+          control={control}
+          idx={idx}
+        />
         {/* <Input
           placeholder="Serengeti Plains"
           {...register(`daysManagement.${idx}.destination`)}
@@ -75,7 +79,11 @@ export default function IndividualDayForm({
           label="Accomodation"
           caption="Where will the guest spend the night?"
         />
-        <SelectAccomodation organizationEmail={organizationEmail} />
+        <SelectAccomodation
+          organizationEmail={organizationEmail}
+          control={control}
+          idx={idx}
+        />
         {/* <Input
           placeholder="Acacia Lodge"
           {...register(`daysManagement.${idx}.accomodation`)}

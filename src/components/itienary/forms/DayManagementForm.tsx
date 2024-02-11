@@ -12,8 +12,8 @@ export const dayManagementSchema = z.object({
       date: z.string(),
       pickUpLocation: z.string().min(1),
       dropOffLocation: z.string().min(1),
-      destination: z.string().min(1),
-      accomodation: z.string().min(1),
+      destinationId: z.string().min(1),
+      accomodationId: z.string().min(1),
     }),
   ),
 });
@@ -23,8 +23,8 @@ const defaultArrayObject = {
   date: "",
   pickUpLocation: "",
   dropOffLocation: "",
-  destination: "",
-  accomodation: "",
+  destinationId: "",
+  accomodationId: "",
 };
 
 export type DayManagementValues = z.infer<typeof dayManagementSchema>;

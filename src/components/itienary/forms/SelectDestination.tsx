@@ -21,12 +21,13 @@ import { api } from "~/utils/api";
 import { Control, Controller } from "react-hook-form";
 import { DayManagementValues } from "./DayManagementForm";
 
-interface Props {
+export interface SelectProps {
   organizationEmail: string;
   control: Control<DayManagementValues>;
+  idx: number;
 }
 
-export default function SelectDestination({ organizationEmail, control }: Props) {
+export default function SelectDestination({ organizationEmail, control, idx }: SelectProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const { data } = api.destinations.destinationPicker.useQuery({
@@ -35,7 +36,7 @@ export default function SelectDestination({ organizationEmail, control }: Props)
 
   return (
     <Controller
-      name="destinationId"
+      name={`daysManagement.${idx}.destinationId`}
       control={control}
       render={({ field }) => (
         <Popover open={open} onOpenChange={setOpen}>

@@ -42,10 +42,10 @@ export default function Page() {
   const [page, setPage] = useState(0);
   const MultiPageForm = () => {
     switch (page) {
-      // case 0:
-      //   return <BasicInfoForm onSubmitReady={handleBasicItienaryInfo} />;
-
       case 0:
+        return <BasicInfoForm onSubmitReady={handleBasicItienaryInfo} />;
+
+      case 1:
         return (
           <DayManagementForm
             onSubmitReady={handleDayManagementInfo}
