@@ -102,8 +102,8 @@ model Itienaries {
     pricePerPerson Int
     // each itienary has different days associated with it, we link the data below here
     dayManagement  DayManagement[]
-    organizationId Int?
-    Organization   Organizations?  @relation(fields: [organizationId], references: [id])
+    organizationId Int
+    Organization   Organizations  @relation(fields: [organizationId], references: [id])
 }
 
 model DayManagement {

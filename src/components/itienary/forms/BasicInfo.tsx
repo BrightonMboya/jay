@@ -16,6 +16,16 @@ export const basicInfoSchema = z.object({
   pricePerPerson: z.string().min(1),
 });
 
+export const basicInfoInitialValues = {
+  guestName: "",
+  itienaryName: "",
+  numberOfDays: "",
+  numberOfNights: "",
+  numberOfGuests: "",
+  description: "",
+  pricePerPerson: "",
+};
+
 export type BasicInfoFormValues = z.infer<typeof basicInfoSchema>;
 
 interface BasicInfoFormProps {

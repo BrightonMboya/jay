@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { protectedProcedure, createTRPCRouter } from "../../trpc";
 import { mailSchema } from "~/pages/mails/new";
-import { supabase } from "../../trpc";
 import { randomUUID } from "crypto";
 import { CANT_MUTATE_ERROR } from "../trips/newTrip";
 
