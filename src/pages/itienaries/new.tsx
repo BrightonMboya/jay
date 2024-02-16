@@ -12,12 +12,17 @@ import DayManagementForm, {
 import { useUser } from "@clerk/nextjs";
 import Button from "~/components/ui/Button";
 import { api } from "~/utils/api";
+import { inferProcedureInput } from "@trpc/server";
+import { AppRouter } from "~/server/api/root";
 
 export default function Page() {
   const [basicInfo, setBasicInfo] = useState<BasicInfoFormValues>(
     basicInfoInitialValues,
   );
+  let basicInfos: BasicInfoFormValues;
+  // let dayManagementData: DayManagementValues;
   const [dayManagementData, setDayManagementData] =
+         
     useState<DayManagementValues[]>();
 
   const user = useUser();
@@ -27,32 +32,26 @@ export default function Page() {
   const handleBasicItienaryInfo: SubmitHandler<BasicInfoFormValues> = (
     data,
   ) => {
+    basicInfos = data;
     setBasicInfo(data);
-
-    // console.log(data, "Hello good morning");
-    console.log(basicInfo, "how is this null");
-
-    // console.log(data);
-
     setPage(() => page + 1);
   };
 
   const handleDayManagementInfo: SubmitHandler<DayManagementValues> = (
     data,
   ) => {
-    // console.log("*********");
-    console.log(data);
-    // console.log("*********");
-    setBasicInfo(data);
+    setDayManagementData(data?.daysManagement)
     setPage(() => page + 1);
   };
 
   const [page, setPage] = useState(0);
 
   function handleCreateItienary() {
-    const daysdata = dayManagementSchema.parse(dayManagementData);
-    mutateAsync({
-      dayManagementSchema: { daysManagement: daysdata.daysManagement },
+    // const daysdata = dayManagementSchema.parse(dayManagementData);
+    type Input = inferProcedureInput<AppRouter["itienary"]["create"]>;
+    console.log(basicInfo, "This is the vasic info");
+    console.log(dayManagementData, "Plz font be null");
+    const input: Input = {
       organizationEmail: organizationEmail,
       guestName: basicInfo?.guestName,
       itienaryName: basicInfo?.itienaryName,
@@ -61,7 +60,10 @@ export default function Page() {
       numberOfGuests: basicInfo?.numberOfGuests,
       description: basicInfo?.description,
       pricePerPerson: basicInfo?.pricePerPerson,
-    });
+      daysManagement: dayManagementData
+      
+    };
+    mutateAsync(input);
   }
   const MultiPageForm = () => {
     switch (page) {

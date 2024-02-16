@@ -9,7 +9,7 @@ export const dayManagementSchema = z.object({
   daysManagement: z.array(
     z.object({
       daySummary: z.string().min(1),
-      date: z.string(),
+      date: z.date(),
       pickUpLocation: z.string().min(1),
       dropOffLocation: z.string().min(1),
       destinationId: z.string().min(1),
@@ -20,7 +20,7 @@ export const dayManagementSchema = z.object({
 
 const defaultArrayObject = {
   daySummary: "",
-  date: "",
+  date: new Date(),
   pickUpLocation: "",
   dropOffLocation: "",
   destinationId: "",

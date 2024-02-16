@@ -1,6 +1,10 @@
 import { AssetLabel, ItemLayout } from "~/pages/contacts/new";
 import Input from "~/components/ui/Input";
-import { type UseFormRegister, type FieldErrors, Control } from "react-hook-form";
+import {
+  type UseFormRegister,
+  type FieldErrors,
+  Control,
+} from "react-hook-form";
 import { type DayManagementValues } from "./DayManagementForm";
 import { Textarea } from "~/components/ui/TextArea";
 import SelectDestination from "./SelectDestination";
@@ -28,9 +32,11 @@ export default function IndividualDayForm({
       <ItemLayout>
         <AssetLabel label="Day" caption="Enter the date of this day" />
         <Input
-          placeholder="23/07/2000"
-          {...register(`daysManagement.${idx}.date`)}
+          // placeholder="23/07/2000"
+          type="date"
+          {...register(`daysManagement.${idx}.date`, { valueAsDate: true })}
         />
+        <p>{`${errors?.daysManagement?.[idx]?.date?.message}`}</p>
       </ItemLayout>
 
       <ItemLayout>

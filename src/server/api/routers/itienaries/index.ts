@@ -4,15 +4,47 @@ import { basicInfoSchema } from "~/components/itienary/forms/BasicInfo";
 import { CANT_MUTATE_ERROR } from "../trips/newTrip";
 import { dayManagementSchema } from "~/components/itienary/forms/DayManagementForm";
 
+// basicInfoSchema.merge(
+//         z.object({
+//           dayManagementSchema,
+
+//           daysManagement: z.array(
+//             z.object({
+//               daySummary: z.string().min(1),
+//               date: z.string(),
+//               pickUpLocation: z.string().min(1),
+//               dropOffLocation: z.string().min(1),
+//               destinationId: z.string().min(1),
+//               accomodationId: z.string().min(1),
+//             }),
+//           ),
+//           organizationEmail: z.string(),
+//         }),
+//       ),
+
 export const itienary = createTRPCRouter({
   create: protectedProcedure
     .input(
-      basicInfoSchema.merge(
-        z.object({
-          dayManagementSchema,
-          organizationEmail: z.string(),
-        }),
-      ),
+      z.object({
+        guestName: z.string().min(1),
+        itienaryName: z.string().min(1),
+        numberOfDays: z.string().min(1),
+        numberOfNights: z.string().min(1),
+        numberOfGuests: z.string().min(1),
+        description: z.string(),
+        pricePerPerson: z.string().min(1),
+        daysManagement: z.array(
+          z.object({
+            daySummary: z.string().min(1),
+            date: z.date(),
+            pickUpLocation: z.string().min(1),
+            dropOffLocation: z.string().min(1),
+            destinationId: z.string().min(1),
+            accomodationId: z.string().min(1),
+          }),
+        ),
+        organizationEmail: z.string(),
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
@@ -29,31 +61,21 @@ export const itienary = createTRPCRouter({
         const newItienary = await ctx.db.itienaries.create({
           data: {
             organizationId: Number(organizationId?.id),
-            itienaryName: "",
+            itienaryName: input.itienaryName,
             guestName: input.guestName,
             numberOfDays: Number(input.numberOfDays),
             numberOfNights: Number(input.numberOfNights),
             numberOfGuests: Number(input.numberOfGuests),
             description: input.description,
             pricePerPerson: Number(input.pricePerPerson),
+            dayManagement: {
+              createMany: {
+                data: input.daysManagement,
+              },
+            },
           },
         });
-
-        // record the dayManagement info on its respective table
-        const days = input.dayManagementSchema.daysManagement.map((day) => ({
-          daySummary: day.daySummary,
-          pickUpLocation: day.pickUpLocation,
-          dropOffLocation: day.dropOffLocation,
-          date: day.date,
-          destinationId: day.destinationId,
-          accomodationId: day.accomodationId,
-          itienaryId: newItienary.id,
-        }));
-
-        const itienaryDays = await ctx.db.dayManagement.createMany({
-          data: days,
-        });
-        return itienaryDays;
+        return newItienary;
       } catch (cause) {
         console.log(cause);
         throw CANT_MUTATE_ERROR;
