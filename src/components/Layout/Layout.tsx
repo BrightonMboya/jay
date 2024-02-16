@@ -1,6 +1,7 @@
 import * as React from "react";
 import { SignedIn, SignedOut, SignIn } from "@clerk/nextjs";
 import SignUpForm from "~/components/auth/SignUpPage";
+import LoginForm from "~/components/auth/LoginPage"
 
 import SideBar from "./SideBar";
 type Props = {
@@ -9,20 +10,21 @@ type Props = {
 export default function Layout({ children }: Props) {
   return (
     <>
-      {/* <SignedIn> */}
-        <section>
+      <SignedIn>
+        {/* <section>
           <div className="font- flex space-x-[300px] ">
             <SideBar />
             <main className="">{children}</main>
           </div>
-        </section>
-      {/* </SignedIn> */}
+        </section> */}
+       <LoginForm/>
+      </SignedIn>
 
-      {/* <SignedOut>
-        <section className="flex h-screen items-center justify-center">
+      <SignedOut>
+        {/* <section className="flex h-screen items-center justify-center">
           <SignUpForm />
-        </section>
-      </SignedOut> */}
+        </section> */}
+      </SignedOut>
     </>
   );
 }

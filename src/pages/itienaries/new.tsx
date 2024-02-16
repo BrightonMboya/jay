@@ -19,8 +19,7 @@ export default function Page() {
   const [basicInfo, setBasicInfo] = useState<BasicInfoFormValues>(
     basicInfoInitialValues,
   );
-  let basicInfos: BasicInfoFormValues;
-  // let dayManagementData: DayManagementValues;
+  
   const [dayManagementData, setDayManagementData] =
          
     useState<DayManagementValues[]>();
