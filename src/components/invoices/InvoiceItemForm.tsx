@@ -1,7 +1,7 @@
 import { Label } from "../ui/label";
 import Input from "../ui/Input";
 import { UseFormRegister } from "react-hook-form";
-import { InvoiceItemValues, type InvoiceSchema } from "./newInvoiceForm";
+import { type InvoiceSchema } from "./newInvoiceForm";
 
 interface Props {
   idx: number;
@@ -15,7 +15,8 @@ export default function InvoiceItemForm({ idx, register }: Props) {
         <Label>Qty</Label>
         <Input
           placeholder="1"
-          {...register(`invoiceItemsSchema.invoiceItems.${idx}.quantity`)}
+          {...register(`invoiceItems.${idx}.quantity`, { valueAsNumber: true })}
+          type="number"
         />
       </div>
 
@@ -23,14 +24,15 @@ export default function InvoiceItemForm({ idx, register }: Props) {
         <Label>Description</Label>
         <Input
           placeholder="Travel Booking"
-          {...register(`invoiceItemsSchema.invoiceItems.${idx}.desc`)}
+          {...register(`invoiceItems.${idx}.desc`)}
         />
       </div>
       <div>
         <Label>Prce</Label>
         <Input
           placeholder="2,500"
-          {...register(`invoiceItemsSchema.invoiceItems.${idx}.amount`)}
+          {...(register(`invoiceItems.${idx}.amount`), { valueAsNumber: true })}
+          type="number"
         />
       </div>
     </section>
