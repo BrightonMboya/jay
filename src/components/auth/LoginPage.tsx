@@ -1,10 +1,7 @@
 import Image from "next/legacy/image";
-import Link from "next/link";
 
-import { buttonVariants } from "~/components/ui/Button";
 import { Toaster } from "~/components/ui/toaster";
-import { cn } from "~/utils/utils";
-import SignUpComponent from "./SignupComponent";
+import { LoginForm } from "./LoginForm";
 
 export default function Page() {
   return (
@@ -42,7 +39,10 @@ export default function Page() {
             </blockquote>
           </div>
         </div>
-        <SignUpComponent />
+        <LoginForm/>
+        
+        
+        
       </div>
     </>
   );

@@ -31,7 +31,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
       {...pageProps}
       appearance={{
         variables: {
-          colorPrimary: "#46783E",
+          colorPrimary: "#a87133",
         },
       }}
     >
