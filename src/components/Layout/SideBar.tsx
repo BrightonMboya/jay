@@ -14,7 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import { PlusCircle, Luggage, Send, Plane, Home } from "lucide-react";
+import { PlusCircle, Luggage, Send, Plane, Home, Receipt, BadgePercent } from "lucide-react";
 
 export default function SideBar() {
   const router = useRouter();
@@ -89,6 +89,39 @@ export default function SideBar() {
                   <PlusCircle width={20} height={20} />
 
                   <h3 className="">Add Trips</h3>
+                </div>
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <Accordion type="single" collapsible className="text-gray-500">
+          <AccordionItem value="itienaries">
+            <AccordionTrigger>Invoice Management</AccordionTrigger>
+            <AccordionContent className="flex flex-col space-y-5">
+              <Link href="/invoices">
+                <div
+                  className={`flex items-center justify-center space-x-2
+              ${router.pathname === "/invoices" ? "text-dark" : "text-gray-500"}
+          `}
+                >
+                  <Receipt width={20} height={20} />
+                  <h3>Invoices</h3>
+                </div>
+              </Link>
+
+              <Link href="/invoices/new">
+                <div
+                  className={`flex items-center justify-center space-x-2
+              ${
+                router.pathname === "/invoices/new"
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+                >
+                  <BadgePercent width={20} height={20} />
+                  <h3>New Invoice</h3>
                 </div>
               </Link>
             </AccordionContent>

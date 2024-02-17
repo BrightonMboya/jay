@@ -22,6 +22,7 @@ model Organizations {
     itienaries         Itienaries[]
     destinations       Destination[]
     accomodations      Accomodation[]
+    invoices           Invoices[]
 }
 
 model Assets {
@@ -103,7 +104,7 @@ model Itienaries {
     // each itienary has different days associated with it, we link the data below here
     dayManagement  DayManagement[]
     organizationId Int
-    Organization   Organizations  @relation(fields: [organizationId], references: [id])
+    Organization   Organizations   @relation(fields: [organizationId], references: [id])
 }
 
 model DayManagement {
@@ -145,4 +146,29 @@ model Destination {
     DayManagement   DayManagement[]
     Organizations   Organizations   @relation(fields: [organizationsId], references: [id])
     organizationsId Int
+}
+
+model Invoices {
+    id               String         @id @default(cuid())
+    invoiceName      String
+    tinNumber        Int
+    Date             DateTime
+    companyAdress    String
+    clientAdress     String
+    clientName       String
+    bankName         String
+    bankCustomerName String
+    accNo            Int
+    invoiceItems     InvoiceItems[]
+    Organizations    Organizations  @relation(fields: [organizationsId], references: [id])
+    organizationsId  Int
+}
+
+model InvoiceItems {
+    id         String   @id @default(cuid())
+    desc       String
+    quantity   Int
+    amount     Int
+    Invoices   Invoices @relation(fields: [invoicesId], references: [id])
+    invoicesId String
 }
