@@ -9,7 +9,7 @@ import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
 
 const Page: NextPageWithLayout = () => {
   const user = useUser();
-  console.log(user.user?.primaryEmailAddress?.emailAddress);
+  
   const { data, isLoading } = api.trips.byOrganization.useQuery({
     email: user.user?.primaryEmailAddress?.emailAddress as unknown as string,
   });

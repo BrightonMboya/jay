@@ -19,9 +19,8 @@ export default function Page() {
   const [basicInfo, setBasicInfo] = useState<BasicInfoFormValues>(
     basicInfoInitialValues,
   );
-  
+
   const [dayManagementData, setDayManagementData] =
-         
     useState<DayManagementValues[]>();
 
   const user = useUser();
@@ -31,7 +30,6 @@ export default function Page() {
   const handleBasicItienaryInfo: SubmitHandler<BasicInfoFormValues> = (
     data,
   ) => {
-    basicInfos = data;
     setBasicInfo(data);
     setPage(() => page + 1);
   };
@@ -39,7 +37,7 @@ export default function Page() {
   const handleDayManagementInfo: SubmitHandler<DayManagementValues> = (
     data,
   ) => {
-    setDayManagementData(data?.daysManagement)
+    setDayManagementData(data?.daysManagement);
     setPage(() => page + 1);
   };
 
@@ -59,8 +57,7 @@ export default function Page() {
       numberOfGuests: basicInfo?.numberOfGuests,
       description: basicInfo?.description,
       pricePerPerson: basicInfo?.pricePerPerson,
-      daysManagement: dayManagementData
-      
+      daysManagement: dayManagementData,
     };
     mutateAsync(input);
   }

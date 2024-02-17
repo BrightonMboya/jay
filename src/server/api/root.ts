@@ -7,6 +7,7 @@ import { destinations } from "./routers/trips/destination";
 import { accomodation } from "./routers/trips/accomodation";
 import { organization } from "./routers/organizations";
 import { itienary } from "./routers/itienaries";
+import { invoices } from "./routers/invoices";
 
 /**
  * This is the primary router for your server.
@@ -22,6 +23,7 @@ export const appRouter = createTRPCRouter({
   accomodation,
   organization,
   itienary,
+  invoices,
 });
 
 // export type definition of API
