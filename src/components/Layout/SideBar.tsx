@@ -14,14 +14,23 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import { PlusCircle, Luggage, Send, Plane, Home, Receipt, BadgePercent } from "lucide-react";
+import {
+  PlusCircle,
+  Luggage,
+  Send,
+  Plane,
+  Home,
+  Receipt,
+  BadgePercent,
+  LogOutIcon,
+} from "lucide-react";
 
 export default function SideBar() {
   const router = useRouter();
   const { signOut } = useClerk();
 
   return (
-    <section className="fixed">
+    <section className="fixed bg-lightest min-h-screen">
       <div className="spac flex w-full flex-col items-center justify-center px-5 pt-5 ">
         <UserButton
           appearance={{
@@ -29,7 +38,7 @@ export default function SideBar() {
           }}
         />
 
-        <Accordion type="single" collapsible className="text-gray-500">
+        {/* <Accordion type="single" collapsible className="text-gray-500">
           <AccordionItem value="mailCommunication">
             <AccordionTrigger>Communications</AccordionTrigger>
             <AccordionContent className="flex flex-col space-y-5">
@@ -60,7 +69,7 @@ export default function SideBar() {
               </Link>
             </AccordionContent>
           </AccordionItem>
-        </Accordion>
+        </Accordion> */}
 
         <Accordion type="single" collapsible className="text-gray-500">
           <AccordionItem value="allTrips">
@@ -292,11 +301,12 @@ export default function SideBar() {
         </Link> */}
 
         <Button
-          className="fixed bottom-10 ml-10 w-[150px]"
+          className="fixed bottom-10 ml-10 w-[150px] space-x-2"
           variant="destructive"
           onClick={() => signOut(() => router.push("/auth/login"))}
         >
-          Log out
+          <LogOutIcon />
+          <span>Log out</span>
         </Button>
       </div>
     </section>

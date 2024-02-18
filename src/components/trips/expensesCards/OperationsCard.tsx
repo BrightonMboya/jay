@@ -82,7 +82,7 @@ export default function OperationsCard({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Reservation Tracker</CardTitle>
+        <CardTitle>Operations  Tracker</CardTitle>
         <CardDescription>
           Keep Track of trip operations here such as park permits, crew payments
           etc
