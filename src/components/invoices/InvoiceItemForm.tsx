@@ -10,7 +10,7 @@ interface Props {
 
 export default function InvoiceItemForm({ idx, register }: Props) {
   return (
-    <section className="flex items-center space-x-10 pt-10" key={idx}>
+    <section className="flex items-center space-x-10 pt-5" key={idx}>
       <div>
         <Label>Qty</Label>
         <Input
@@ -28,7 +28,7 @@ export default function InvoiceItemForm({ idx, register }: Props) {
         />
       </div>
       <div>
-        <Label>Prce</Label>
+        <Label>Price</Label>
         <Input
           placeholder="2,500"
           {...(register(`invoiceItems.${idx}.amount`), { valueAsNumber: true })}
