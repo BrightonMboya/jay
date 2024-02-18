@@ -1,26 +1,6 @@
 import { protectedProcedure, createTRPCRouter } from "../../trpc";
 import { z } from "zod";
-import { basicInfoSchema } from "~/components/itienary/forms/BasicInfo";
 import { CANT_MUTATE_ERROR } from "../trips/newTrip";
-import { dayManagementSchema } from "~/components/itienary/forms/DayManagementForm";
-
-// basicInfoSchema.merge(
-//         z.object({
-//           dayManagementSchema,
-
-//           daysManagement: z.array(
-//             z.object({
-//               daySummary: z.string().min(1),
-//               date: z.string(),
-//               pickUpLocation: z.string().min(1),
-//               dropOffLocation: z.string().min(1),
-//               destinationId: z.string().min(1),
-//               accomodationId: z.string().min(1),
-//             }),
-//           ),
-//           organizationEmail: z.string(),
-//         }),
-//       ),
 
 export const itienary = createTRPCRouter({
   create: protectedProcedure

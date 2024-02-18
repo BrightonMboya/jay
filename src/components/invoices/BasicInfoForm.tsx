@@ -37,8 +37,8 @@ export default function BasicInfoForm({ register }: Props) {
         />
         <Input
           placeholder="29091238701237123"
-          {...register("tinNumber", { valueAsNumber: true })}
-          type="number"
+          {...register("tinNumber")}
+         
         />
       </ItemLayout>
       <ItemLayout>
@@ -51,7 +51,7 @@ export default function BasicInfoForm({ register }: Props) {
           label="Billing Address"
           caption="Enter the address of the billing adress"
         />
-        <Input placeholder="Munich, Germany" {...register("companyAdress")} />
+        <Input placeholder="Munich, Germany" {...register("billingAdress")} />
       </ItemLayout>
       <ItemLayout>
         <AssetLabel
@@ -85,8 +85,8 @@ export default function BasicInfoForm({ register }: Props) {
         />
         <Input
           placeholder="122009123213"
-          {...register("accNo", { valueAsNumber: true })}
-          type="number"
+          {...register("accNo")}
+        
         />
       </ItemLayout>
     </section>

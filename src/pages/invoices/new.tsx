@@ -4,10 +4,12 @@ import { ReactElement } from "react";
 import { api } from "~/utils/api";
 import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
 import NewInvoiceForm from "~/components/invoices/newInvoiceForm";
+import { Toaster } from "~/components/ui/toaster";
 
 function Page() {
   return (
     <main className="pl-5">
+      <Toaster />
       <NewInvoiceForm />
     </main>
   );

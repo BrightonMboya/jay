@@ -151,14 +151,14 @@ model Destination {
 model Invoices {
     id               String         @id @default(cuid())
     invoiceName      String
-    tinNumber        Int
+    tinNumber        String
     Date             DateTime
     companyAdress    String
-    clientAdress     String
+    billingAdress     String
     clientName       String
     bankName         String
     bankCustomerName String
-    accNo            Int
+    accNo            String
     invoiceItems     InvoiceItems[]
     Organizations    Organizations  @relation(fields: [organizationsId], references: [id])
     organizationsId  Int
