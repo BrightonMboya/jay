@@ -154,11 +154,12 @@ model Invoices {
     tinNumber        String
     Date             DateTime
     companyAdress    String
-    billingAdress     String
+    billingAdress    String
     clientName       String
     bankName         String
     bankCustomerName String
     accNo            String
+    status           Boolean        @default(false)
     invoiceItems     InvoiceItems[]
     Organizations    Organizations  @relation(fields: [organizationsId], references: [id])
     organizationsId  Int

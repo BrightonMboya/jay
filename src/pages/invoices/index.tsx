@@ -4,16 +4,19 @@ import { ReactElement } from "react";
 import { useUser } from "@clerk/nextjs";
 import { api } from "~/utils/api";
 import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
-
+import InvoiceList from "~/components/invoices/invoiceTables/InvoiceList";
+import { Toaster } from "~/components/ui/toaster";
 function Page() {
   const user = useUser();
   const { data, isLoading } = api.invoices.byOrganization.useQuery({
     organizationEmail: user.user?.primaryEmailAddress
       ?.emailAddress as unknown as string,
   });
+
   return (
     <main className="pl-5">
       <Header title="Your Invoices" href="/invoices/new" />
+      <Toaster />
       {data?.length === 0 && (
         <NoAsset
           bigTitle="You haven't added any invoices yet"
@@ -22,6 +25,8 @@ function Page() {
           c2aUrl="/invoices/new"
         />
       )}
+      {data?.length !== 0 && !isLoading && <InvoiceList invoices={data!} />}
+      {isLoading && <LoadingSkeleton />}
     </main>
   );
 }

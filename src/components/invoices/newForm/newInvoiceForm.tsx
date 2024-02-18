@@ -1,4 +1,4 @@
-import Button from "../ui/Button";
+import Button from "../../ui/Button";
 import { z } from "zod";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,7 +10,7 @@ import { useUser } from "@clerk/nextjs";
 import { api } from "~/utils/api";
 import { ToastAction } from "~/components/ui/Toast";
 import { useToast } from "~/utils/hooks/useToast";
-import { Spinner } from "../trips/LoadingSkeleton";
+import { Spinner } from "../../trips/LoadingSkeleton";
 
 export const invoiceSchema = z.object({
   companyName: z.string(),
@@ -105,7 +105,7 @@ export default function NewInvoiceForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col pb-10" >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col pb-10">
       <BasicInfoForm register={register} />
       <h3 className="text-prmary pt-10 text-xl font-medium">Invoice Items</h3>
       {fieldSections}

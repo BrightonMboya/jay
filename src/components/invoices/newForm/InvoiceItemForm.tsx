@@ -1,5 +1,5 @@
-import { Label } from "../ui/label";
-import Input from "../ui/Input";
+import { Label } from "../../ui/label";
+import Input from "../../ui/Input";
 import { UseFormRegister } from "react-hook-form";
 import { type InvoiceSchema } from "./newInvoiceForm";
 

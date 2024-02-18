@@ -1,7 +1,7 @@
 import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { CANT_MUTATE_ERROR } from "../trips/newTrip";
-import { invoiceSchema } from "~/components/invoices/newInvoiceForm";
+import { invoiceSchema } from "~/components/invoices/newForm/newInvoiceForm";
 
 export const invoices = createTRPCRouter({
   byOrganization: protectedProcedure
