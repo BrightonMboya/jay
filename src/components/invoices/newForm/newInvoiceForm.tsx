@@ -11,6 +11,7 @@ import { api } from "~/utils/api";
 import { ToastAction } from "~/components/ui/Toast";
 import { useToast } from "~/utils/hooks/useToast";
 import { Spinner } from "../../trips/LoadingSkeleton";
+import { useRouter } from "next/router";
 
 export const invoiceSchema = z.object({
   companyName: z.string(),
@@ -60,6 +61,8 @@ export default function NewInvoiceForm() {
     name: "invoiceItems",
   });
 
+  const router = useRouter();
+
   const fieldSections = fields.map((field, idx) => {
     const { id } = field;
     const fieldErrors = errors?.invoiceItems?.[idx];
@@ -78,6 +81,7 @@ export default function NewInvoiceForm() {
       toast({
         description: "Invoice Added succesfully",
       });
+      router.push("/invoices");
     },
 
     onError: (error) => {

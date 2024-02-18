@@ -30,8 +30,8 @@ export default function InvoiceItemForm({ idx, register }: Props) {
       <div>
         <Label>Price</Label>
         <Input
-          placeholder="2,500"
-          {...(register(`invoiceItems.${idx}.amount`), { valueAsNumber: true })}
+          placeholder="2500"
+          {...register(`invoiceItems.${idx}.amount`, { valueAsNumber: true })}
           type="number"
         />
       </div>

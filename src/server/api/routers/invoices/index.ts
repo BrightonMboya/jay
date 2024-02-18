@@ -25,9 +25,33 @@ export const invoices = createTRPCRouter({
           where: {
             organizationsId: organizationId?.id,
           },
+
+          select: {
+            id: true,
+            invoiceName: true,
+            Date: true,
+            clientName: true,
+            status: true,
+            organizationsId: true,
+            invoiceItems: {
+              select: {
+                amount: true,
+              },
+            },
+          },
         });
 
-        return invoices;
+        // calculating the total amount for each invoice
+        const invoicesWithAmount = invoices.map((invoice) => ({
+          ...invoice,
+          totalAmount: invoice.invoiceItems.reduce(
+            (sum, item) => sum + item.amount, 0
+          )
+        }))
+
+       
+
+        return invoicesWithAmount;
       } catch (cause) {
         console.log(cause);
         throw CANT_MUTATE_ERROR;

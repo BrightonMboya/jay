@@ -91,6 +91,13 @@ export const columns: ColumnDef<Invoices>[] = [
     ),
   },
   {
+    accessorKey: "totalAmount",
+    header: "Total Amount",
+    cell: ({row}) => (
+        <div>{row.getValue("totalAmount")}</div>
+    )
+  },
+  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
