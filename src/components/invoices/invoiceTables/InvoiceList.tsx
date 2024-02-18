@@ -1,9 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { ChevronDownIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -16,13 +15,11 @@ import {
 } from "@tanstack/react-table";
 
 import Button from "~/components/ui/Button";
-import { Checkbox } from "~/components/ui/checkbox";
+
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import Input from "~/components/ui/Input";
@@ -34,127 +31,9 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { useToast } from "~/utils/hooks/useToast";
-import { format } from "date-fns";
-import { type InvoiceSchema } from "../newForm/newInvoiceForm";
 
-type AdditionalTripType = {
-  id: string;
-  status: string;
-};
+import { columns } from "./InvoiceColumns";
 
-type Invoices = InvoiceSchema & AdditionalTripType;
-
-export const columns: ColumnDef<Invoices>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-
-  {
-    accessorKey: "invoiceName",
-    header: "Invoice Name",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("invoiceName")}</div>
-    ),
-  },
-  {
-    accessorKey: "clientName",
-    header: "Client Name",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("clientName")}</div>
-    ),
-  },
-  {
-    accessorKey: "Date",
-    header: "Date",
-    cell: ({ row }) => (
-      <div className="capitalize">{format(row.getValue("Date"), "PPP")}</div>
-    ),
-  },
-  {
-    accessorKey: "totalAmount",
-    header: "Total Amount",
-    cell: ({row}) => (
-        <div>{row.getValue("totalAmount")}</div>
-    )
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div>
-        {row.getValue("status") ? (
-          <div className="flex items-center space-x-2">
-            <div className="h-2 w-2 rounded-full bg-green-500"></div>
-            <span>Paid</span>
-          </div>
-        ) : (
-          <div className="flex items-center space-x-2">
-            <div className="h-2 w-2 rounded-full bg-red-500"></div>
-            <span>Unpaid</span>
-          </div>
-        )}
-      </div>
-    ),
-  },
-
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const invoice = row.original;
-      const {toast} = useToast();
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-white font-montserrat">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={() => {
-                navigator.clipboard.writeText(invoice.id);
-                toast({
-                  description: "Invoice Link copied to clipboard",
-                });
-              }}
-            >
-              Copy Invoice ID
-            </DropdownMenuItem>
-
-            <DropdownMenuItem className="cursor-pointer">
-              Mark as Paid
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
 
 export default function InvoiceList({ invoices }: any) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -183,6 +62,7 @@ export default function InvoiceList({ invoices }: any) {
       rowSelection,
     },
   });
+  
 
   return (
     <div className="w-full">

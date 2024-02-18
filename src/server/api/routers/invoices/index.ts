@@ -45,11 +45,10 @@ export const invoices = createTRPCRouter({
         const invoicesWithAmount = invoices.map((invoice) => ({
           ...invoice,
           totalAmount: invoice.invoiceItems.reduce(
-            (sum, item) => sum + item.amount, 0
-          )
-        }))
-
-       
+            (sum, item) => sum + item.amount,
+            0,
+          ),
+        }));
 
         return invoicesWithAmount;
       } catch (cause) {
@@ -97,6 +96,28 @@ export const invoices = createTRPCRouter({
           },
         });
         return newInvoice;
+      } catch (cause) {
+        console.log(cause);
+        throw CANT_MUTATE_ERROR;
+      }
+    }),
+
+  markAsPaid: protectedProcedure
+    .input(
+      z.object({
+        invoiceId: z.string(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      try {
+        const updatedInvoice = await ctx.db.invoices.update({
+          where: {
+            id: input.invoiceId,
+          },
+          data: {
+            status: true,
+          },
+        });
       } catch (cause) {
         console.log(cause);
         throw CANT_MUTATE_ERROR;
