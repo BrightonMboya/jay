@@ -15,6 +15,7 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { api } from "~/utils/api";
 import { Spinner } from "~/components/trips/LoadingSkeleton";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/router";
 
 type AdditionalTripType = {
   id: string;
@@ -99,6 +100,7 @@ export const columns: ColumnDef<Invoices>[] = [
     cell: ({ row }) => {
       const invoice = row.original;
       const { toast } = useToast();
+      const router = useRouter();
       const user = useUser();
       const organizationEmail = user?.user?.primaryEmailAddress?.emailAddress;
       const { mutateAsync, isLoading } = api.invoices.markAsPaid.useMutation({
@@ -142,6 +144,18 @@ export const columns: ColumnDef<Invoices>[] = [
               }}
             >
               {isLoading ? <Spinner /> : " Mark as Paid"}
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => {
+                router.push({
+                  pathname: "/invoices/preview",
+                  query: { invoiceId: invoice.id },
+                });
+              }}
+            >
+              View Invoice
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
