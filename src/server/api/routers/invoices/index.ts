@@ -2,6 +2,7 @@ import { createTRPCRouter, protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { CANT_MUTATE_ERROR } from "../trips/newTrip";
 import { invoiceSchema } from "~/components/invoices/newForm/newInvoiceForm";
+import { TRPCClientError } from "@trpc/client";
 
 export const invoices = createTRPCRouter({
   byOrganization: protectedProcedure
@@ -118,6 +119,47 @@ export const invoices = createTRPCRouter({
             status: true,
           },
         });
+      } catch (cause) {
+        console.log(cause);
+        throw CANT_MUTATE_ERROR;
+      }
+    }),
+
+  byId: protectedProcedure
+    .input(
+      z.object({
+        invoiceId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const invoice = await ctx.db.invoices.findUnique({
+          where: {
+            id: input.invoiceId,
+          },
+          select: {
+            id: true,
+            invoiceName: true,
+            tinNumber: true,
+            Date: true,
+            companyAdress: true,
+            billingAdress: true,
+            clientName: true,
+            bankName: true,
+            bankCustomerName: true,
+            accNo: true,
+            invoiceItems: true,
+          },
+        });
+        // Calculate the totalAmount for the specific invoice
+        const totalAmount = invoice?.invoiceItems.reduce(
+          (sum, item) => sum + item.amount,
+          0,
+        );
+        return {
+          ...invoice,
+          totalAmount,
+        };
       } catch (cause) {
         console.log(cause);
         throw CANT_MUTATE_ERROR;
