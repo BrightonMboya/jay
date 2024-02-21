@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import Layout from "~/components/Layout/Layout";
 import ItienaryPage from "~/components/itienary/ItienaryPage";
-import ItienaryHeaderForm from "~/components/itienary/ItienaryHeaderForm";
 
-const ItineraryForm = () => {
+const Page = () => {
   return (
-    <Layout>
-      <main>
-        <ItienaryPage />
-        
-      </main>
-    </Layout>
+    <main>
+      <ItienaryPage />
+    </main>
   );
 };
 
-export default ItineraryForm;
+Page.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
+
+export default Page;

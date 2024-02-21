@@ -15,6 +15,7 @@ import { NextPageWithLayout } from "../_app";
 import { ReactElement } from "react";
 import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
 import { useUser } from "@clerk/nextjs";
+import { AccountingTable } from "~/components/trips/AccountingTable";
 
 const Page: NextPageWithLayout = () => {
   const { query } = useRouter();
@@ -57,10 +58,9 @@ const Page: NextPageWithLayout = () => {
               {data && <TripDetails tripId={Number(tripId)} />}
 
               <Separator className="mt-5" />
-              <ExpenseTable
+              <AccountingTable
                 tripId={Number(tripId)}
                 organizationEmail={organizationEmail}
-                expenseType="all"
               />
             </ResizablePanel>
             <ResizableHandle withHandle />

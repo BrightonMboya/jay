@@ -123,4 +123,36 @@ export const tripAccounting = createTRPCRouter({
         });
       }
     }),
+
+  fetchExpenseAndSales: protectedProcedure
+    .input(
+      z.object({
+        organizationEmail: z.string(),
+        tripId: z.number(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      try {
+        const organizationId = await ctx.db.organizations.findUnique({
+          where: {
+            emailAddress: input.organizationEmail,
+          },
+          select: {
+            id: true,
+          },
+        });
+        const expenses = await ctx.db.expenses.findMany({
+          where: {
+            organizationsId: organizationId?.id,
+            tripsId: input.tripId,
+          },
+        });
+        return expenses;
+      } catch (cause) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "The expenses could not be fetched",
+        });
+      }
+    }),
 });
