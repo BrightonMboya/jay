@@ -12,31 +12,37 @@ import { ToastAction } from "~/components/ui/Toast";
 import { useToast } from "~/utils/hooks/useToast";
 import { Spinner } from "../../trips/LoadingSkeleton";
 import { useRouter } from "next/router";
+import { CardTitle, CardHeader, CardContent, Card } from "~/components/ui/Card";
+import Total from "./TotalAmount";
 
 export const invoiceSchema = z.object({
   companyName: z.string(),
   invoiceName: z.string(),
   tinNumber: z.string(),
-  date: z.date(),
+  invoiceDate: z.date(),
+  invoiceDueDate: z.date(),
+  invoiceNumber: z.number(),
   companyAdress: z.string(),
-  billingAdress: z.string(),
+  clientAdress: z.string(),
   clientName: z.string(),
   bankName: z.string(),
   bankCustomerName: z.string(),
   accNo: z.string(),
   invoiceItems: z.array(
     z.object({
-      desc: z.string(),
+      itemName: z.string(),
       quantity: z.number(),
       amount: z.number(),
+      rate: z.number(),
     }),
   ),
 });
 
 const defaultInvoiceItems = [
   {
-    desc: "",
+    itemName: "",
     quantity: 0,
+    rate: 0,
     amount: 0,
   },
 ];
@@ -48,6 +54,7 @@ export default function NewInvoiceForm() {
     register,
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<InvoiceSchema>({
     resolver: zodResolver(invoiceSchema),
@@ -62,13 +69,6 @@ export default function NewInvoiceForm() {
   });
 
   const router = useRouter();
-
-  const fieldSections = fields.map((field, idx) => {
-    const { id } = field;
-    const fieldErrors = errors?.invoiceItems?.[idx];
-
-    return <InvoiceItemForm idx={idx} register={register} key={id} />;
-  });
 
   const user = useUser();
   const organizationEmail = user.user?.primaryEmailAddress
@@ -109,28 +109,49 @@ export default function NewInvoiceForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col pb-10">
-      <BasicInfoForm register={register} />
-      <h3 className="text-prmary pt-10 text-xl font-medium">Invoice Items</h3>
-      {fieldSections}
+    <section className="mt-5 flex items-center justify-center">
+      <Card className="">
+        <CardHeader className="">
+          <CardTitle className="text-sm font-medium">Invoice Details</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col pb-10"
+          >
+            <BasicInfoForm register={register} />
+            <h3 className="text-prmary pt-10 text-xl font-medium">
+              Invoice Items
+            </h3>
 
-      <Button
-        className="mt-5 w-[300px] "
-        onClick={() => {
-          append({
-            desc: "",
-            quantity: 0,
-            amount: 0,
-          });
-        }}
-        type="button"
-      >
-        Add New Item
-      </Button>
+            {fields.map((field, index) => (
+              <InvoiceItemForm
+                idx={index}
+                keyIdentifier={field.id}
+                register={register}
+                key={field.id}
+                watch={watch}
+              />
+            ))}
+            <Total control={control} />
 
-      <Button className="mt-10" type="submit">
-        {isLoading ? <Spinner /> : " Save Invoice"}
-      </Button>
-    </form>
+            <Button
+              className="mt-5 w-[300px] "
+              onClick={() => {
+                append(defaultInvoiceItems);
+              }}
+              type="button"
+              variant="outline"
+            >
+              Add New Item
+            </Button>
+
+            <Button className="mt-10" type="submit">
+              {isLoading ? <Spinner /> : " Save Invoice"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </section>
   );
 }

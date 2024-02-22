@@ -17,7 +17,7 @@ export default function Component() {
   return (
     <>
       {data && !isLoading && (
-        <section className="flex items-center justify-center mt-5">
+        <section className="mt-5 flex items-center justify-center">
           <Card className="w-[70%]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Invoice</CardTitle>

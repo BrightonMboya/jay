@@ -173,3 +173,12 @@ model InvoiceItems {
     Invoices   Invoices @relation(fields: [invoicesId], references: [id])
     invoicesId String
 }
+
+
+model BankDetails {
+    id String @id @default(cuid())
+    country String
+    bankName String
+    accountNumber String
+    
+}
