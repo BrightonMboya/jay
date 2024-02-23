@@ -37,21 +37,23 @@ export default function BankSelector() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[300px] justify-between"
+          className=" justify-between"
         >
           {value
             ? data?.find(
                 (bank) => bank.bankName.toLowerCase() === value.toLowerCase(),
               )?.bankName
             : "Select Bank..."}
+
           <CaretSortIcon className=" h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0">
+      <PopoverContent className=" p-0">
         <Command>
           <CommandInput placeholder="Select Bank..." className="h-9" />
           <CommandEmpty>
-            <CreateBankForm />
+            No Bank Details Added yet
+          
           </CommandEmpty>
           <CommandGroup>
             {data?.map((bank) => (
@@ -60,7 +62,6 @@ export default function BankSelector() {
                 value={bank.bankName}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue);
-                  console.log(value);
                   setOpen(false);
                 }}
               >
@@ -73,6 +74,12 @@ export default function BankSelector() {
                 />
               </CommandItem>
             ))}
+
+            {data?.length === 0 && (
+              <div className="flex flex-col items-center justify-center">
+                <CreateBankForm />
+              </div>
+            )}
           </CommandGroup>
         </Command>
       </PopoverContent>

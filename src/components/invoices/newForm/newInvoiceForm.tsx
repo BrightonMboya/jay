@@ -95,7 +95,7 @@ export default function NewInvoiceForm() {
   });
 
   const onSubmit: SubmitHandler<InvoiceSchema> = (data) => {
-    type Input = inferProcedureInput<AppRouter["invoices"]["create"]>;
+    type Input = inferProcedureInput<AppRouter["invoices"][""]>;
     const input: Input = {
       ...data,
       organizationEmail: organizationEmail,
