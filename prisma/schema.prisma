@@ -14,6 +14,7 @@ model Organizations {
     emailAddress       String         @unique
     // organizations send emails to the customers, below is the email used
     communicationEmail String
+    bankDetails        BankDetails?
     assets             Assets[]
     expense            Expenses[]
     sales              Sales[]
@@ -174,12 +175,13 @@ model InvoiceItems {
     invoicesId String
 }
 
-
 model BankDetails {
-    id String @id @default(cuid())
-    country String
-    bankName String
-    accountNumber String
+    id                String        @id @default(cuid())
+    country           String
+    bankName          String
+    accountNumber     String
     accountHolderName String
-    
+    currency          String
+    organizationId    Int           @unique
+    organization      Organizations @relation(fields: [organizationId], references: [id])
 }
