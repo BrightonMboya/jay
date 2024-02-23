@@ -5,11 +5,10 @@ import {
 } from "../../trpc";
 import { z } from "zod";
 import { CANT_MUTATE_ERROR } from "../trips/newTrip";
-import { invoiceSchema } from "~/components/invoices/newForm/newInvoiceForm";
-import { TRPCClientError } from "@trpc/client";
+
 
 export const query = createTRPCRouter({
-  byId: publicProcedure
+  queryById: publicProcedure
     .input(
       z.object({
         invoiceId: z.string(),
@@ -50,7 +49,7 @@ export const query = createTRPCRouter({
       }
     }),
 
-  byOrganization: protectedProcedure
+  queryByOrganization: protectedProcedure
     .input(
       z.object({
         organizationEmail: z.string(),

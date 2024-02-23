@@ -4,7 +4,7 @@ import { bankSchema } from "~/components/invoices/bankForms/CreateBank";
 import { CANT_MUTATE_ERROR } from "../trips/newTrip";
 
 export const bank = createTRPCRouter({
-  create: protectedProcedure
+  createBank: protectedProcedure
     .input(
       bankSchema.merge(
         z.object({
@@ -32,7 +32,7 @@ export const bank = createTRPCRouter({
       }
     }),
 
-  byOrganization: protectedProcedure
+  fetchOrganizationBanks: protectedProcedure
     .input(
       z.object({
         organizationEmail: z.string(),
@@ -51,6 +51,10 @@ export const bank = createTRPCRouter({
       const organizationBanks = await ctx.db.bankDetails.findMany({
         where: {
           organizationId: organizationId?.id,
+        },
+        select: {
+          id: true,
+          bankName: true,
         },
       });
 

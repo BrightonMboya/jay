@@ -18,13 +18,18 @@ import {
   PopoverTrigger,
 } from "~/components/ui/Popover";
 import { api } from "~/utils/api";
+import { useUser } from "@clerk/nextjs";
+import CreateBankForm from "../bankForms/AddFormModal";
 
 export default function BankSelector() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-  const { data } = api.fetchTrips.tripNames.useQuery({
-    organizationEmail: organizationEmail,
+  const user = useUser();
+  const { data } = api.invoices.fetchOrganizationBanks.useQuery({
+    organizationEmail: user?.user?.primaryEmailAddress
+      ?.emailAddress as unknown as string,
   });
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -36,32 +41,34 @@ export default function BankSelector() {
         >
           {value
             ? data?.find(
-                (trip) => trip.guestName.toLowerCase() === value.toLowerCase(),
-              )?.guestName
-            : "Select trip..."}
+                (bank) => bank.bankName.toLowerCase() === value.toLowerCase(),
+              )?.bankName
+            : "Select Bank..."}
           <CaretSortIcon className=" h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0">
         <Command>
-          <CommandInput placeholder="Search trip..." className="h-9" />
-          <CommandEmpty>No trip found.</CommandEmpty>
+          <CommandInput placeholder="Select Bank..." className="h-9" />
+          <CommandEmpty>
+            <CreateBankForm />
+          </CommandEmpty>
           <CommandGroup>
-            {data?.map((trip) => (
+            {data?.map((bank) => (
               <CommandItem
-                key={trip.guestName}
-                value={trip.guestName}
+                key={bank.id}
+                value={bank.bankName}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue);
                   console.log(value);
                   setOpen(false);
                 }}
               >
-                {trip.guestName}
+                {bank.bankName}
                 <CheckIcon
                   className={cn(
                     "ml-auto h-4 w-4",
-                    value === trip.guestName ? "opacity-100" : "opacity-0",
+                    value === bank.bankName ? "opacity-100" : "opacity-0",
                   )}
                 />
               </CommandItem>
