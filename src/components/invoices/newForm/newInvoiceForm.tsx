@@ -75,7 +75,6 @@ export default function NewInvoiceForm() {
     ?.emailAddress as unknown as string;
 
   const { toast } = useToast();
-
   const { mutateAsync, isLoading } = api.invoices.create.useMutation({
     onSuccess: () => {
       toast({

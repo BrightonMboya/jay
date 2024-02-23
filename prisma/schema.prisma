@@ -180,5 +180,6 @@ model BankDetails {
     country String
     bankName String
     accountNumber String
+    accountHolderName String
     
 }
