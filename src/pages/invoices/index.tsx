@@ -8,7 +8,7 @@ import InvoiceList from "~/components/invoices/invoiceTables/InvoiceList";
 import { Toaster } from "~/components/ui/toaster";
 function Page() {
   const user = useUser();
-  const { data, isLoading } = api.invoices.byOrganization.useQuery({
+  const { data, isLoading } = api.invoices.queryByOrganization.useQuery({
     organizationEmail: user.user?.primaryEmailAddress
       ?.emailAddress as unknown as string,
   });

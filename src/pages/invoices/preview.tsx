@@ -10,7 +10,7 @@ import LoadingSkeleton from "~/components/trips/LoadingSkeleton";
 export default function Component() {
   const { query } = useRouter();
   const invoiceId = query.invoiceId;
-  const { data, isLoading } = api.invoices.byId.useQuery({
+  const { data, isLoading } = api.invoices.queryById.useQuery({
     invoiceId: invoiceId as unknown as string,
   });
   console.log(data);
