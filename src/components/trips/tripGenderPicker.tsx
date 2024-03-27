@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { z } from "zod";
 
 interface Props {
-  field: ControllerRenderProps<TripSchemaType>;
+  field: ControllerRenderProps<TripSchemaType, "gender">;
 }
 
 

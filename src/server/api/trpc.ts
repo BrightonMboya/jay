@@ -21,6 +21,8 @@ import { ZodError } from "zod";
 import { db } from "~/server/db";
 import { NextApiRequest } from "next";
 import { env } from "~/env";
+import postmark from "postmark";
+
 /**
  * 1. CONTEXT
  *
@@ -32,11 +34,17 @@ import { env } from "~/env";
 // creating a supabse client so that I pass it to context
 export const supabase = createClient(
   env.NEXT_PUBLIC_SUPABASE_URL,
-  env. NEXT_PUBLIC_SUPABASE_ANNON_KEY,
+  env.NEXT_PUBLIC_SUPABASE_ANNON_KEY,
 );
+
+//creating postmark instance to pass it to context
+const serverToken = "";
+const postmarkClient = new postmark.ServerClient(serverToken);
+
 type CreateContextOptions = {
   auth: SignedInAuthObject | SignedOutAuthObject;
   supabase: SupabaseClient<any, any>;
+  postmarkClient: any;
 };
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -53,6 +61,7 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
     db,
     auth: _opts.auth,
     supabase: _opts.supabase,
+    postmarkClient: _opts.postmarkClient,
   };
 };
 
@@ -68,6 +77,7 @@ export const createTRPCContext = async (opts?: CreateNextContextOptions) => {
   return createInnerTRPCContext({
     auth,
     supabase,
+    postmarkClient,
   });
 };
 
